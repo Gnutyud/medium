@@ -10,7 +10,7 @@ type FormikInputProps = {
   maxRows?: number;
 } & FieldAttributes<{}>;
 
-const FormikInput: React.FC<FormikInput> = ({
+const FormikInput: React.FC<FormikInputProps> = ({
   label,
   type = 'text',
   multiline,
@@ -20,7 +20,7 @@ const FormikInput: React.FC<FormikInput> = ({
 }) => {
   const [field, meta] = useField(props);
   return (
-    <>
+    <React.Fragment>
       <TextField
         label={label}
         type={type}
@@ -35,7 +35,7 @@ const FormikInput: React.FC<FormikInput> = ({
       {meta.touched && meta.error ? (
         <div style={{ color: 'red', marginTop: '5px' }}>{meta.error}</div>
       ) : null}
-    </>
+    </React.Fragment>
   );
 };
 
