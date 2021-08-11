@@ -1,21 +1,16 @@
 import { Route, Switch } from "react-router-dom";
 import Layout from "./layouts/Layout";
-import Home from "./pages/Home";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
-
+import HomePage from "./pages/HomePage";
+import AuthPage from "./pages/AuthPage";
 function App() {
   return (
     <Layout>
       <Switch>
         <Route path="/" exact>
-          <Home />
+          <HomePage />
         </Route>
-        <Route path="/sign-in" exact>
-          <SignIn />
-        </Route>
-        <Route path="/sign-up" exact>
-          <SignUp />
+        <Route path="/auth">
+          <AuthPage />
         </Route>
       </Switch>
     </Layout>

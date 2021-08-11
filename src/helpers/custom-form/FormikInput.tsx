@@ -1,7 +1,6 @@
-import React from 'react';
-import { FieldAttributes, useField } from 'formik';
-import { TextField } from '@material-ui/core';
-
+import React from "react";
+import { FieldAttributes, useField } from "formik";
+import { TextField } from "@material-ui/core";
 type FormikInputProps = {
   label: string;
   type?: string;
@@ -12,7 +11,7 @@ type FormikInputProps = {
 
 const FormikInput: React.FC<FormikInputProps> = ({
   label,
-  type = 'text',
+  type = "text",
   multiline,
   minRows,
   maxRows,
@@ -33,7 +32,7 @@ const FormikInput: React.FC<FormikInputProps> = ({
         fullWidth
       />
       {meta.touched && meta.error ? (
-        <div style={{ color: 'red', marginTop: '5px' }}>{meta.error}</div>
+        <div style={{ color: "red", marginTop: "5px" }}>{meta.error}</div>
       ) : null}
     </React.Fragment>
   );
