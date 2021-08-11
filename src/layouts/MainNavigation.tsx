@@ -5,7 +5,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { NavLink } from "react-router-dom";
-// import IconButton from "@material-ui/core/IconButton";
+import { useSelector } from "react-redux";
+import type { RootState } from "../app/store";
+import { Account } from "./Account";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,20 +22,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MainNavigation = () => {
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const classes = useStyles();
   return (
     <React.Fragment>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Home
+            <NavLink to="/">Logo</NavLink>
           </Typography>
-          <NavLink to="/sign-in">
-            <Button color="inherit">Sign In</Button>
-          </NavLink>
-          <NavLink to="/sign-up">
-            <Button color="inherit">Sign Up</Button>
-          </NavLink>
+          {!isLoggedIn && (
+            <NavLink to="/auth">
+              <Button color="inherit">Sign In</Button>
+            </NavLink>
+          )}
+          {isLoggedIn && <Account />}
         </Toolbar>
       </AppBar>
     </React.Fragment>
