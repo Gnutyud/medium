@@ -4,15 +4,17 @@ import { TextField } from "@material-ui/core";
 type FormikInputProps = {
   label: string;
   type?: string;
+  placeholder?: string;
   multiline?: boolean;
   minRows?: number;
   maxRows?: number;
 } & FieldAttributes<{}>;
 
-const FormikInput: React.FC<FormikInputProps> = ({
+export const FormikInput: React.FC<FormikInputProps> = ({
   label,
   type = "text",
-  multiline,
+  placeholder = "",
+  multiline = false,
   minRows,
   maxRows,
   ...props
@@ -37,5 +39,3 @@ const FormikInput: React.FC<FormikInputProps> = ({
     </React.Fragment>
   );
 };
-
-export default FormikInput;
