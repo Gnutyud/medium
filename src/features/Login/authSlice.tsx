@@ -1,20 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-// interface userType {
-//   username : string;
-//   email : string;
-// }
+interface userType {
+  username : undefined |string;
+  email : undefined | string;
+  "email or password" : undefined | string;
+}
 export interface authState {
   isRegister: boolean;
   isLoggedIn: boolean;
   isLoading: boolean;
-  error: string;
+  error: userType | null;
   currentUser: any;
 }
 const initialState: authState = {
   isRegister: false,
   isLoggedIn: false,
   isLoading: false,
-  error: "",
+  error: null,
   currentUser: null,
 };
 const authSlice = createSlice({
@@ -27,7 +28,7 @@ const authSlice = createSlice({
     loginSuccess(state, action) {
       state.isLoggedIn = true;
       state.isLoading = false;
-      state.error = "";
+      state.error = null;
       state.currentUser = action.payload;
     },
     loginFail(state, action) {
