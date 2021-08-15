@@ -6,15 +6,15 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import {  useHistory} from "react-router-dom";
-import { Field, Form, Formik} from "formik";
+import { useHistory } from "react-router-dom";
+import { Field, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../features/Login/authSlice";
 import { LoginHandler } from "../../app/api/authApi";
 import type { RootState } from "../../app/store";
 import * as yup from "yup";
 import { FormikInput } from "../../helpers/custom-form/FormikInput";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 // main
 interface initialValuesType {
   username: string;
@@ -40,43 +40,50 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
   error: {
-    color : "red",
+    color: "red",
     marginTop: theme.spacing(3),
-  }
+  },
 }));
 
 const AuthForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const {isRegister, error}  = useSelector((state: RootState) => state.auth);
+  const { isRegister, error } = useSelector((state: RootState) => state.auth);
   const classes = useStyles();
- 
+
   // Validate form with yup (dynamic when switch sign in and sign up mode)
-  const formSchema = (isRegister : boolean) => {
+  const formSchema = (isRegister: boolean) => {
     return yup.object({
-      username : isRegister ? yup.string().required("Username is required") : yup.string(),
+      username: isRegister
+        ? yup
+            .string()
+            .required("Username is required")
+            .min(3, "Username should be of minimum 3 characters")
+        : yup.string(),
       email: yup
         .string()
         .email("Enter a valid email")
         .required("Email is required"),
       password: yup
         .string()
-        .min(8, "Password should be of minimum 8 characters length")
+        .min(6, "Password should be of minimum 6 characters length")
         .required("Password is required"),
-    })
+    });
   };
-  const [validationSchema, setValidationSchema] = useState(() => formSchema(isRegister));
+  const [validationSchema, setValidationSchema] = useState(() =>
+    formSchema(isRegister),
+  );
 
   useEffect(() => {
-    console.log("switch mode")
-    setValidationSchema(formSchema(isRegister))
-  }, [isRegister])
-//  initialValues
+    console.log("switch mode");
+    setValidationSchema(formSchema(isRegister));
+  }, [isRegister]);
+  //  initialValues
   const initialValues: initialValuesType = {
     username: "",
     email: "",
     password: "",
-};
+  };
   // Handle submit
   const submitHandler = async (values: any) => {
     console.log("submit handler");
@@ -99,41 +106,46 @@ const AuthForm = () => {
     try {
       const userData: any = await LoginHandler(userInfo, endPoint);
       if (userData.status === "errors") {
-        console.log("abc")
+        console.log("abc");
         return dispatch(authActions.loginFail(userData.message));
       }
       dispatch(
         authActions.loginSuccess({
           username: userData.user.username,
           email: userData.user.email,
-        })
+        }),
       );
       history.replace("/");
     } catch (error) {
-      dispatch(authActions.loginFail(error.response.data.errors));
+      if (error.response.data.errors) {
+        dispatch(authActions.loginFail(error.response.data.errors));
+      } else {
+        dispatch(authActions.loginFail(error.message));
+      }
     }
   };
   // switch sign in and sign up
   const switchAuthModeHandler = () => {
-    history.push("/auth?action=" + (isRegister ? "sign-in" : "sign-up"))
+    history.push("/auth?action=" + (isRegister ? "sign-in" : "sign-up"));
     dispatch(authActions.switchAuthModeHandler());
-    dispatch(authActions.loginFail(""))
+    dispatch(authActions.loginFail(""));
   };
   // Handle error when sign in and sign up from server
   let errorMessage;
-  if(error){
-    if(error.email){
-      errorMessage = `Email ${error.email}`
+  if (error) {
+    errorMessage = error;
+    if (error.email) {
+      errorMessage = `Email ${error.email}`;
     }
-    if(error.username){
-      errorMessage = `Username ${error.username}`
+    if (error.username) {
+      errorMessage = `Username ${error.username}`;
     }
-    if(error.email && error.username){
-      errorMessage = `Username and email ${error.email}`
+    if (error.email && error.username) {
+      errorMessage = `Username and email ${error.email}`;
     }
-    if(error['email or password']){
-      console.log("invaild")
-      errorMessage = `Email or password ${error['email or password']}`
+    if (error["email or password"]) {
+      console.log("invaild");
+      errorMessage = `Email or password ${error["email or password"]}`;
     }
   }
   return (
@@ -150,8 +162,7 @@ const AuthForm = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={submitHandler}
-          validationSchema={validationSchema}
-        >
+          validationSchema={validationSchema}>
           {() => {
             return (
               <Form className={classes.form}>
@@ -175,7 +186,12 @@ const AuthForm = () => {
                   </Grid>
 
                   <Grid item xs={12}>
-                    <Field type="password" label="Password" name="password" as={FormikInput} />
+                    <Field
+                      type="password"
+                      label="Password"
+                      name="password"
+                      as={FormikInput}
+                    />
                   </Grid>
                 </Grid>
                 <Button
@@ -183,17 +199,20 @@ const AuthForm = () => {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  className={classes.submit}
-                >
+                  className={classes.submit}>
                   {!isRegister ? "Sign In" : "Sign Up"}
                 </Button>
                 <Grid container justifyContent="flex-end">
                   <Grid item>
                     <button
                       type="reset"
-                      style={{ color: "#1976d2", cursor: "pointer", border:"none", background:"transparent" }}
-                      onClick={switchAuthModeHandler}
-                    >
+                      style={{
+                        color: "#1976d2",
+                        cursor: "pointer",
+                        border: "none",
+                        background: "transparent",
+                      }}
+                      onClick={switchAuthModeHandler}>
                       {isRegister
                         ? "Already have an account? Sign in"
                         : "Don't have an acount? Sign up"}

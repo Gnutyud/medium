@@ -7,10 +7,10 @@ function App() {
     <Layout>
       <Switch>
         <Route path="/" exact>
-          <Redirect to="/home"/>
+          <Redirect to="/home" />
         </Route>
         <Route path="/home">
-        <HomePage />
+          <HomePage />
         </Route>
         <Route path="/auth">
           <AuthPage />

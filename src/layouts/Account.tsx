@@ -8,9 +8,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar } from "@material-ui/core";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { authActions } from "../features/Login/authSlice";
-import { RootState } from "../app/store";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -21,10 +21,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Account = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const currentUserName = useSelector(
-    (state: RootState) => state.auth.currentUser.username,
-  );
+  let currentUserName;
+  const jsonUser = localStorage.getItem("user");
+  if (jsonUser) {
+    currentUserName = JSON.parse(jsonUser).username;
+  }
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<null | any>(null);
@@ -35,15 +39,15 @@ export const Account = () => {
 
   const handleClose = (event: any) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
-      console.log(123);
       return;
     }
-    console.log(456789);
     setOpen(false);
   };
   const handleLogout = () => {
     console.log("logout");
+    history.replace("/");
     dispatch(authActions.logoutHandler());
+    setOpen(false);
   };
   function handleListKeyDown(event: any) {
     if (event.key === "Tab") {
@@ -69,7 +73,7 @@ export const Account = () => {
         aria-controls={open ? "menu-list-grow" : undefined}
         aria-haspopup="true"
         onClick={handleToggle}>
-        <Avatar>{currentUserName.slice(0, 1)}</Avatar>
+        <Avatar>{currentUserName ? currentUserName.slice(0, 1) : ""}</Avatar>
       </Button>
       <Popper
         open={open}
