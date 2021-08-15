@@ -2,7 +2,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import Layout from "./layouts/Layout";
 import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
-import NewPost from "./features/articles/components/NewPost";
+import AddArticle from "./features/articles/components/AddArticle";
 function App() {
   return (
     <Layout>
@@ -17,7 +17,7 @@ function App() {
           <AuthPage />
         </Route>
         <Route path="/article/create">
-          <NewPost />
+          <AddArticle />
         </Route>
       </Switch>
     </Layout>
