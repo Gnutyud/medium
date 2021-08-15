@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "../app/store";
 import { Account } from "./Account";
+import CreateIcon from "@material-ui/icons/Create";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,7 +37,17 @@ const MainNavigation = () => {
               <Button color="inherit">Sign In</Button>
             </NavLink>
           )}
-          {isLoggedIn && <Account />}
+          {isLoggedIn && (
+            <React.Fragment>
+              <NavLink to="/post">
+                <Button color="inherit">
+                  <CreateIcon style={{ marginRight: "5px" }} />
+                  New Post
+                </Button>
+              </NavLink>
+              <Account />
+            </React.Fragment>
+          )}
         </Toolbar>
       </AppBar>
     </React.Fragment>

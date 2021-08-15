@@ -14,7 +14,7 @@ export const LoginHandler = (userInput: any, endPoint: string) => {
       resolve(res.data);
       if (res.statusText === "OK") {
         console.log(res.data);
-        localStorage.setItem("token", res.data.user.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
       }
     } catch (error) {
       reject(error);

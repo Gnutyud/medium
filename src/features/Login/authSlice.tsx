@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 interface userType {
-  username : undefined |string;
-  email : undefined | string;
-  "email or password" : undefined | string;
+  username: undefined | string;
+  email: undefined | string;
+  "email or password": undefined | string;
 }
 export interface authState {
   isRegister: boolean;
@@ -11,9 +11,15 @@ export interface authState {
   error: userType | null;
   currentUser: any;
 }
+let isAuth;
+const jsonUser = localStorage.getItem("user");
+if (jsonUser) {
+  isAuth = JSON.parse(jsonUser).token;
+}
+const isLoggedIn = isAuth ? true : false;
 const initialState: authState = {
   isRegister: false,
-  isLoggedIn: false,
+  isLoggedIn,
   isLoading: false,
   error: null,
   currentUser: null,
@@ -39,7 +45,7 @@ const authSlice = createSlice({
       state.isRegister = !state.isRegister;
     },
     logoutHandler(state) {
-      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       state.isLoggedIn = false;
       state.currentUser = null;
     },
