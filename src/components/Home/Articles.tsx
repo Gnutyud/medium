@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { articlesAsync, selectArticles } from "./slice/articleSlice";
-import { articlesData } from "./data/articlesData";
-import { articlesTransform } from "./helpers/articlesDataTransform";
-import Article from "./components/Article";
+import { articlesAsync, selectArticles } from "../../app/reducers/articleSlice";
+import { articlesData } from "../../helpers/Home/data/articlesData";
+import { articlesTransform } from "../../helpers/Home/helpers/articlesDataTransform";
+import Article from "./Article";
 
 const Articles = () => {
   let articles = useAppSelector(selectArticles);

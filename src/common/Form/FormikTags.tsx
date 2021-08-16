@@ -3,7 +3,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField } from "@material-ui/core";
 import { ErrorMessage, Field } from "formik";
 
-function CustomTags(props: any) {
+function FormikTags(props: any) {
   const handleKeyDown = (event: any) => {
     switch (event.key) {
       case ",":
@@ -58,4 +58,4 @@ function CustomTags(props: any) {
   );
 }
 
-export default CustomTags;
+export default FormikTags;

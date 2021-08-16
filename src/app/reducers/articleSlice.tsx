@@ -1,5 +1,5 @@
-import { RootState } from "../../../app/store";
-import { ArticleType } from "../type/ArticleType";
+import { RootState } from "../store";
+import { ArticleType } from "../../helpers/Home/type/ArticleType";
 import { fetchArticles, postArticle } from "../api/articlesAPI";
 import {
   createAsyncThunk,

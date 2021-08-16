@@ -1,8 +1,8 @@
 import { Redirect, Route, Switch } from "react-router-dom";
-import Layout from "./layouts/Layout";
+import Layout from "./common/Header/Layout";
 import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
-import AddArticle from "./features/articles/components/AddArticle";
+import AddArticle from "./pages/AddArticle";
 function App() {
   return (
     <Layout>
