@@ -8,7 +8,7 @@ import {
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import CustomTags from "../../../components/custom-form/CustomTags";
+import FormikTags from "../common/Form/FormikTags";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -95,7 +95,7 @@ function AddArticle(props: any) {
                 <div className={classes.error}>
                   <ErrorMessage name="body" />
                 </div>
-                <CustomTags
+                <FormikTags
                   tagList={values.tagList}
                   setFieldValue={setFieldValue}
                   component={TextField}

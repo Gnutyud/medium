@@ -13,8 +13,8 @@ import {
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import React from "react";
-import { ArticleType } from "../type/ArticleType";
-import { articlesTagsTransform } from "../helpers/articlesDataTransform";
+import { ArticleType } from "../../helpers/Home/type/ArticleType";
+import { articlesTagsTransform } from "../../helpers/Home/helpers/articlesDataTransform";
 
 interface ArticleProps {
   article: ArticleType;
