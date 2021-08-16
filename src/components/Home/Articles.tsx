@@ -4,6 +4,7 @@ import { articlesAsync, selectArticles } from "../../app/reducers/articleSlice";
 import { articlesData } from "../../helpers/Home/data/articlesData";
 import { articlesTransform } from "../../helpers/Home/helpers/articlesDataTransform";
 import Article from "./Article";
+import { Box } from "@material-ui/core";
 
 const Articles = () => {
   let articles = useAppSelector(selectArticles);
@@ -21,13 +22,13 @@ const Articles = () => {
   articles = articlesTransform(articles);
 
   return (
-    <div>
+    <Box>
       {articles.map((article) => (
         <li key={article.id}>
           <Article article={article} />
         </li>
       ))}
-    </div>
+    </Box>
   );
 };
 
