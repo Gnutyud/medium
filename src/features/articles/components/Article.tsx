@@ -13,7 +13,8 @@ import {
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import React from "react";
-import { ArticleType } from "../helpers/articleType";
+import { ArticleType } from "../type/ArticleType";
+import { articlesTagsTransform } from "../helpers/articlesDataTransform";
 
 interface ArticleProps {
   article: ArticleType;
@@ -104,8 +105,12 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
             </Typography>
           </Box>
           <Box className={classes.cardContentRight}>
-            {tagList.map((tag) => (
-              <Chip label={tag} className={classes.cardContentRightText} />
+            {articlesTagsTransform(tagList).map((tag) => (
+              <Chip
+                key={tag.id}
+                label={tag.tag}
+                className={classes.cardContentRightText}
+              />
             ))}
           </Box>
         </CardContent>

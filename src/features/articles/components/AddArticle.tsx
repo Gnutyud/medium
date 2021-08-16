@@ -5,11 +5,10 @@ import {
   TextareaAutosize,
   TextField,
 } from "@material-ui/core";
-import { ErrorMessage, Field, FieldProps, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import { FormikInput } from "../../../helpers/custom-form/FormikInput";
-import CustomTags from "./CustomTags";
+import CustomTags from "../../../components/custom-form/CustomTags";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -72,7 +71,7 @@ function AddArticle(props: any) {
                   as={TextField}
                   variant="outlined"
                   label="Article Title"
-                ></Field>
+                />
                 <div className={classes.error}>
                   <ErrorMessage name="title" />
                 </div>
@@ -82,7 +81,7 @@ function AddArticle(props: any) {
                   as={TextField}
                   variant="outlined"
                   label="What's this article about?"
-                ></Field>
+                />
                 <div className={classes.error}>
                   <ErrorMessage name="description" />
                 </div>
@@ -92,7 +91,7 @@ function AddArticle(props: any) {
                   className={classes.textArea}
                   placeholder="What's this article about?"
                   minRows={10}
-                ></Field>
+                />
                 <div className={classes.error}>
                   <ErrorMessage name="body" />
                 </div>
