@@ -13,7 +13,7 @@ import { authActions } from "../../features/Login/authSlice";
 import { LoginHandler } from "../../app/api/authApi";
 import type { RootState } from "../../app/store";
 import * as yup from "yup";
-import { FormikInput } from "../../helpers/custom-form/FormikInput";
+import { FormikInput } from "../custom-form/FormikInput";
 import { useEffect, useState } from "react";
 // main
 interface initialValuesType {
@@ -71,7 +71,7 @@ const AuthForm = () => {
     });
   };
   const [validationSchema, setValidationSchema] = useState(() =>
-    formSchema(isRegister),
+    formSchema(isRegister)
   );
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const AuthForm = () => {
         authActions.loginSuccess({
           username: userData.user.username,
           email: userData.user.email,
-        }),
+        })
       );
       history.replace("/");
     } catch (error) {
@@ -162,7 +162,8 @@ const AuthForm = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={submitHandler}
-          validationSchema={validationSchema}>
+          validationSchema={validationSchema}
+        >
           {() => {
             return (
               <Form className={classes.form}>
@@ -199,7 +200,8 @@ const AuthForm = () => {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  className={classes.submit}>
+                  className={classes.submit}
+                >
                   {!isRegister ? "Sign In" : "Sign Up"}
                 </Button>
                 <Grid container justifyContent="flex-end">
@@ -212,7 +214,8 @@ const AuthForm = () => {
                         border: "none",
                         background: "transparent",
                       }}
-                      onClick={switchAuthModeHandler}>
+                      onClick={switchAuthModeHandler}
+                    >
                       {isRegister
                         ? "Already have an account? Sign in"
                         : "Don't have an acount? Sign up"}
