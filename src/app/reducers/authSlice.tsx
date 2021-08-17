@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+<<<<<<< HEAD
 import { getCurrentUser, updateCurrentUser } from "../api/authApi";
+=======
+import { updateCurrentUser } from "../api/authApi";
+>>>>>>> b11afc66d4fa7713a813286a67cdb9e0613940e6
 interface userType {
   username: undefined | string;
   email: undefined | string;
@@ -31,6 +35,7 @@ const initialState: authState = {
 };
 
 export const updateUser = createAsyncThunk(
+<<<<<<< HEAD
   "user/updateUser",
   async (data: { user: any }) => {
     const response = await updateCurrentUser(data);
@@ -43,6 +48,15 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
   return response.data.user;
 });
 
+=======
+  "user/update",
+  async (data: { user: any }) => {
+    const response = await updateCurrentUser(data);
+    return data;
+  }
+);
+
+>>>>>>> b11afc66d4fa7713a813286a67cdb9e0613940e6
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -69,6 +83,7 @@ const authSlice = createSlice({
       state.currentUser = null;
     },
   },
+<<<<<<< HEAD
   extraReducers: (builder) => {
     builder
       .addCase(getUser.fulfilled, (state, action) => {
@@ -78,6 +93,8 @@ const authSlice = createSlice({
         state.currentUser = action.payload;
       });
   },
+=======
+>>>>>>> b11afc66d4fa7713a813286a67cdb9e0613940e6
 });
 export const authActions = authSlice.actions;
 export default authSlice;
