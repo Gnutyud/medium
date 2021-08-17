@@ -1,11 +1,11 @@
 import { nanoid } from "@reduxjs/toolkit";
-import { ArticleType, TagType } from "../type/ArticleType";
+import { Type, TagType } from "../type/Type";
 
 const dateFormat = require("dateformat");
 const formatType = "ddd mmm dS yyyy";
 
 // articles transform
-export const articlesTransform = (articles: ArticleType[]): ArticleType[] => {
+export const articlesTransform = (articles: Type[]): Type[] => {
   return articles.map((article) => {
     return {
       ...article,

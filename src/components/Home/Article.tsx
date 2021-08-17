@@ -13,11 +13,11 @@ import {
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import React from "react";
-import { ArticleType } from "../../helpers/Home/type/ArticleType";
+import { Type } from "../../helpers/Home/type/Type";
 import { articlesTagsTransform } from "../../helpers/Home/helpers/articlesDataTransform";
 
 interface ArticleProps {
-  article: ArticleType;
+  article: Type;
 }
 
 const useStyles = makeStyles((theme: Theme) =>

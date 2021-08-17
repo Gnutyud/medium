@@ -7,11 +7,11 @@ import Article from "./Article";
 import { Box } from "@material-ui/core";
 
 const Articles = () => {
-  let articles = useAppSelector(selectArticles);
   const dispatch = useAppDispatch();
 
   // case articles empty, assign to backup data
-  if (!articles.length) articles = articlesData;
+  let articlesFetchFromApi = useAppSelector(selectArticles);
+  if (!articlesFetchFromApi.length) articlesFetchFromApi = articlesData;
 
   // fetch articles
   useEffect(() => {
@@ -19,7 +19,7 @@ const Articles = () => {
   }, [dispatch]);
 
   // articles with id and format data
-  articles = articlesTransform(articles);
+  const articles = articlesTransform(articlesFetchFromApi);
 
   return (
     <Box>

@@ -4,7 +4,7 @@ interface Author {
   following: boolean;
 }
 
-export interface ArticleType {
+export interface Type {
   id: string;
   slug: string;
   title: string;
