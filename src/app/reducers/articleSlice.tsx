@@ -26,7 +26,7 @@ export const articlesAsync = createAsyncThunk(
 
 export const createArticle = createAsyncThunk(
   "articles/postArticles",
-  async (data) => {
+  async (data: { article: any }) => {
     const response = await postArticle(data);
     return response.articles;
   }
