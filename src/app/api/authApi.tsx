@@ -21,3 +21,29 @@ export const LoginHandler = (userInput: any, endPoint: string) => {
     }
   });
 };
+
+export function getCurrentUser() {
+  let token = localStorage.getItem("token");
+  let axiosConfig = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
+  return axios
+    .get(`${ROOT_URL}/user`, axiosConfig)
+    .then((response: any) => response);
+}
+
+export function updateCurrentUser(data: any) {
+  let token = localStorage.getItem("token");
+  let axiosConfig = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+  };
+  return axios
+    .put(`${ROOT_URL}/user`, data, axiosConfig)
+    .then((response: any) => response);
+}

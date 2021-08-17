@@ -9,7 +9,11 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { createArticle, selectArticles } from "../app/reducers/articleSlice";
+import {
+  articlesAsync,
+  createArticle,
+  selectArticles,
+} from "../app/reducers/articleSlice";
 import FormikTags from "../common/Form/FormikTags";
 
 const useStyles = makeStyles((theme) => ({
@@ -49,9 +53,7 @@ function AddArticle() {
   const a = useAppSelector(selectArticles);
 
   const onSubmit = (values: any) => {
-    console.log(values);
     dispatch(createArticle({ article: values }));
-    console.log(a);
   };
   const classes = useStyles();
 
