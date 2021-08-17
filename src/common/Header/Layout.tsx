@@ -4,7 +4,7 @@ const Layout = (props: any) => {
   return (
     <React.Fragment>
       <MainNavigation />
-      <main>{props.children}</main>
+      <main style={{ padding: "0 50px" }}>{props.children}</main>
     </React.Fragment>
   );
 };

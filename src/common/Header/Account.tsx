@@ -1,13 +1,20 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
-import ClickAwayListener from "@material-ui/core/ClickAwayListener";
-import Grow from "@material-ui/core/Grow";
-import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
-import MenuItem from "@material-ui/core/MenuItem";
-import MenuList from "@material-ui/core/MenuList";
 import { makeStyles } from "@material-ui/core/styles";
-import { Avatar } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  ClickAwayListener,
+  Paper,
+  Popper,
+  MenuItem,
+  MenuList,
+  Divider,
+  ListItemAvatar,
+  ListItemText,
+} from "@material-ui/core";
+import SettingsIcon from "@material-ui/icons/Settings";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PersonIcon from "@material-ui/icons/Person";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../app/reducers/authSlice";
 import { useHistory } from "react-router-dom";
@@ -18,15 +25,23 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     marginRight: theme.spacing(2),
   },
+  menuItem: {
+    "&:hover, &:hover $menuIcon": {
+      color: "blue",
+    },
+  },
+  menuIcon: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 export const Account = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  let currentUserName;
+  let currentUser;
   const jsonUser = localStorage.getItem("user");
   if (jsonUser) {
-    currentUserName = JSON.parse(jsonUser).username;
+    currentUser = JSON.parse(jsonUser);
   }
 
   const classes = useStyles();
@@ -72,40 +87,49 @@ export const Account = () => {
         ref={anchorRef}
         aria-controls={open ? "menu-list-grow" : undefined}
         aria-haspopup="true"
-        onClick={handleToggle}
-      >
-        <Avatar>{currentUserName ? currentUserName.slice(0, 1) : ""}</Avatar>
+        onClick={handleToggle}>
+        <Avatar>{currentUser.username.slice(0, 1)}</Avatar>
       </Button>
       <Popper
         open={open}
         anchorEl={anchorRef.current}
         role={undefined}
         transition
-        disablePortal
-      >
-        {({ TransitionProps, placement }) => (
-          <Grow
-            {...TransitionProps}
-            style={{
-              transformOrigin:
-                placement === "bottom" ? "center top" : "center bottom",
-            }}
-          >
-            <Paper>
-              <ClickAwayListener onClickAway={handleClose}>
-                <MenuList
-                  autoFocusItem={open}
-                  id="menu-list-grow"
-                  onKeyDown={handleListKeyDown}
-                >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>Setting</MenuItem>
-                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
+        placement="bottom"
+        disablePortal>
+        <Paper>
+          <ClickAwayListener onClickAway={handleClose}>
+            <MenuList
+              autoFocusItem={open}
+              id="menu-list-grow"
+              onKeyDown={handleListKeyDown}>
+              <MenuItem onClick={handleClose}>
+                <ListItemAvatar>
+                  <Avatar>
+                    {currentUser.username.slice(0, 1).toUpperCase()}
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText
+                  primary={currentUser.username}
+                  secondary={currentUser.email}
+                />
+              </MenuItem>
+              <Divider />
+              <MenuItem onClick={handleClose} className={classes.menuItem}>
+                <PersonIcon color="action" className={classes.menuIcon} />
+                Profile
+              </MenuItem>
+              <MenuItem onClick={handleClose} className={classes.menuItem}>
+                <SettingsIcon color="action" className={classes.menuIcon} />
+                Setting
+              </MenuItem>
+              <MenuItem onClick={handleLogout} className={classes.menuItem}>
+                <ExitToAppIcon color="action" className={classes.menuIcon} />
+                Logout
+              </MenuItem>
+            </MenuList>
+          </ClickAwayListener>
+        </Paper>
       </Popper>
     </div>
   );
