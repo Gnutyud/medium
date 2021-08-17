@@ -1,18 +1,13 @@
 import { RootState } from "../store";
 import { Type } from "../../helpers/Home/type/Type";
 import { fetchArticles, postArticle } from "../api/articlesAPI";
-import {
-  createAsyncThunk,
-  createSlice,
-  nanoid,
-  PayloadAction,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface ArticleState {
+interface ArticlesState {
   articles: Type[];
 }
 
-const initialState: ArticleState = {
+const initialState: ArticlesState = {
   articles: [],
 };
 
@@ -26,9 +21,9 @@ export const articlesAsync = createAsyncThunk(
 
 export const createArticle = createAsyncThunk(
   "articles/postArticles",
-  async (data) => {
+  async (data: { article: any }) => {
     const response = await postArticle(data);
-    return response.articles;
+    return response.data.article;
   }
 );
 
@@ -41,21 +36,12 @@ export const articlesSlice = createSlice({
       .addCase(
         articlesAsync.fulfilled,
         (state, action: PayloadAction<Type[]>) => {
-          state.articles = action.payload.map((article) => {
-            const randomId = nanoid();
-            return {
-              ...article,
-              id: randomId,
-            };
-          });
+          state.articles = action.payload;
         }
       )
-      .addCase(
-        createArticle.fulfilled,
-        (state, action: PayloadAction<Type>) => {
-          state.articles.push(action.payload);
-        }
-      );
+      .addCase(createArticle.fulfilled, (state, action: any) => {
+        state.articles.unshift(action.payload);
+      });
   },
 });
 

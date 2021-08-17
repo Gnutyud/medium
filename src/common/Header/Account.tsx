@@ -4,7 +4,6 @@ import {
   Avatar,
   Button,
   ClickAwayListener,
-  Grow,
   Paper,
   Popper,
   MenuItem,
