@@ -26,30 +26,28 @@ const MainNavigation = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const classes = useStyles();
   return (
-    <React.Fragment>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            <NavLink to="/">Logo</NavLink>
-          </Typography>
-          {!isLoggedIn && (
-            <NavLink to="/auth">
-              <Button color="inherit">Sign In</Button>
+    <AppBar position="static" style={{ padding: "0 50px" }}>
+      <Toolbar>
+        <Typography variant="h6" className={classes.title}>
+          <NavLink to="/">Logo</NavLink>
+        </Typography>
+        {!isLoggedIn && (
+          <NavLink to="/auth">
+            <Button color="inherit">Sign In</Button>
+          </NavLink>
+        )}
+        {isLoggedIn && (
+          <>
+            <NavLink to="/article/create">
+              <Button startIcon={<PostAddIcon />} color="inherit">
+                New Post
+              </Button>
             </NavLink>
-          )}
-          {isLoggedIn && (
-            <>
-              <NavLink to="/article/create">
-                <Button startIcon={<PostAddIcon />} color="inherit">
-                  New Post
-                </Button>
-              </NavLink>
-              <Account />
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
-    </React.Fragment>
+            <Account />
+          </>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 export default MainNavigation;
