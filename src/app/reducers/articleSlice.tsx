@@ -23,7 +23,7 @@ export const createArticle = createAsyncThunk(
   "articles/postArticles",
   async (data: { article: any }) => {
     const response = await postArticle(data);
-    return response.articles;
+    return response.data.article;
   }
 );
 
@@ -39,12 +39,9 @@ export const articlesSlice = createSlice({
           state.articles = action.payload;
         }
       )
-      .addCase(
-        createArticle.fulfilled,
-        (state, action: PayloadAction<Type>) => {
-          state.articles.push(action.payload);
-        }
-      );
+      .addCase(createArticle.fulfilled, (state, action: any) => {
+        state.articles.unshift(action.payload);
+      });
   },
 });
 
