@@ -2,8 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { fetchTags } from "../api/tagsAPI";
 import { RootState } from "../store";
 
-export interface TagState {}
-
 interface TagsState {
   tags: string[];
 }

@@ -3,7 +3,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Card, CardContent, CardHeader, Chip } from "@material-ui/core";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectTags, tagsAsync } from "../../app/reducers/tagSlice";
+import { selectTags, tagsAsync } from "../../app/reducers/tagsSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {

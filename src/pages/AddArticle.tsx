@@ -13,7 +13,7 @@ import {
   articlesAsync,
   createArticle,
   selectArticles,
-} from "../app/reducers/articleSlice";
+} from "../app/reducers/articlesSlice";
 import FormikTags from "../common/Form/FormikTags";
 
 const useStyles = makeStyles((theme) => ({

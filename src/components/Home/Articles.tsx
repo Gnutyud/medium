@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { articlesAsync, selectArticles } from "../../app/reducers/articleSlice";
+import {
+  articlesAsync,
+  selectArticles,
+} from "../../app/reducers/articlesSlice";
 import { articlesTransform } from "../../helpers/Home/helpers/articlesDataTransform";
 import Article from "./Article";
 import { Box } from "@material-ui/core";
@@ -15,6 +18,8 @@ const Articles = () => {
   useEffect(() => {
     dispatch(articlesAsync());
   }, [dispatch]);
+
+  console.log(articlesFetchFromApi);
 
   // articles with id and format data
   const articles = articlesTransform(articlesFetchFromApi);
