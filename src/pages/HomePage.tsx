@@ -7,10 +7,10 @@ const Home = () => {
   return (
     <h1>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={12} md={9}>
+        <Grid item xs={12} lg={9}>
           <Articles />
         </Grid>
-        <Grid item xs={12} sm={12} md={3}>
+        <Grid item xs={12} lg={3}>
           <TagsBox />
         </Grid>
       </Grid>

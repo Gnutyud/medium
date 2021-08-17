@@ -1,5 +1,5 @@
 import { RootState } from "../store";
-import { ArticleType } from "../../helpers/Home/type/ArticleType";
+import { Type } from "../../helpers/Home/type/Type";
 import { fetchArticles, postArticle } from "../api/articlesAPI";
 import {
   createAsyncThunk,
@@ -9,7 +9,7 @@ import {
 } from "@reduxjs/toolkit";
 
 export interface ArticleState {
-  articles: ArticleType[];
+  articles: Type[];
 }
 
 const initialState: ArticleState = {
@@ -40,7 +40,7 @@ export const articlesSlice = createSlice({
     builder
       .addCase(
         articlesAsync.fulfilled,
-        (state, action: PayloadAction<ArticleType[]>) => {
+        (state, action: PayloadAction<Type[]>) => {
           state.articles = action.payload.map((article) => {
             const randomId = nanoid();
             return {
@@ -52,7 +52,7 @@ export const articlesSlice = createSlice({
       )
       .addCase(
         createArticle.fulfilled,
-        (state, action: PayloadAction<ArticleType>) => {
+        (state, action: PayloadAction<Type>) => {
           state.articles.push(action.payload);
         }
       );
