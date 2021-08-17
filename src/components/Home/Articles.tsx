@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { articlesAsync, selectArticles } from "../../app/reducers/articleSlice";
-import { articlesData } from "../../helpers/Home/data/articlesData";
 import { articlesTransform } from "../../helpers/Home/helpers/articlesDataTransform";
 import Article from "./Article";
 import { Box } from "@material-ui/core";
@@ -10,8 +9,7 @@ const Articles = () => {
   const dispatch = useAppDispatch();
 
   // case articles empty, assign to backup data
-  let articlesFetchFromApi = useAppSelector(selectArticles);
-  if (!articlesFetchFromApi.length) articlesFetchFromApi = articlesData;
+  const articlesFetchFromApi = useAppSelector(selectArticles);
 
   // fetch articles
   useEffect(() => {
@@ -24,7 +22,7 @@ const Articles = () => {
   return (
     <Box>
       {articles.map((article) => (
-        <li key={article.id}>
+        <li key={article.slug}>
           <Article article={article} />
         </li>
       ))}

@@ -17,8 +17,3 @@ export interface Type {
   favoritesCount: number;
   author: Author;
 }
-
-export interface TagType {
-  id: string;
-  tag: string;
-}
