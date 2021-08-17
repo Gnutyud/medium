@@ -1,9 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { updateCurrentUser } from "../api/authApi";
 interface userType {
   username: undefined | string;
   email: undefined | string;
   "email or password": undefined | string;
 }
+
 export interface authState {
   isRegister: boolean;
   isLoggedIn: boolean;
@@ -11,11 +13,14 @@ export interface authState {
   error: userType | null;
   currentUser: any;
 }
+
 let isAuth;
+
 const jsonUser = localStorage.getItem("user");
 if (jsonUser) {
   isAuth = JSON.parse(jsonUser).token;
 }
+
 const isLoggedIn = !!isAuth;
 const initialState: authState = {
   isRegister: false,
@@ -24,6 +29,15 @@ const initialState: authState = {
   error: null,
   currentUser: null,
 };
+
+export const updateUser = createAsyncThunk(
+  "user/update",
+  async (data: { user: any }) => {
+    const response = await updateCurrentUser(data);
+    return data;
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
