@@ -8,12 +8,8 @@ import {
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import {
-  articlesAsync,
-  createArticle,
-  selectArticles,
-} from "../app/reducers/articleSlice";
+import { useAppDispatch } from "../app/hooks";
+import { createArticle } from "../app/reducers/articleSlice";
 import FormikTags from "../common/Form/FormikTags";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +46,6 @@ const validationSchema = Yup.object().shape({
 
 function AddArticle() {
   const dispatch = useAppDispatch();
-  const a = useAppSelector(selectArticles);
 
   const onSubmit = (values: any) => {
     dispatch(createArticle({ article: values }));
