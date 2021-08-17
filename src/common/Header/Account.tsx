@@ -58,6 +58,9 @@ export const Account = () => {
     }
     setOpen(false);
   };
+  const handleSetting = (event: any) => {
+    history.push("/settings");
+  };
   const handleLogout = () => {
     console.log("logout");
     history.replace("/");
@@ -87,7 +90,8 @@ export const Account = () => {
         ref={anchorRef}
         aria-controls={open ? "menu-list-grow" : undefined}
         aria-haspopup="true"
-        onClick={handleToggle}>
+        onClick={handleToggle}
+      >
         <Avatar>{currentUser.username.slice(0, 1)}</Avatar>
       </Button>
       <Popper
@@ -96,13 +100,15 @@ export const Account = () => {
         role={undefined}
         transition
         placement="bottom"
-        disablePortal>
+        disablePortal
+      >
         <Paper>
           <ClickAwayListener onClickAway={handleClose}>
             <MenuList
               autoFocusItem={open}
               id="menu-list-grow"
-              onKeyDown={handleListKeyDown}>
+              onKeyDown={handleListKeyDown}
+            >
               <MenuItem onClick={handleClose}>
                 <ListItemAvatar>
                   <Avatar>
@@ -119,7 +125,7 @@ export const Account = () => {
                 <PersonIcon color="action" className={classes.menuIcon} />
                 Profile
               </MenuItem>
-              <MenuItem onClick={handleClose} className={classes.menuItem}>
+              <MenuItem onClick={handleSetting} className={classes.menuItem}>
                 <SettingsIcon color="action" className={classes.menuIcon} />
                 Setting
               </MenuItem>

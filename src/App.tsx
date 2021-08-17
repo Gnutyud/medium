@@ -3,6 +3,7 @@ import Layout from "./common/Header/Layout";
 import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
 import AddArticle from "./pages/AddArticle";
+import Settings from "./pages/Settings";
 function App() {
   return (
     <Layout>
@@ -18,6 +19,9 @@ function App() {
         </Route>
         <Route path="/article/create">
           <AddArticle />
+        </Route>
+        <Route path="/settings">
+          <Settings />
         </Route>
       </Switch>
     </Layout>
