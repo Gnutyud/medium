@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseAPI = "http://localhost:3000/api/";
+const baseAPI = "http://localhost:3000/api";
 
 const articlesAPI = baseAPI + "/articles";
 
