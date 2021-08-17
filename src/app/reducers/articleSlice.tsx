@@ -39,9 +39,12 @@ export const articlesSlice = createSlice({
           state.articles = action.payload;
         }
       )
-      .addCase(createArticle.fulfilled, (state, action: any) => {
-        state.articles.unshift(action.payload);
-      });
+      .addCase(
+        createArticle.fulfilled,
+        (state, action: PayloadAction<Type>) => {
+          state.articles.unshift(action.payload);
+        }
+      );
   },
 });
 

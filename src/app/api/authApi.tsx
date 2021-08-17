@@ -23,11 +23,12 @@ export const LoginHandler = (userInput: any, endPoint: string) => {
 };
 
 export function getCurrentUser() {
-  let token = localStorage.getItem("token");
+  let Storage: any = localStorage.getItem("user");
+  let user = JSON.parse(Storage);
   let axiosConfig = {
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
+      Authorization: "Bearer " + user.token,
     },
   };
   return axios
@@ -36,11 +37,12 @@ export function getCurrentUser() {
 }
 
 export function updateCurrentUser(data: any) {
-  let token = localStorage.getItem("token");
+  let Storage: any = localStorage.getItem("user");
+  let user = JSON.parse(Storage);
   let axiosConfig = {
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token,
+      Authorization: "Bearer " + user.token,
     },
   };
   return axios
