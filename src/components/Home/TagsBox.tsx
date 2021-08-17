@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { nanoid } from "@reduxjs/toolkit";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Card, CardContent, CardHeader, Chip } from "@material-ui/core";
-import { useAppSelector } from "../../app/hooks";
-import { selectArticles } from "../../app/reducers/articleSlice";
-import { articlesData } from "../../helpers/Home/data/articlesData";
-import { getTagsList } from "../../helpers/Home/helpers/tagsListPriority";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectTags, tagsAsync } from "../../app/reducers/tagSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,16 +27,16 @@ const useStyles = makeStyles((theme) => ({
 
 const TagsBox = () => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
+  const tagsFetchFromApi = useAppSelector(selectTags);
 
-  // case articles empty, assign to backup data
-  let articles = useAppSelector(selectArticles);
-  if (!articles.length) articles = articlesData;
+  // fetch tags
+  useEffect(() => {
+    dispatch(tagsAsync());
+  }, [dispatch]);
 
-  // get list of tags
-  const tagsListFetchFromApi = articles.flatMap((article) => article.tagList);
-  const tagsList = getTagsList(tagsListFetchFromApi);
-
-  console.log(tagsList);
+  // limit tags list
+  const tagsList = tagsFetchFromApi.slice(0, 21);
 
   return (
     <Box className={classes.container}>
@@ -45,9 +44,7 @@ const TagsBox = () => {
         <CardHeader title="Popular Tags" />
         <CardContent>
           {tagsList.map((tag) => {
-            return (
-              <Chip className={classes.tag} key={tag.id} label={tag.tag} />
-            );
+            return <Chip className={classes.tag} key={nanoid()} label={tag} />;
           })}
         </CardContent>
       </Card>

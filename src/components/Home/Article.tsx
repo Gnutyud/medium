@@ -14,7 +14,7 @@ import {
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import React from "react";
 import { Type } from "../../helpers/Home/type/Type";
-import { articlesTagsTransform } from "../../helpers/Home/helpers/articlesDataTransform";
+import { nanoid } from "@reduxjs/toolkit";
 
 interface ArticleProps {
   article: Type;
@@ -105,10 +105,10 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
             </Typography>
           </Box>
           <Box className={classes.cardContentRight}>
-            {articlesTagsTransform(tagList).map((tag) => (
+            {tagList.map((tag) => (
               <Chip
-                key={tag.id}
-                label={tag.tag}
+                key={nanoid()}
+                label={tag}
                 className={classes.cardContentRightText}
               />
             ))}
