@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage";
 import AuthPage from "./pages/AuthPage";
 import AddArticle from "./pages/AddArticle";
 import Settings from "./pages/Settings";
+import ProfilePage from "./pages/ProfilePage";
+
 function App() {
   return (
     <Layout>
@@ -22,6 +24,9 @@ function App() {
         </Route>
         <Route path="/settings">
           <Settings />
+        </Route>
+        <Route path="/profile/:name">
+          <ProfilePage />
         </Route>
       </Switch>
     </Layout>

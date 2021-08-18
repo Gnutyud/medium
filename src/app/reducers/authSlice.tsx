@@ -37,8 +37,13 @@ export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (data: { user: any }) => {
     const response = await updateCurrentUser(data);
+<<<<<<< HEAD
     return response.data.user;
   }
+=======
+    return data;
+  },
+>>>>>>> profile-tungnd24
 );
 
 export const getUser = createAsyncThunk("user/getUser", async () => {
