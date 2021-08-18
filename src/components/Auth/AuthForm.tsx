@@ -9,7 +9,7 @@ import Container from "@material-ui/core/Container";
 import { useHistory } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../app/reducers/authSlice";
+import { authActions, getUser } from "../../app/reducers/authSlice";
 import { LoginHandler } from "../../app/api/authApi";
 import type { RootState } from "../../app/store";
 import * as yup from "yup";
