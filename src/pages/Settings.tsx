@@ -11,6 +11,7 @@ import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { getUser, updateUser, userSelector } from "../app/reducers/authSlice";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -39,6 +40,12 @@ const useStyles = makeStyles((theme) => ({
   },
   error: {
     color: "red !important",
+  },
+  root: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
   },
 }));
 
@@ -72,9 +79,7 @@ const Settings = () => {
         password: "",
       };
 
-  console.log("curr", currentUser);
-
-  const onsubmit = (values: any) => {
+  const onsubmit = (values: any, form: any) => {
     const user =
       values.password != ""
         ? {
@@ -90,8 +95,10 @@ const Settings = () => {
             bio: values.bio,
             email: values.email,
           };
-
     dispatch(updateUser({ user: user }));
+    setTimeout(() => {
+      form.setSubmitting(false);
+    }, 4000);
   };
 
   const classes = useStyles();
@@ -107,7 +114,7 @@ const Settings = () => {
           onSubmit={onsubmit}
           validationSchema={validationSchema}
         >
-          {({ isValid, dirty }) => (
+          {({ isSubmitting }) => (
             <Form className={classes.form}>
               <Field
                 name="image"
@@ -163,11 +170,18 @@ const Settings = () => {
               <div className={classes.error}>
                 <ErrorMessage name="password" />
               </div>
+              {isSubmitting && (
+                <div className={classes.root}>
+                  <Alert severity="success">
+                    This is a success alert — check it out!
+                  </Alert>
+                </div>
+              )}
               <Button
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                // disabled={!isValid || !dirty}
+                disabled={isSubmitting}
                 type="submit"
               >
                 Update Settings
