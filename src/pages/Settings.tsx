@@ -9,6 +9,8 @@ import {
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { updateUser, userSelector } from "../app/reducers/authSlice";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -41,15 +43,53 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const validationSchema = Yup.object().shape({
-  username: Yup.string().required("This field is required!"),
-  email: Yup.string().required("This field is required!"),
+  username: Yup.string().required("Username is required!"),
+  email: Yup.string().required("Email is required!"),
+  // password: Yup.string().required("Password is required!"),
 });
 
 const Settings = () => {
-  const initialValues = {};
+  const currentUser = useAppSelector(userSelector);
+  const dispatch = useAppDispatch();
+
+  const initialValues = currentUser
+    ? {
+        image: currentUser.image ? currentUser.image : "",
+        username: currentUser.username ? currentUser.username : "",
+        bio: currentUser.bio ? currentUser.bio : "",
+        email: currentUser.email ? currentUser.email : "",
+        password: currentUser.password ? currentUser.password : "",
+      }
+    : {
+        image: "",
+        username: "",
+        bio: "",
+        email: "",
+        password: "",
+      };
+
+  console.log(initialValues, "-", currentUser);
+
   const onsubmit = (values: any) => {
-    console.log(values);
+    const user =
+      values.password != ""
+        ? {
+            image: values.image,
+            username: values.username,
+            bio: values.bio,
+            email: values.email,
+            password: values.password,
+          }
+        : {
+            image: values.image,
+            username: values.username,
+            bio: values.bio,
+            email: values.email,
+          };
+
+    dispatch(updateUser({ user: user }));
   };
+
   const classes = useStyles();
 
   return (

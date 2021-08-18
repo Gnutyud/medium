@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { getCurrentUser, updateCurrentUser } from "../api/authApi";
+import { RootState } from "../store";
 
 interface userType {
   username: undefined | string;
@@ -82,4 +83,7 @@ const authSlice = createSlice({
   },
 });
 export const authActions = authSlice.actions;
+
+export const userSelector = (state: RootState) => state.auth.currentUser;
+
 export default authSlice;

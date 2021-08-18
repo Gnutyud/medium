@@ -41,7 +41,9 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().required("This field is required!"),
   body: Yup.string().required("This field is required!"),
   description: Yup.string().required("This field is required!"),
-  tagList: Yup.array().min(1).required("This field is required!"),
+  tagList: Yup.array()
+    .min(1, "tagList must have at least 1 tag")
+    .required("This field is required!"),
 });
 
 function AddArticle() {
