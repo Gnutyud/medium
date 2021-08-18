@@ -1,3 +1,5 @@
+import { string } from "yup";
+
 interface Author {
   username: string;
   image: string;
@@ -16,4 +18,8 @@ export interface Type {
   favorited: boolean;
   favoritesCount: number;
   author: Author;
+}
+export interface UserType {
+  username: string;
+  email: string;
 }

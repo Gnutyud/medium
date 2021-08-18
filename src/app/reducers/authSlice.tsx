@@ -35,7 +35,7 @@ export const updateUser = createAsyncThunk(
   async (data: { user: any }) => {
     const response = await updateCurrentUser(data);
     return data;
-  }
+  },
 );
 
 const authSlice = createSlice({

@@ -18,6 +18,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../app/reducers/authSlice";
 import { useHistory } from "react-router-dom";
+import { UserType } from "../../helpers/Home/type/Type";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover, &:hover $menuIcon": {
       color: "blue",
     },
+    padding: "10px 30px",
   },
   menuIcon: {
     marginRight: theme.spacing(1),
@@ -38,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 export const Account = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  let currentUser;
+  let currentUser: UserType | undefined;
   const jsonUser = localStorage.getItem("user");
   if (jsonUser) {
     currentUser = JSON.parse(jsonUser);
@@ -62,6 +64,10 @@ export const Account = () => {
     console.log("logout");
     history.replace("/");
     dispatch(authActions.logoutHandler());
+    setOpen(false);
+  };
+  const handleProfile = () => {
+    history.replace("/profile/" + currentUser?.username);
     setOpen(false);
   };
   function handleListKeyDown(event: any) {
@@ -88,9 +94,10 @@ export const Account = () => {
         aria-controls={open ? "menu-list-grow" : undefined}
         aria-haspopup="true"
         onClick={handleToggle}>
-        <Avatar>{currentUser.username.slice(0, 1)}</Avatar>
+        <Avatar>{currentUser?.username.slice(0, 1)}</Avatar>
       </Button>
       <Popper
+        style={{ zIndex: 100 }}
         open={open}
         anchorEl={anchorRef.current}
         role={undefined}
@@ -103,19 +110,25 @@ export const Account = () => {
               autoFocusItem={open}
               id="menu-list-grow"
               onKeyDown={handleListKeyDown}>
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={handleClose} className={classes.menuItem}>
                 <ListItemAvatar>
                   <Avatar>
-                    {currentUser.username.slice(0, 1).toUpperCase()}
+                    {currentUser?.username.slice(0, 1).toUpperCase()}
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText
-                  primary={currentUser.username}
-                  secondary={currentUser.email}
+                  primary={currentUser?.username}
+                  secondary={
+                    "@" +
+                    currentUser?.email.substring(
+                      0,
+                      currentUser?.email.indexOf("@"),
+                    )
+                  }
                 />
               </MenuItem>
               <Divider />
-              <MenuItem onClick={handleClose} className={classes.menuItem}>
+              <MenuItem onClick={handleProfile} className={classes.menuItem}>
                 <PersonIcon color="action" className={classes.menuIcon} />
                 Profile
               </MenuItem>
