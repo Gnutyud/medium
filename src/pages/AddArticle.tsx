@@ -99,14 +99,10 @@ function AddArticle() {
                 <div className={classes.error}>
                   <ErrorMessage name="body" />
                 </div>
-                <FormikTags
-                  tagList={values.tagList}
-                  setFieldValue={setFieldValue}
-                  component={TextField}
-                />
-                {/* <div className={classes.error}>
+                <Field name="tagList" component={FormikTags} />
+                <div className={classes.error}>
                   <ErrorMessage name="tagList" />
-                </div> */}
+                </div>
               </div>
               <Button
                 variant="contained"

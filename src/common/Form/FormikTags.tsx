@@ -1,9 +1,14 @@
 import React from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField } from "@material-ui/core";
-import { ErrorMessage, Field } from "formik";
+import { FieldInputProps, FormikProps } from "formik";
 
-function FormikTags(props: any) {
+interface Props {
+  field: FieldInputProps<any>;
+  form: FormikProps<any>;
+}
+
+function FormikTags({ field, form }: Props) {
   const handleKeyDown = (event: any) => {
     switch (event.key) {
       case ",":
@@ -11,10 +16,7 @@ function FormikTags(props: any) {
         event.preventDefault();
         event.stopPropagation();
         if (event.target.value.length > 0) {
-          props.setFieldValue("tagList", [
-            ...props.tagList,
-            event.target.value,
-          ]);
+          form.setFieldValue("tagList", [...field.name, event.target.value]);
         }
 
         break;
@@ -24,37 +26,31 @@ function FormikTags(props: any) {
   };
 
   return (
-    <div>
-      <Autocomplete
-        multiple
-        freeSolo
-        id="tags-outlined"
-        options={[]}
-        getOptionLabel={(option) => option.title || option}
-        value={props.tagList}
-        onChange={(event, newValue) => props.setFieldValue("tagList", newValue)}
-        filterSelectedOptions
-        renderInput={(params: any) => {
-          params.inputProps.onKeyDown = handleKeyDown;
-          return (
-            <>
-              <Field
-                name="tagList"
-                {...params}
-                variant="outlined"
-                label="Enter tags"
-                margin="normal"
-                fullWidth
-                component={TextField}
-              />
-              <div>
-                <ErrorMessage name="tagList" />
-              </div>
-            </>
-          );
-        }}
-      />
-    </div>
+    <Autocomplete
+      {...field}
+      multiple
+      freeSolo
+      id="tags-outlined"
+      options={[]}
+      getOptionLabel={(option) => option.title || option}
+      onChange={(event, newValue) => form.setFieldValue(field.name, newValue)}
+      filterSelectedOptions
+      renderInput={(params: any) => {
+        params.inputProps.onKeyDown = handleKeyDown;
+        return (
+          <>
+            <TextField
+              name="tagList"
+              {...params}
+              variant="outlined"
+              label="Enter tags"
+              margin="normal"
+              fullWidth
+            />
+          </>
+        );
+      }}
+    />
   );
 }
 
