@@ -11,14 +11,12 @@ import { Link } from "react-router-dom";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import MenuTabs from "./MenuTabs";
 interface Props {
-  cover: string;
   image: string;
-  userName: string;
-  userTag: string;
-  content: string;
+  username: string;
+  following: boolean;
+  bio: string;
 }
 let HEIGHT = window.screen.height;
-let WIDTH = window.screen.width;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,12 +68,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile(props: Props) {
+const Profile = (props: Props) => {
   const classes = useStyles();
 
   return (
     <Card className={classes.root}>
-      <CardMedia className={classes.media} image={props.cover}>
+      <CardMedia
+        className={classes.media}
+        image="https://st.quantrimang.com/photos/image/2018/09/20/anh-bia-facebook-mau-den-1.jpg">
         <Link className={classes.settingBtn} to="/settings">
           <SettingsIcon />
           Edit Profile Setting
@@ -88,14 +88,21 @@ export default function Profile(props: Props) {
           className={classes.userName}
           variant="h4"
           gutterBottom>
-          {props.userName}
+          {props.username}
         </Typography>
         <Typography
           align={"center"}
           variant="subtitle2"
           gutterBottom
           className={classes.userTag}>
-          @{props.userTag}
+          {props.following}
+        </Typography>
+        <Typography
+          align={"center"}
+          variant="subtitle2"
+          gutterBottom
+          className={classes.userTag}>
+          {props.bio}
         </Typography>
       </div>
       <CardContent className={classes.contentContainer}>
@@ -103,4 +110,5 @@ export default function Profile(props: Props) {
       </CardContent>
     </Card>
   );
-}
+};
+export default Profile;
