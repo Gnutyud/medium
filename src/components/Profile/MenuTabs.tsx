@@ -1,12 +1,12 @@
 import React from "react";
-import { Tab, Tabs, Paper, Box } from "@material-ui/core";
+import { Tab, Tabs, Box } from "@material-ui/core";
 
 interface Props {
   tab1: string;
   tab2: string;
 }
 export default function MenuTabs(props: Props) {
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
 
   const handleChange = (event: any, newValue: number) => {
     setValue(newValue);

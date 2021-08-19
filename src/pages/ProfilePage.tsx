@@ -1,26 +1,27 @@
 import React from "react";
 import Profile from "../components/Profile/Profile";
-
-const data = {
-  cover:
-    "https://st.quantrimang.com/photos/image/2018/09/20/anh-bia-facebook-mau-den-1.jpg",
-  image: "https://static.productionready.io/images/smiley-cyrus.jpg",
-  userName: "Tungnd24",
-  userTag: "Gnutyud",
-  content:
-    "A user is a person who utilizes a computer or network service. Users of computer systems and software products generally lack the technical expertise required to fully understand how they work.",
-};
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from ".././app/hooks";
+import { getProfile, profileSelector } from "../app/reducers/profileSlice";
+import { userSelector } from "../app/reducers/authSlice";
 
 export default function ProfileContainer() {
-  const [userData, setUserData] = React.useState(data);
-
-  return (
-    <Profile
-      cover={userData.cover}
-      image={userData.image}
-      userName={userData.userName}
-      userTag={userData.userTag}
-      content={userData.content}
-    />
-  );
+  const dispatch = useAppDispatch();
+  const currentProfile = useAppSelector(profileSelector);
+  const currentUser = useAppSelector(userSelector);
+  useEffect(() => {
+    dispatch(getProfile(currentUser.username));
+  }, [dispatch]);
+  if (currentProfile) {
+    return (
+      <Profile
+        image={currentProfile.image}
+        username={currentProfile.username}
+        bio={currentProfile.bio}
+        following={currentProfile.following}
+      />
+    );
+  } else {
+    return <h3>Loading...</h3>;
+  }
 }
