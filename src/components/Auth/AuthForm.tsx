@@ -71,7 +71,7 @@ const AuthForm = () => {
     });
   };
   const [validationSchema, setValidationSchema] = useState(() =>
-    formSchema(isRegister)
+    formSchema(isRegister),
   );
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const AuthForm = () => {
         authActions.loginSuccess({
           username: userData.user.username,
           email: userData.user.email,
-        })
+        }),
       );
       history.replace("/");
     } catch (error) {
@@ -144,7 +144,6 @@ const AuthForm = () => {
       errorMessage = `Username and email ${error.email}`;
     }
     if (error["email or password"]) {
-      console.log("invaild");
       errorMessage = `Email or password ${error["email or password"]}`;
     }
   }
@@ -162,8 +161,7 @@ const AuthForm = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={submitHandler}
-          validationSchema={validationSchema}
-        >
+          validationSchema={validationSchema}>
           {() => {
             return (
               <Form className={classes.form}>
@@ -200,8 +198,7 @@ const AuthForm = () => {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  className={classes.submit}
-                >
+                  className={classes.submit}>
                   {!isRegister ? "Sign In" : "Sign Up"}
                 </Button>
                 <Grid container justifyContent="flex-end">
@@ -214,8 +211,7 @@ const AuthForm = () => {
                         border: "none",
                         background: "transparent",
                       }}
-                      onClick={switchAuthModeHandler}
-                    >
+                      onClick={switchAuthModeHandler}>
                       {isRegister
                         ? "Already have an account? Sign in"
                         : "Don't have an acount? Sign up"}

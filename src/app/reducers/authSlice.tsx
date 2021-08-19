@@ -58,6 +58,7 @@ const authSlice = createSlice({
       state.isLoading = false;
       state.error = null;
       state.currentUser = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
     loginFail(state, action) {
       state.isLoading = false;
@@ -76,6 +77,8 @@ const authSlice = createSlice({
     builder
       .addCase(getUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
+        console.log(action.payload);
+        localStorage.setItem("user", JSON.stringify(action.payload));
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
