@@ -1,13 +1,12 @@
 import '@fontsource/roboto';
-import { Redirect, Route, Switch } from 'react-router';
 import { Box, makeStyles } from '@material-ui/core';
-import AuthPage from 'features/auth';
-import HomePage from 'features/home';
-import ArticlePage from 'features/article';
-import SettingPage from 'features/setting';
-import ProfilePage from 'features/profile';
-import NotFound from 'components/NotFound';
-import Header from 'components/Header';
+import { Header, NotFound, PrivateRoute } from 'components/common';
+import AdminLayout from 'components/layout/Admin';
+import HomeLayout from 'components/layout/Home';
+import LoginPage from 'features/auth/pages/LoginPage';
+import ProfilePage from 'features/profile/pages/ProfilePage';
+import SettingPage from 'features/setting/pages/SettingPage';
+import { Redirect, Route, Switch } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,9 +28,9 @@ function App() {
         <Route path="/" exact>
           <Redirect to="/home" />
         </Route>
-        <Route path="/home" component={HomePage} />
-        <Route path="/auth" component={AuthPage} />
-        <Route path="/article" component={ArticlePage} />
+        <PrivateRoute path="/admin" component={AdminLayout} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/home" component={HomeLayout} />
         <Route path="/setting" component={SettingPage} />
         <Route path="/profile" component={ProfilePage} />
         <Route component={NotFound} />
