@@ -13,7 +13,7 @@ const initialState: InitialState = {
   articleList: [] as ArticleType[],
   articlesCount: 0,
   isLoading: false,
-  numberCurrentPage: 0,
+  numberCurrentPage: 1,
   numberArticlePerPage: 5,
 };
 
