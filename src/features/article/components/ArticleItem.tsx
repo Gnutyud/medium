@@ -11,7 +11,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import { grey, blue } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
@@ -26,9 +26,21 @@ const useStyles = makeStyles((theme) =>
     root: {
       width: '100%',
       height: '200px',
-      marginBottom: '30px',
+      marginRight: '50px',
+      borderRight: '1px solid',
+      borderRightColor: grey[400],
+      [theme.breakpoints.down('md')]: {
+        borderRight: 'none',
+      },
+    },
+    card: {
       display: 'flex',
       justifyContent: 'space-between',
+      marginRight: '30px',
+      width: '90%',
+      [theme.breakpoints.down('xs')]: {
+        width: '100%',
+      },
     },
     cardLeft: {
       flex: '1',
@@ -43,7 +55,7 @@ const useStyles = makeStyles((theme) =>
       marginBottom: '20px',
     },
     avatar: {
-      backgroundColor: red[500],
+      backgroundColor: blue[400],
     },
     cardAction: {
       height: '80%',
@@ -68,49 +80,50 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
     tagList,
   } = article;
 
-  console.log(favoritesCount);
   return (
-    <Card className={classes.root}>
-      <Box className={classes.cardLeft}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              {username[0].toUpperCase()}
-            </Avatar>
-          }
-          title={
-            <Box className={classes.authorName} component="div" display="inline">
-              {title}
+    <Box className={classes.root}>
+      <Card className={classes.card}>
+        <Box className={classes.cardLeft}>
+          <CardHeader
+            avatar={
+              <Avatar aria-label="recipe" className={classes.avatar}>
+                {username[0].toUpperCase()}
+              </Avatar>
+            }
+            title={
+              <Box className={classes.authorName} component="div" display="inline">
+                {title}
+              </Box>
+            }
+            subheader={updatedAt}
+          />
+          <CardContent>
+            <Box className={classes.description} fontWeight="fontWeightMedium">
+              {description}
             </Box>
-          }
-          subheader={updatedAt}
-        />
-        <CardContent>
-          <Box className={classes.description} fontWeight="fontWeightMedium">
-            {description}
-          </Box>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {body.slice(0, 20) + ' ...'}
-          </Typography>
-        </CardContent>
-      </Box>
+            <Typography variant="body2" color="textSecondary" component="p">
+              {body.slice(0, 20) + ' ...'}
+            </Typography>
+          </CardContent>
+        </Box>
 
-      <Box>
-        <CardActions className={classes.cardAction}>
-          <Box>
-            {favoritesCount}
-            <IconButton aria-label="add to favorites">
-              {favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            </IconButton>
-          </Box>
-          <Box>
-            {tagList.map((tag) => (
-              <Chip key={nanoid()} label={tag} />
-            ))}
-          </Box>
-        </CardActions>
-      </Box>
-    </Card>
+        <Box>
+          <CardActions className={classes.cardAction}>
+            <Box>
+              {favoritesCount}
+              <IconButton aria-label="add to favorites">
+                {favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
+            </Box>
+            <Box>
+              {tagList.map((tag) => (
+                <Chip key={nanoid()} label={tag} />
+              ))}
+            </Box>
+          </CardActions>
+        </Box>
+      </Card>
+    </Box>
   );
 };
 

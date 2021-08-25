@@ -1,6 +1,6 @@
 import { Grid } from '@material-ui/core';
 import ArticleList from 'features/article/components/ArticleList';
-import ArticleTagList from 'features/article/components/ArticleTagList';
+import TagList from 'features/tag/components/TagList';
 
 const HomeLayout = () => {
   return (
@@ -9,7 +9,7 @@ const HomeLayout = () => {
         <ArticleList />
       </Grid>
       <Grid item xs={12} md={3}>
-        <ArticleTagList />
+        <TagList />
       </Grid>
     </Grid>
   );

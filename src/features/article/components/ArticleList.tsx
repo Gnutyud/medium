@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { getListArticle, selectListArticles, selectLoadingArticles } from '../ArticleSlice';
+import { getListArticle, selectListArticles, selectLoadingArticles } from '../articleSlice';
 import { Box } from '@material-ui/core';
 import Loading from 'components/common/Loading';
 import ArticleItem from './ArticleItem';
@@ -9,8 +9,6 @@ const ArticleList = () => {
   const dispatch = useAppDispatch();
   const articleList = useAppSelector(selectListArticles);
   const isLoading = useAppSelector(selectLoadingArticles);
-
-  console.log(articleList, isLoading);
 
   useEffect(() => {
     const action = {
