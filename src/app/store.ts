@@ -1,7 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
-import articleReducer from '../features/article/ArticleSlice';
+import articleReducer from '../features/article/articleSlice';
+import tagReducer from '../features/tag/tagSlice';
 
 // create saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -9,6 +10,7 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer: {
     article: articleReducer,
+    tag: tagReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });

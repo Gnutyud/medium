@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { SagaIterator } from 'redux-saga';
 import { call, put } from '@redux-saga/core/effects';
 import articleApi from 'api/articleApi';
-import { getListArticleFromSaga } from './ArticleSlice';
+import { getListArticleFromSaga } from './articleSlice';
 
 interface PayloadActionType {
   offset: number;
