@@ -27,8 +27,6 @@ const ArticleTagList = () => {
   const tagList = useAppSelector(selectTagList);
   const isLoading = useAppSelector(selectLoadingTags);
 
-  console.log(tagList, isLoading);
-
   useEffect(() => {
     const action = {
       type: getListTag.type,

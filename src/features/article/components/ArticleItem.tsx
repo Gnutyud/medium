@@ -11,7 +11,7 @@ import {
   makeStyles,
   Typography,
 } from '@material-ui/core';
-import { grey, blue } from '@material-ui/core/colors';
+import { blue } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
@@ -26,9 +26,7 @@ const useStyles = makeStyles((theme) =>
     root: {
       width: '100%',
       height: '200px',
-      marginRight: '50px',
-      borderRight: '1px solid',
-      borderRightColor: grey[400],
+      marginBottom: '20px',
       [theme.breakpoints.down('md')]: {
         borderRight: 'none',
       },
@@ -62,6 +60,13 @@ const useStyles = makeStyles((theme) =>
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
+    },
+    chip: {
+      marginRight: '5px',
+    },
+    favoritesContainer: {
+      width: '100%',
+      textAlign: 'right',
     },
   })
 );
@@ -109,7 +114,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
 
         <Box>
           <CardActions className={classes.cardAction}>
-            <Box>
+            <Box className={classes.favoritesContainer}>
               {favoritesCount}
               <IconButton aria-label="add to favorites">
                 {favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
@@ -117,7 +122,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
             </Box>
             <Box>
               {tagList.map((tag) => (
-                <Chip key={nanoid()} label={tag} />
+                <Chip className={classes.chip} key={nanoid()} label={tag} />
               ))}
             </Box>
           </CardActions>
