@@ -36,8 +36,7 @@ const ArticleList = () => {
   // get url params
   const urlParams = queryString.parse(location.search);
 
-  currentPage = urlParams?.page || currentPage;
-
+  currentPage = urlParams?.page - 1 || currentPage - 1;
   console.log('current page ', currentPage);
 
   // fetch list articles + pagination by offset

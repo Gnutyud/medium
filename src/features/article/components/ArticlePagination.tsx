@@ -30,18 +30,17 @@ const ArticlePagination = () => {
 
   // get current page
   const urlParams = queryString.parse(location.search);
-  const { page } = urlParams;
-  currentPage = page || currentPage;
+  currentPage = urlParams?.page - 1 || currentPage - 1;
 
   // get total page
   const totalPage = Math.ceil(articleCount / articlePerPage);
 
   // navigate to page event
-  const handleNavigate = (event: any, page: number) => {
-    dispatch(setNumberCurrentPage(page - 1));
+  const handleNavigate = (event: any, pageNumber: number) => {
+    dispatch(setNumberCurrentPage(pageNumber));
 
     // sync url param
-    const queryParams = { page: page - 1 };
+    const queryParams = { page: pageNumber };
     history.push({
       pathname: match.path,
       search: queryString.stringify(queryParams),
