@@ -26,14 +26,31 @@ const ArticlePagination = () => {
   const dispatch = useAppDispatch();
   const articleCount = useAppSelector(selectCountArticles);
   const articlePerPage = useAppSelector(selectNumberArticlePerPage);
-  let currentPage = useAppSelector(selectNumberCurrentPage);
+  const currentPage = useAppSelector(selectNumberCurrentPage);
 
-  // get current page
-  const urlParams = queryString.parse(location.search);
-  currentPage = urlParams?.page - 1 || currentPage - 1;
+  // initial sync url param
+  useEffect(() => {
+    const queryParams = { page: 1 };
+    history.push({
+      pathname: match.path,
+      search: queryString.stringify(queryParams),
+    });
+  }, [history, match.path]);
+
+  // sync url param with state
+  useEffect(() => {
+    const urlParams = queryString.parse(location.search);
+    const { page } = urlParams;
+
+    dispatch(setNumberCurrentPage(page));
+  }, [location.search, dispatch]);
 
   // get total page
   const totalPage = Math.ceil(articleCount / articlePerPage);
+
+  // get current page final
+  const { page } = queryString.parse(location.search);
+  const currentPageFinal = +page - 1 || currentPage - 1;
 
   // navigate to page event
   const handleNavigate = (event: any, pageNumber: number) => {
@@ -47,17 +64,9 @@ const ArticlePagination = () => {
     });
   };
 
-  // sync url param
-  useEffect(() => {
-    const urlParams = queryString.parse(location.search);
-    const { page } = urlParams;
-
-    dispatch(setNumberCurrentPage(page - 1));
-  }, [location.search, dispatch]);
-
   return (
     <Box className={classes.root}>
-      <Pagination count={totalPage} page={+currentPage + 1} onChange={handleNavigate} />
+      <Pagination count={totalPage} page={currentPageFinal + 1} onChange={handleNavigate} />
     </Box>
   );
 };
