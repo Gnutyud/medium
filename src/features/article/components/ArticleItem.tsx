@@ -15,10 +15,10 @@ import { blue } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch } from 'app/hooks';
 import React from 'react';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import { selectTagByArticle, setTag } from '../articleSlice';
+import { setTag } from '../articleSlice';
 
 interface ArticleItemProps {
   article: ArticleType;
@@ -83,13 +83,6 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
   const match = useRouteMatch();
   const dispatch = useAppDispatch();
 
-  // get data for filter by tag
-  const tagByArticle = useAppSelector(selectTagByArticle);
-
-  // get tag from url param
-  const { tag } = queryString.parse(location.search);
-  const tagFinal = tag || tagByArticle;
-
   // get page from url param
   const { page } = queryString.parse(location.search);
   const pageFinal = +page - 1 || 1;
@@ -106,7 +99,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
   } = article;
 
   // update tag from store
-  const handleClick = (tagLabel: string) => {
+  const handleClickTag = (tagLabel: string) => {
     console.info('You clicked the Chip. ', tagLabel);
     dispatch(setTag(tagLabel));
 
@@ -159,7 +152,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
                   className={classes.chip}
                   key={nanoid()}
                   label={tag}
-                  onClick={() => handleClick(tag)}
+                  onClick={() => handleClickTag(tag)}
                 />
               ))}
             </Box>
