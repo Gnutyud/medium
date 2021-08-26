@@ -18,7 +18,7 @@ const queryString = require('query-string');
 const useStyles = makeStyles({
   articleList: {
     borderRight: '1px solid',
-    borderRightColor: grey[500],
+    borderRightColor: grey[400],
   },
 });
 
@@ -30,26 +30,24 @@ const ArticleList = () => {
   // select data from store
   const articleList = useAppSelector(selectListArticles);
   const isLoading = useAppSelector(selectLoadingArticles);
-  let currentPage = useAppSelector(selectNumberCurrentPage);
+  const currentPage = useAppSelector(selectNumberCurrentPage);
   const articlePerPage = useAppSelector(selectNumberArticlePerPage);
 
-  // get url params
-  const urlParams = queryString.parse(location.search);
-
-  currentPage = urlParams?.page - 1 || currentPage - 1;
-  console.log('current page ', currentPage);
+  // get current page final
+  const { page } = queryString.parse(location.search);
+  const currentPageFinal = +page - 1 || currentPage - 1;
 
   // fetch list articles + pagination by offset
   useEffect(() => {
     const action = {
       type: getListArticle.type,
       payload: {
-        offset: currentPage * articlePerPage,
+        offset: currentPageFinal * articlePerPage,
         limit: articlePerPage,
       },
     };
     dispatch(action);
-  }, [currentPage, articlePerPage, dispatch]);
+  }, [currentPageFinal, articlePerPage, dispatch]);
 
   return (
     <Box>
