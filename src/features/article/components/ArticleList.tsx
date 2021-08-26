@@ -10,6 +10,7 @@ import {
   selectLoadingArticles,
   selectNumberArticlePerPage,
   selectNumberCurrentPage,
+  selectTagByArticle,
 } from '../articleSlice';
 import ArticleItem from './ArticleItem';
 
@@ -30,24 +31,37 @@ const ArticleList = () => {
   // select data from store
   const articleList = useAppSelector(selectListArticles);
   const isLoading = useAppSelector(selectLoadingArticles);
+
+  // select data for pagination from store
   const currentPage = useAppSelector(selectNumberCurrentPage);
   const articlePerPage = useAppSelector(selectNumberArticlePerPage);
 
-  // get current page final
+  // select data for filter by tag
+  const tagByArticle = useAppSelector(selectTagByArticle);
+  console.log('tag ', tagByArticle, typeof tagByArticle);
+
+  // get page from url param
   const { page } = queryString.parse(location.search);
   const currentPageFinal = +page - 1 || currentPage - 1;
 
-  // fetch list articles + pagination by offset
+  // get tag from url param
+  const { tag } = queryString.parse(location.search);
+  const tagFinal = tag || tagByArticle;
+
+  console.log('tag final ', tagFinal);
+
+  // fetch list articles + pagination by offset + filter by tag
   useEffect(() => {
     const action = {
       type: getListArticle.type,
       payload: {
         offset: currentPageFinal * articlePerPage,
         limit: articlePerPage,
+        tag: tagFinal,
       },
     };
     dispatch(action);
-  }, [currentPageFinal, articlePerPage, dispatch]);
+  }, [currentPageFinal, articlePerPage, tagFinal, dispatch]);
 
   return (
     <Box>

@@ -7,12 +7,13 @@ import { getListArticleFromSaga } from './articleSlice';
 interface PayloadActionType {
   offset: number;
   limit: number;
+  tag: string;
 }
 
 export function* getListArticleSaga(action: PayloadAction<PayloadActionType>): SagaIterator<void> {
   try {
-    const { offset, limit } = action.payload;
-    const res = yield call(articleApi.getAll, offset, limit);
+    const { offset, limit, tag } = action.payload;
+    const res = yield call(articleApi.getAll, offset, limit, tag);
 
     yield put({
       type: getListArticleFromSaga.type,

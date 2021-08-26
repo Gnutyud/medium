@@ -5,6 +5,7 @@ interface InitialState {
   articleList: ArticleType[];
   articlesCount: number;
   isLoading: boolean;
+  tag?: string;
   numberCurrentPage: number;
   numberArticlePerPage: number;
 }
@@ -35,17 +36,21 @@ export const articlesSlice = createSlice({
     setNumberArticlePerPage: (state, action) => {
       state.numberArticlePerPage = action.payload;
     },
+    setTag: (state, action) => {
+      state.tag = action.payload;
+    },
   },
 });
 
 // actions
-export const { getListArticle, getListArticleFromSaga, setNumberCurrentPage } =
+export const { getListArticle, getListArticleFromSaga, setNumberCurrentPage, setTag } =
   articlesSlice.actions;
 
 // selector
 export const selectListArticles = (state: RootState) => state.article.articleList;
 export const selectCountArticles = (state: RootState) => state.article.articlesCount;
 export const selectLoadingArticles = (state: RootState) => state.article.isLoading;
+export const selectTagByArticle = (state: RootState) => state.article.tag;
 export const selectNumberCurrentPage = (state: RootState) => state.article.numberCurrentPage;
 export const selectNumberArticlePerPage = (state: RootState) => state.article.numberArticlePerPage;
 

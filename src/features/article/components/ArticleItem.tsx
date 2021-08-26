@@ -15,7 +15,10 @@ import { blue } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import React from 'react';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { selectTagByArticle, setTag } from '../articleSlice';
 
 interface ArticleItemProps {
   article: ArticleType;
@@ -71,8 +74,25 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
+const queryString = require('query-string');
+
 const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
   const classes = useStyles();
+  const location = useLocation();
+  const history = useHistory();
+  const match = useRouteMatch();
+  const dispatch = useAppDispatch();
+
+  // get data for filter by tag
+  const tagByArticle = useAppSelector(selectTagByArticle);
+
+  // get tag from url param
+  const { tag } = queryString.parse(location.search);
+  const tagFinal = tag || tagByArticle;
+
+  // get page from url param
+  const { page } = queryString.parse(location.search);
+  const pageFinal = +page - 1 || 1;
 
   const {
     author: { username },
@@ -84,6 +104,19 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
     favoritesCount,
     tagList,
   } = article;
+
+  // update tag from store
+  const handleClick = (tagLabel: string) => {
+    console.info('You clicked the Chip. ', tagLabel);
+    dispatch(setTag(tagLabel));
+
+    // sync url param
+    const queryParams = { tag: tagLabel, page: pageFinal };
+    history.push({
+      pathname: match.path,
+      search: queryString.stringify(queryParams),
+    });
+  };
 
   return (
     <Box className={classes.root}>
@@ -122,7 +155,12 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
             </Box>
             <Box>
               {tagList.map((tag) => (
-                <Chip className={classes.chip} key={nanoid()} label={tag} />
+                <Chip
+                  className={classes.chip}
+                  key={nanoid()}
+                  label={tag}
+                  onClick={() => handleClick(tag)}
+                />
               ))}
             </Box>
           </CardActions>
