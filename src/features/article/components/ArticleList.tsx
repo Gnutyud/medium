@@ -16,12 +16,15 @@ import ArticleItem from './ArticleItem';
 
 const queryString = require('query-string');
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   articleList: {
     borderRight: '1px solid',
     borderRightColor: grey[400],
+    [theme.breakpoints.down('md')]: {
+      border: 'none',
+    },
   },
-});
+}));
 
 const ArticleList = () => {
   const classes = useStyles();

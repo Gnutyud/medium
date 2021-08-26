@@ -9,6 +9,11 @@ import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import { getListTag, selectLoadingTags, selectTagList } from '../tagSlice';
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
   inforBox: {
     marginBottom: '30px',
   },
@@ -60,7 +65,7 @@ const ArticleTagList = () => {
   };
 
   return (
-    <Box>
+    <Box className={classes.root}>
       <Box className={classes.inforBox}>
         <Alert severity="info">
           <AlertTitle className={classes.inforTitle}>Write on Medium</AlertTitle>
