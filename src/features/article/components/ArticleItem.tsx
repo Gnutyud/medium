@@ -17,7 +17,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
 import React from 'react';
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import { setTag } from '../articleSlice';
 
 interface ArticleItemProps {
@@ -39,8 +39,9 @@ const useStyles = makeStyles((theme) =>
       justifyContent: 'space-between',
       marginRight: '30px',
       width: '90%',
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         width: '100%',
+        margin: '0',
       },
     },
     cardLeft: {
@@ -78,14 +79,9 @@ const queryString = require('query-string');
 
 const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
   const classes = useStyles();
-  const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
   const dispatch = useAppDispatch();
-
-  // get page from url param
-  const { page } = queryString.parse(location.search);
-  const pageFinal = +page - 1 || 1;
 
   const {
     author: { username },
@@ -104,7 +100,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
     dispatch(setTag(tagLabel));
 
     // sync url param
-    const queryParams = { tag: tagLabel, page: pageFinal };
+    const queryParams = { tag: tagLabel, page: '1' };
     history.push({
       pathname: match.path,
       search: queryString.stringify(queryParams),
