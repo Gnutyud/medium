@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useEffect } from 'react';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import {
   selectCountArticles,
@@ -24,9 +24,18 @@ const ArticlePagination = () => {
   const history = useHistory();
   const match = useRouteMatch();
   const dispatch = useAppDispatch();
+
+  // get data for pagination
   const articleCount = useAppSelector(selectCountArticles);
   const articlePerPage = useAppSelector(selectNumberArticlePerPage);
   const currentPage = useAppSelector(selectNumberCurrentPage);
+
+  // get total page
+  const totalPage = Math.ceil(articleCount / articlePerPage);
+
+  // get current page final
+  const { page } = queryString.parse(location.search);
+  const currentPageFinal = +page - 1 || currentPage - 1;
 
   // initial sync url param
   useEffect(() => {
@@ -45,13 +54,6 @@ const ArticlePagination = () => {
     dispatch(setNumberCurrentPage(page));
   }, [location.search, dispatch]);
 
-  // get total page
-  const totalPage = Math.ceil(articleCount / articlePerPage);
-
-  // get current page final
-  const { page } = queryString.parse(location.search);
-  const currentPageFinal = +page - 1 || currentPage - 1;
-
   // navigate to page event
   const handleNavigate = (event: any, pageNumber: number) => {
     dispatch(setNumberCurrentPage(pageNumber));
@@ -66,7 +68,12 @@ const ArticlePagination = () => {
 
   return (
     <Box className={classes.root}>
-      <Pagination count={totalPage} page={currentPageFinal + 1} onChange={handleNavigate} />
+      <Pagination
+        size="large"
+        count={totalPage}
+        page={currentPageFinal + 1}
+        onChange={handleNavigate}
+      />
     </Box>
   );
 };
