@@ -1,7 +1,7 @@
 import { Grid } from '@material-ui/core';
-import ArticleList from 'features/article/components/ArticleList';
-import ArticlePagination from 'features/article/components/ArticlePagination';
-import TagList from 'features/tag/components/TagList';
+import ArticleList from 'features/articles/components/ArticleList';
+import ArticlePagination from 'features/articles/components/ArticlePagination';
+import TagList from 'features/tags/components/TagList';
 
 const HomeLayout = () => {
   return (

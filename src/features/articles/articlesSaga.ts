@@ -1,8 +1,8 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { SagaIterator } from 'redux-saga';
 import { call, put } from '@redux-saga/core/effects';
-import articleApi from 'api/articleApi';
-import { getListArticleFromSaga } from './articleSlice';
+import articleApi from 'api/articlesApi';
+import { getListArticleFromSaga } from './articlesSlice';
 
 interface PayloadActionType {
   offset: number;

@@ -18,7 +18,7 @@ import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
 import React from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { setTag } from '../articleSlice';
+import { setTag } from '../articlesSlice';
 
 interface ArticleItemProps {
   article: ArticleType;
@@ -94,7 +94,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
     tagList,
   } = article;
 
-  // update tag from store
+  // update tags from store
   const handleClickTag = (tagLabel: string) => {
     console.info('You clicked the Chip. ', tagLabel);
     dispatch(setTag(tagLabel));
