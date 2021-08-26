@@ -1,8 +1,8 @@
 import { takeEvery } from '@redux-saga/core/effects';
-import { getListArticleSaga } from 'features/article/articleSaga';
-import { getListArticle } from 'features/article/articleSlice';
-import { getListTagSaga } from 'features/tag/tagSaga';
-import { getListTag } from 'features/tag/tagSlice';
+import { getListArticleSaga } from 'features/articles/articlesSaga';
+import { getListArticle } from 'features/articles/articlesSlice';
+import { getListTagSaga } from 'features/tags/tagsSaga';
+import { getListTag } from 'features/tags/tagsSlice';
 
 export default function* rootSaga() {
   yield takeEvery(getListArticle.type, getListArticleSaga);

@@ -11,7 +11,7 @@ import {
   selectNumberArticlePerPage,
   selectNumberCurrentPage,
   selectTagByArticle,
-} from '../articleSlice';
+} from '../articlesSlice';
 import ArticleItem from './ArticleItem';
 
 const queryString = require('query-string');
@@ -39,32 +39,29 @@ const ArticleList = () => {
   const currentPage = useAppSelector(selectNumberCurrentPage);
   const articlePerPage = useAppSelector(selectNumberArticlePerPage);
 
-  // select data for filter by tag
+  // select data for filter by tags
   const tagByArticle = useAppSelector(selectTagByArticle);
-  console.log('tag ', tagByArticle, typeof tagByArticle);
 
   // get page from url param
   const { page } = queryString.parse(location.search);
-  const currentPageFinal = +page - 1 || currentPage - 1;
+  const offsetIndex = +page - 1 || currentPage - 1;
 
-  // get tag from url param
+  // get tags from url param
   const { tag } = queryString.parse(location.search);
   const tagFinal = tag || tagByArticle;
 
-  console.log('tag final ', tagFinal);
-
-  // fetch list articles + pagination by offset + filter by tag
+  // fetch list articles + pagination by offset + filter by tags
   useEffect(() => {
     const action = {
       type: getListArticle.type,
       payload: {
-        offset: currentPageFinal * articlePerPage,
+        offset: offsetIndex * articlePerPage,
         limit: articlePerPage,
         tag: tagFinal,
       },
     };
     dispatch(action);
-  }, [currentPageFinal, articlePerPage, tagFinal, dispatch]);
+  }, [offsetIndex, articlePerPage, tagFinal, dispatch]);
 
   return (
     <Box>

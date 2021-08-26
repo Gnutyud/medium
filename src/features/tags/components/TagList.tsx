@@ -3,10 +3,10 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import Loading from 'components/common/Loading';
-import { setTag } from 'features/article/articleSlice';
+import { setTag } from 'features/articles/articlesSlice';
 import { useEffect } from 'react';
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import { getListTag, selectLoadingTags, selectTagList } from '../tagSlice';
+import { useHistory, useRouteMatch } from 'react-router-dom';
+import { getListTag, selectLoadingTags, selectTagList } from '../tagsSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +32,6 @@ const queryString = require('query-string');
 
 const ArticleTagList = () => {
   const classes = useStyles();
-  const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
   const dispatch = useAppDispatch();
@@ -47,17 +46,12 @@ const ArticleTagList = () => {
     dispatch(action);
   }, [dispatch]);
 
-  // get page from url param
-  const { page } = queryString.parse(location.search);
-  const pageFinal = +page - 1 || 1;
-
-  // handle click tag
+  // handle click tags
   const handleClickTag = (tagLabel: string) => {
-    console.log('you clicked tag ', tagLabel);
     dispatch(setTag(tagLabel));
 
     // sync url param
-    const queryParams = { tag: tagLabel, page: pageFinal };
+    const queryParams = { tag: tagLabel, page: '1' };
     history.push({
       pathname: match.path,
       search: queryString.stringify(queryParams),

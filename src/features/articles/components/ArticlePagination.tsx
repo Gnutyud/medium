@@ -7,8 +7,9 @@ import {
   selectCountArticles,
   selectNumberArticlePerPage,
   selectNumberCurrentPage,
+  selectTagByArticle,
   setNumberCurrentPage,
-} from '../../article/articleSlice';
+} from '../articlesSlice';
 
 const useStyles = makeStyles({
   root: {
@@ -37,6 +38,9 @@ const ArticlePagination = () => {
   const { page } = queryString.parse(location.search);
   const currentPageFinal = +page - 1 || currentPage - 1;
 
+  // get tag
+  const tagByArticle = useAppSelector(selectTagByArticle);
+
   // initial sync url param
   useEffect(() => {
     const queryParams = { page: 1 };
@@ -59,7 +63,7 @@ const ArticlePagination = () => {
     dispatch(setNumberCurrentPage(pageNumber));
 
     // sync url param
-    const queryParams = { page: pageNumber };
+    const queryParams = { page: pageNumber, tag: tagByArticle };
     history.push({
       pathname: match.path,
       search: queryString.stringify(queryParams),
