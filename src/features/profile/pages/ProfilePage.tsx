@@ -1,7 +1,27 @@
 import React from 'react';
+import ProfileInfo from './ProfileInfo';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { getProfile, profileSelector } from '../profileSlice';
+import { userSelector } from '../../auth/authSlice';
 
-const ProfilePage = () => {
-  return <div>Profile Page</div>;
-};
-
-export default ProfilePage;
+export default function ProfilePage() {
+  const dispatch = useAppDispatch();
+  const currentProfile = useAppSelector(profileSelector);
+  const currentUser = useAppSelector(userSelector);
+  useEffect(() => {
+    dispatch(getProfile(currentUser.username));
+  }, [dispatch]);
+  if (currentProfile) {
+    return (
+      <ProfileInfo
+        image={currentProfile.image}
+        username={currentProfile.username}
+        bio={currentProfile.bio}
+        following={currentProfile.following}
+      />
+    );
+  } else {
+    return <h3>Loading...</h3>;
+  }
+}
