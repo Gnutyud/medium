@@ -15,7 +15,7 @@ const articlesApi = {
     });
   },
   getOne: (slug: string): Promise<ArticleType> => {
-    return axiosClient.get(`/article${slug}`);
+    return axiosClient.get(`/article/${slug}`);
   },
 };
 
