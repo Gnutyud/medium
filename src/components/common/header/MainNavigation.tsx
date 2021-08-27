@@ -1,15 +1,15 @@
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../../../app/store';
-import { Account } from './Account';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 import { useAppDispatch } from 'app/hooks';
-import { setNumberCurrentPage } from 'features/articles/articlesSlice';
+import { setNumberCurrentPage, setTag } from 'features/articles/articlesSlice';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import type { RootState } from '../../../app/store';
+import { Account } from './Account';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +30,9 @@ const MainNavigation = () => {
   const dispatch = useAppDispatch();
 
   const handleClickNavLink = () => {
+    console.log('clicked');
     dispatch(setNumberCurrentPage(1));
+    dispatch(setTag(null));
   };
 
   return (

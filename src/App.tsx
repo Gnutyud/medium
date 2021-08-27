@@ -36,7 +36,8 @@ function App() {
         <Switch>
           <Route path="/" component={HomeLayout} exact />
           <Route path="/auth" component={LoginPage} />
-          <Route path="/setting" component={SettingPage} />
+          <Route path="/home" component={HomeLayout} />
+          <Route path="/settings" component={SettingPage} />
           <Route path="/profile" component={ProfilePage} />
           <Route component={NotFound} />
         </Switch>
