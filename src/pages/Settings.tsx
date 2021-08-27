@@ -6,11 +6,16 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, FormikProps } from "formik";
 import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { getUser, updateUser, userSelector } from "../app/reducers/authSlice";
+import {
+  errorUpdateUser,
+  getUser,
+  updateUser,
+  userSelector,
+} from "../app/reducers/authSlice";
 import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
@@ -57,6 +62,7 @@ const validationSchema = Yup.object().shape({
 
 const Settings = () => {
   const currentUser = useAppSelector(userSelector);
+  const errMessage = useAppSelector(errorUpdateUser);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -114,8 +120,21 @@ const Settings = () => {
           onSubmit={onsubmit}
           validationSchema={validationSchema}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting }: FormikProps<any>) => (
             <Form className={classes.form}>
+              {isSubmitting && (
+                <div className={classes.root}>
+                  {errMessage ? (
+                    <Alert severity="error">
+                      {errMessage.email && `Email ${errMessage.email}`}
+                      {errMessage.username &&
+                        ` Username ${errMessage.username}`}
+                    </Alert>
+                  ) : (
+                    <Alert severity="success">Update successful!</Alert>
+                  )}
+                </div>
+              )}
               <Field
                 name="image"
                 type="text"
@@ -170,13 +189,6 @@ const Settings = () => {
               <div className={classes.error}>
                 <ErrorMessage name="password" />
               </div>
-              {isSubmitting && (
-                <div className={classes.root}>
-                  <Alert severity="success">
-                    This is a success alert — check it out!
-                  </Alert>
-                </div>
-              )}
               <Button
                 variant="contained"
                 color="primary"

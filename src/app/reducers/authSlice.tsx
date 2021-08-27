@@ -15,6 +15,7 @@ export interface authState {
   isLoading: boolean;
   error: userType | null;
   currentUser: any;
+  errorUpdateUser: userType | null;
 }
 
 let isAuth;
@@ -31,13 +32,22 @@ const initialState: authState = {
   isLoading: false,
   error: null,
   currentUser: null,
+  errorUpdateUser: null,
 };
 
 export const updateUser = createAsyncThunk(
   "user/updateUser",
-  async (data: { user: any }) => {
-    const response = await updateCurrentUser(data);
-    return response.data.user;
+  async (data: { user: any }, { rejectWithValue }) => {
+    try {
+      const response = await updateCurrentUser(data);
+
+      return response.data.user;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data.errors);
+    }
   }
 );
 
@@ -79,11 +89,16 @@ const authSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.currentUser = action.payload;
+        state.errorUpdateUser = null;
+      })
+      .addCase(updateUser.rejected, (state, action: any) => {
+        console.log(action.payload);
+        state.errorUpdateUser = action.payload;
       });
   },
 });
 export const authActions = authSlice.actions;
 
 export const userSelector = (state: RootState) => state.auth.currentUser;
-
+export const errorUpdateUser = (state: RootState) => state.auth.errorUpdateUser;
 export default authSlice;
