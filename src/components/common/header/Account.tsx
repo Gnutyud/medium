@@ -57,7 +57,8 @@ export const Account = () => {
     setOpen(false);
   };
   const handleSetting = (event: any) => {
-    history.push('/setting');
+    history.push('/settings');
+    setOpen(false);
   };
   const handleLogout = () => {
     console.log('logout');

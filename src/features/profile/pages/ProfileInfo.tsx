@@ -73,7 +73,7 @@ const ProfileInfo = (props: Props) => {
         className={classes.media}
         image="https://st.quantrimang.com/photos/image/2018/09/20/anh-bia-facebook-mau-den-1.jpg"
       >
-        <Link className={classes.settingBtn} to="/setting">
+        <Link className={classes.settingBtn} to="/settings">
           <SettingsIcon />
           Edit Profile Setting
         </Link>
