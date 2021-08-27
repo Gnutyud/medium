@@ -30,7 +30,6 @@ const MainNavigation = () => {
   const dispatch = useAppDispatch();
 
   const handleClickNavLink = () => {
-    console.log('clicked');
     dispatch(setNumberCurrentPage(1));
     dispatch(setTag(null));
   };
