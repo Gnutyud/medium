@@ -1,4 +1,3 @@
-import axios from 'axios';
 import axiosClient from './axiosClient';
 
 const settingApi = {
@@ -13,7 +12,7 @@ const settingApi = {
     };
     return axiosClient.get(`/user`, axiosConfig);
   },
-  updateCurrentUser: (data: any): Promise<any> => {
+  updateCurrentUser: (data: { user: any }): Promise<any> => {
     let Storage: any = localStorage.getItem('user');
     let user = JSON.parse(Storage);
     let axiosConfig = {
@@ -22,7 +21,7 @@ const settingApi = {
         Authorization: 'Bearer ' + user.token,
       },
     };
-    return axiosClient.post(`/user`, data, axiosConfig);
+    return axiosClient.put(`/user`, data, axiosConfig);
   },
 };
 

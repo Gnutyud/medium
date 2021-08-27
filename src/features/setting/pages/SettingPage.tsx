@@ -1,18 +1,11 @@
-import {
-  Button,
-  Container,
-  makeStyles,
-  TextareaAutosize,
-  TextField,
-  Typography,
-} from '@material-ui/core';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Box, Button, Container, makeStyles, Typography } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import { Field, Form, Formik } from 'formik';
 import React, { useEffect } from 'react';
+import FormikInput from 'share/components/FormikInput';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import Alert from '@material-ui/lab/Alert';
-import { RootState } from 'app/store';
-import { getUser, selectUser, updateUser } from '../settingSlice';
+import { getUser, selectError, selectUser, updateUser } from '../settingSlice';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -28,19 +21,10 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10,
     width: '100%',
   },
-  textArea: {
-    marginTop: 10,
-    marginBottom: 10,
-    width: '100%',
-    height: '300px',
-    padding: '10px',
-  },
   button: {
     marginTop: 10,
     float: 'right',
-  },
-  error: {
-    color: 'red !important',
+    marginBottom: '40px',
   },
   root: {
     width: '100%',
@@ -54,11 +38,12 @@ const validationSchema = Yup.object().shape({
   username: Yup.string().required('Username is required!'),
   email: Yup.string().required('Email is required!'),
   image: Yup.string().required('Url image is required').url('Must be Url'),
-  // password: Yup.string().required("Password is required!"),
+  bio: Yup.string().required('Email is required!'),
 });
 
 const SettingPage = () => {
   const currentUser = useAppSelector(selectUser);
+  const errMessage = useAppSelector(selectError);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -85,7 +70,7 @@ const SettingPage = () => {
 
   const onsubmit = (values: any, form: any) => {
     const user =
-      values.password != ''
+      values.password !== ''
         ? {
             image: values.image,
             username: values.username,
@@ -105,7 +90,7 @@ const SettingPage = () => {
     });
     setTimeout(() => {
       form.setSubmitting(false);
-    }, 4000);
+    }, 3000);
   };
 
   const classes = useStyles();
@@ -123,65 +108,33 @@ const SettingPage = () => {
         >
           {({ isSubmitting }) => (
             <Form className={classes.form}>
-              <Field
-                name="image"
-                type="text"
-                className={classes.title}
-                as={TextField}
-                variant="outlined"
-                label="URL of profile picture"
-              />
-              <div className={classes.error}>
-                <ErrorMessage name="image" />
-              </div>
-              <Field
-                name="username"
-                type="text"
-                className={classes.title}
-                as={TextField}
-                variant="outlined"
-                label="User Name"
-              />
-              <div className={classes.error}>
-                <ErrorMessage name="username" />
-              </div>
-              <Field
-                name="bio"
-                as={TextareaAutosize}
-                className={classes.textArea}
-                placeholder="Short bio about you?"
-                minRows={10}
-              />
-              <div className={classes.error}>
-                <ErrorMessage name="bio" />
-              </div>
-              <Field
-                name="email"
-                type="text"
-                className={classes.title}
-                as={TextField}
-                variant="outlined"
-                label="Email"
-              />
-              <div className={classes.error}>
-                <ErrorMessage name="email" />
-              </div>
-              <Field
-                name="password"
-                type="password"
-                className={classes.title}
-                as={TextField}
-                variant="outlined"
-                label="Password"
-              />
-              <div className={classes.error}>
-                <ErrorMessage name="password" />
-              </div>
               {isSubmitting && (
                 <div className={classes.root}>
-                  <Alert severity="success">This is a success alert — check it out!</Alert>
+                  {errMessage ? (
+                    <Alert severity="error">
+                      {errMessage.email && `Email ${errMessage.email}`}
+                      {errMessage.username && ` Username ${errMessage.username}`}
+                    </Alert>
+                  ) : (
+                    <Alert severity="success">Update successful!</Alert>
+                  )}
                 </div>
               )}
+              <Box className={classes.title}>
+                <Field label="image" name="image" as={FormikInput} />
+              </Box>
+              <Box className={classes.title}>
+                <Field label="username" name="username" as={FormikInput} />
+              </Box>
+              <Box className={classes.title}>
+                <Field label="bio" name="bio" multiline={true} minsRow={10} as={FormikInput} />
+              </Box>
+              <Box className={classes.title}>
+                <Field label="email" name="email" as={FormikInput} />
+              </Box>
+              <Box className={classes.title}>
+                <Field label="password" name="password" type="password" as={FormikInput} />
+              </Box>
               <Button
                 variant="contained"
                 color="primary"

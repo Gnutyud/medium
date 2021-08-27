@@ -32,7 +32,7 @@ function App() {
           <PrivateRoute path="/admin" component={AdminLayout} />
           <Route path="/auth" component={LoginPage} />
           <Route path="/home" component={HomeLayout} />
-          <Route path="/setting" component={SettingPage} />
+          <Route path="/settings" component={SettingPage} />
           <Route path="/profile" component={ProfilePage} />
           <Route component={NotFound} />
         </Switch>
