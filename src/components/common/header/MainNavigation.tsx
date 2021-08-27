@@ -8,6 +8,8 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../../../app/store';
 import { Account } from './Account';
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import { useAppDispatch } from 'app/hooks';
+import { setNumberCurrentPage } from 'features/articles/articlesSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,11 +27,19 @@ const useStyles = makeStyles((theme) => ({
 const MainNavigation = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
   const classes = useStyles();
+  const dispatch = useAppDispatch();
+
+  const handleClickNavLink = () => {
+    dispatch(setNumberCurrentPage(1));
+  };
+
   return (
     <AppBar position="static" style={{ padding: '0 50px' }} className={classes.root}>
       <Toolbar>
         <Typography variant="h6" className={classes.title}>
-          <NavLink to="/">Logo</NavLink>
+          <NavLink to="/" onClick={handleClickNavLink}>
+            Logo
+          </NavLink>
         </Typography>
         {!isLoggedIn && (
           <NavLink to="/auth">

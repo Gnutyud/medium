@@ -6,12 +6,11 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { useEffect } from 'react';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import Alert from '@material-ui/lab/Alert';
-import { RootState } from 'app/store';
 import { getUser, selectUser, updateUser } from '../settingSlice';
 
 const useStyles = makeStyles((theme) => ({
@@ -85,7 +84,7 @@ const SettingPage = () => {
 
   const onsubmit = (values: any, form: any) => {
     const user =
-      values.password != ''
+      values.password !== ''
         ? {
             image: values.image,
             username: values.username,
