@@ -3,7 +3,7 @@ import { RootState } from 'app/store';
 
 export const settingSlice = createSlice({
   name: 'setting',
-  initialState: { currentUser: null as any, isLoading: false },
+  initialState: { currentUser: null as any, isLoading: false, error: null as any },
   reducers: {
     getUser: (state) => {
       state.isLoading = true;
@@ -15,15 +15,21 @@ export const settingSlice = createSlice({
     updateUser: (state) => {
       state.isLoading = true;
     },
+    updateError: (state, action: PayloadAction<any>) => {
+      console.log(action.payload);
+      state.error = action.payload;
+    },
     updateUserSaga: (state, action: PayloadAction<any>) => {
       state.currentUser = action.payload;
+      state.error = null;
       localStorage.setItem('user', JSON.stringify(action.payload));
     },
   },
 });
 
-export const { getUser, updateUser, getUserSaga, updateUserSaga } = settingSlice.actions;
+export const { getUser, updateUser, getUserSaga, updateUserSaga, updateError } =
+  settingSlice.actions;
 export const selectUser = (state: RootState) => state.setting.currentUser;
 export const selectLoading = (state: RootState) => state.setting.isLoading;
-
+export const selectError = (state: RootState) => state.setting.error;
 export default settingSlice.reducer;
