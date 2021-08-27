@@ -22,20 +22,22 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
   return (
-    <Box className={classes.root}>
+    <>
       <Header />
-      <Switch>
-        <Route path="/" exact>
-          <Redirect to="/home" />
-        </Route>
-        <PrivateRoute path="/admin" component={AdminLayout} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/home" component={HomeLayout} />
-        <Route path="/setting" component={SettingPage} />
-        <Route path="/profile" component={ProfilePage} />
-        <Route component={NotFound} />
-      </Switch>
-    </Box>
+      <Box className={classes.root}>
+        <Switch>
+          <Route path="/" exact>
+            <Redirect to="/home" />
+          </Route>
+          <PrivateRoute path="/admin" component={AdminLayout} />
+          <Route path="/auth" component={LoginPage} />
+          <Route path="/home" component={HomeLayout} />
+          <Route path="/setting" component={SettingPage} />
+          <Route path="/profile" component={ProfilePage} />
+          <Route component={NotFound} />
+        </Switch>
+      </Box>
+    </>
   );
 }
 

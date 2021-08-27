@@ -3,12 +3,14 @@ import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
 import articleReducer from '../features/articles/articlesSlice';
 import tagReducer from '../features/tags/tagsSlice';
+import authReducer from '../features/auth/authSlice';
 
 // create saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
 export const store = configureStore({
   reducer: {
+    auth: authReducer,
     article: articleReducer,
     tag: tagReducer,
   },
