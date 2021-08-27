@@ -5,7 +5,7 @@ import rootSaga from './rootSaga';
 import articleReducer from '../features/articles/articlesSlice';
 import tagReducer from '../features/tags/tagsSlice';
 import authReducer from '../features/auth/authSlice';
-
+import profileReducer from '../features/profile/profileSlice';
 // create saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
@@ -15,6 +15,7 @@ export const store = configureStore({
     article: articleReducer,
     tag: tagReducer,
     setting: settingReducer,
+    profile: profileReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });
