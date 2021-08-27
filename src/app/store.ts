@@ -1,3 +1,4 @@
+import settingReducer from './../features/setting/settingSlice';
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './rootSaga';
@@ -11,6 +12,7 @@ export const store = configureStore({
   reducer: {
     article: articleReducer,
     tag: tagReducer,
+    setting: settingReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });
