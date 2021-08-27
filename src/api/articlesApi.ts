@@ -1,6 +1,6 @@
 import axiosClient from './axiosClient';
 
-const articleApi = {
+const articlesApi = {
   getAll: (
     offsetParam?: number,
     limitParam?: number,
@@ -14,6 +14,9 @@ const articleApi = {
       },
     });
   },
+  getOne: (slug: string): Promise<ArticleType> => {
+    return axiosClient.get(`/article${slug}`);
+  },
 };
 
-export default articleApi;
+export default articlesApi;
