@@ -5,15 +5,17 @@ import TagList from 'features/tags/components/TagList';
 
 const HomeLayout = () => {
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} md={9}>
-        <ArticleList />
-        <ArticlePagination />
+    <div style={{ marginTop: '100px' }}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={9}>
+          <ArticleList />
+          <ArticlePagination />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <TagList />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={3}>
-        <TagList />
-      </Grid>
-    </Grid>
+    </div>
   );
 };
 
