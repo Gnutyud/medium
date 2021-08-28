@@ -7,7 +7,7 @@ interface InitialState {
 }
 
 const initialState: InitialState = {
-  inAuthorPage: inAuthorPagePersist === 'true' ? true : false,
+  inAuthorPage: inAuthorPagePersist ? JSON.parse(inAuthorPagePersist) : false,
 };
 
 export const authorSlice = createSlice({
