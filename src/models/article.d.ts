@@ -10,3 +10,10 @@ interface ArticleType {
   favoritesCount: number;
   author: AuthorType;
 }
+
+interface FormInputArticleType {
+  title: string;
+  description: string;
+  body: string;
+  tagList: string[];
+}
