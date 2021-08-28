@@ -85,7 +85,6 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
 
   const {
     author: { username },
-    title,
     body,
     updatedAt,
     description,
@@ -119,7 +118,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
             }
             title={
               <Box className={classes.authorName} component="div" display="inline">
-                {title}
+                {username}
               </Box>
             }
             subheader={updatedAt}

@@ -2,11 +2,11 @@ import { Box, Card, CardContent, CardHeader, Chip, makeStyles } from '@material-
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import Loading from 'components/common/Loading';
 import { setTag } from 'features/articles/articlesSlice';
 import { useEffect } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { getListTag, selectLoadingTags, selectTagList } from '../tagsSlice';
+import Loading from 'components/common/Loading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,7 +51,7 @@ const ArticleTagList = () => {
     dispatch(setTag(tagLabel));
 
     // sync url param
-    const queryParams = { tag: tagLabel, page: '1' };
+    const queryParams = tagLabel ? { tag: tagLabel, page: '1' } : { page: '1' };
     history.push({
       pathname: match.path,
       search: queryString.stringify(queryParams),
