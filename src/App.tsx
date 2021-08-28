@@ -3,6 +3,7 @@ import { Box, makeStyles } from '@material-ui/core';
 import { Header, NotFound, PrivateRoute } from 'components/common';
 import AdminLayout from 'components/layout/Admin';
 import HomeLayout from 'components/layout/Home';
+import AddArticle from 'features/article/page/AddArticle';
 import LoginPage from 'features/auth/pages/LoginPage';
 import ProfilePage from 'features/profile/pages/ProfilePage';
 import SettingPage from 'features/setting/pages/SettingPage';
@@ -32,6 +33,7 @@ function App() {
           <PrivateRoute path="/admin" component={AdminLayout} />
           <Route path="/auth" component={LoginPage} />
           <Route path="/home" component={HomeLayout} />
+          <Route path="/article/create" component={AddArticle} />
           <Route path="/settings" component={SettingPage} />
           <Route path="/profile" component={ProfilePage} />
           <Route component={NotFound} />
