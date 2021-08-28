@@ -39,12 +39,25 @@ export const articlesSlice = createSlice({
     setTag: (state, action) => {
       state.tag = action.payload;
     },
+    postArticle: (state) => {
+      state.isLoading = true;
+    },
+    addArticleFromSaga: (state, action) => {
+      state.isLoading = false;
+      state.articleList.unshift(action.payload);
+    },
   },
 });
 
 // actions
-export const { getListArticle, getListArticleFromSaga, setNumberCurrentPage, setTag } =
-  articlesSlice.actions;
+export const {
+  getListArticle,
+  getListArticleFromSaga,
+  setNumberCurrentPage,
+  setTag,
+  postArticle,
+  addArticleFromSaga,
+} = articlesSlice.actions;
 
 // selector
 export const selectListArticles = (state: RootState) => state.article.articleList;
