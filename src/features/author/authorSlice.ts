@@ -15,7 +15,7 @@ export const authorSlice = createSlice({
   initialState,
   reducers: {
     setInAuthorPage: (state, action) => {
-      state.inAuthorPage = inAuthorPagePersist === 'true' ? true : action.payload;
+      state.inAuthorPage = action.payload;
     },
   },
 });

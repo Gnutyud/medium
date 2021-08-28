@@ -1,3 +1,4 @@
+import ProfileComponent from 'components/common/profile/ProfileComponent';
 import { selectUser } from 'features/setting/settingSlice';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
