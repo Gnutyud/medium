@@ -1,14 +1,13 @@
-import React from 'react';
-import ProfileInfo from './ProfileInfo';
-import { useEffect } from 'react';
+import { selectUser } from 'features/setting/settingSlice';
+import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { getProfile, profileSelector } from '../profileSlice';
-import { userSelector } from '../../auth/authSlice';
+import ProfileInfo from './ProfileInfo';
 
 export default function ProfilePage() {
   const dispatch = useAppDispatch();
   const currentProfile = useAppSelector(profileSelector);
-  const currentUser = useAppSelector(userSelector);
+  const currentUser = useAppSelector(selectUser);
   useEffect(() => {
     dispatch(getProfile(currentUser.username));
   }, [dispatch]);

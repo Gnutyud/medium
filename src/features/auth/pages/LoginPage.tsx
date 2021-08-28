@@ -6,12 +6,12 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { useAppDispatch } from 'app/hooks';
 import { Field, Form, Formik } from 'formik';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
-import { LoginHandler } from '../../../api/authApi';
 import type { RootState } from '../../../app/store';
 import FormikInput from '../../../share/components/FormikInput';
 import { authActions } from '../authSlice';
@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    // borderRadius: '20px',
   },
   error: {
     color: 'red',
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const LoginPage = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { isRegister, error } = useSelector((state: RootState) => state.auth);
   const classes = useStyles();
 
@@ -97,28 +98,7 @@ const LoginPage = () => {
       };
       endPoint = 'users';
     }
-    dispatch(authActions.loginPending());
-    try {
-      const userData: any = await LoginHandler(userInfo, endPoint);
-      if (userData.status === 'errors') {
-        console.log('abc');
-        return dispatch(authActions.loginFail(userData.message));
-      }
-      dispatch(
-        authActions.loginSuccess({
-          username: userData.user.username,
-          email: userData.user.email,
-          token: userData.user.token,
-        })
-      );
-      history.replace('/');
-    } catch (error) {
-      if (error.response.data.errors) {
-        dispatch(authActions.loginFail(error.response.data.errors));
-      } else {
-        dispatch(authActions.loginFail(error.message));
-      }
-    }
+    dispatch(authActions.loginPending({ userInfo, endPoint, history }));
   };
   // switch sign in and sign up
   const switchAuthModeHandler = () => {

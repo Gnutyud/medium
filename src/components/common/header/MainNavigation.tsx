@@ -13,8 +13,9 @@ import { Account } from './Account';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: 'white',
     flexGrow: 1,
-    '& a': { color: 'white', textDecoration: 'none' },
+    '& a': { color: 'black', textDecoration: 'none' },
   },
   menuButton: {
     marginRight: theme.spacing(2),

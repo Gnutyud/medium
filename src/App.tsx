@@ -9,7 +9,7 @@ import { selectInAuthorPage } from 'features/author/authorSlice';
 import AuthorPage from 'features/author/pages/AuthorPage';
 import ProfilePage from 'features/profile/pages/ProfilePage';
 import SettingPage from 'features/setting/pages/SettingPage';
-import { Route, Switch } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
