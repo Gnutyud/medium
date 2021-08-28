@@ -87,15 +87,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
   const match = useRouteMatch();
   const dispatch = useAppDispatch();
 
-  const {
-    author: { username },
-    body,
-    updatedAt,
-    description,
-    favorited,
-    favoritesCount,
-    tagList,
-  } = article;
+  const { author, title, updatedAt, description, favorited, favoritesCount, tagList } = article;
 
   // update tags from store
   const handleClickTag = (tagLabel: string) => {
@@ -121,17 +113,17 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={classes.avatar}>
-                {username[0].toUpperCase()}
+                {author?.username[0].toUpperCase()}
               </Avatar>
             }
             title={
               <Box className={classes.authorName} component="div" display="inline">
                 <Link
                   className={classes.link}
-                  to={`/author/${username}`}
+                  to={`/author/${author?.username}`}
                   onClick={handleClickAuthor}
                 >
-                  {username}
+                  {author?.username}
                 </Link>
               </Box>
             }
@@ -139,10 +131,10 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
           />
           <CardContent>
             <Box className={classes.description} fontWeight="fontWeightMedium">
-              {description}
+              {title}
             </Box>
             <Typography variant="body2" color="textSecondary" component="p">
-              {body.slice(0, 20) + ' ...'}
+              {description?.slice(0, 20) + ' ...'}
             </Typography>
           </CardContent>
         </Box>
@@ -156,7 +148,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
               </IconButton>
             </Box>
             <Box>
-              {tagList.map((tag) => (
+              {tagList?.map((tag) => (
                 <Chip
                   className={classes.chip}
                   key={nanoid()}
