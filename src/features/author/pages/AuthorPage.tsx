@@ -1,6 +1,5 @@
 import { Box } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import ProfileComponent from 'components/common/profile/ProfileComponent';
 import {
   getListArticle,
   selectListArticles,
@@ -9,6 +8,7 @@ import {
   selectNumberCurrentPage,
   setNumberCurrentPage,
 } from 'features/articles/articlesSlice';
+import ProfileComponent from 'features/articles/components/ProfileComponent';
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import AuthorHeader from '../components/AuthorHeader';

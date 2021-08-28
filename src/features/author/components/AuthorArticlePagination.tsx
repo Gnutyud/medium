@@ -1,6 +1,7 @@
 import { Box } from '@material-ui/core';
 import { Pagination, PaginationItem } from '@material-ui/lab';
 import { useAppDispatch } from 'app/hooks';
+import { setNumberCurrentPage } from 'features/articles/articlesSlice';
 import { useEffect } from 'react';
 import {
   Link,
@@ -10,7 +11,6 @@ import {
   useLocation,
   useRouteMatch,
 } from 'react-router-dom';
-import { setNumberCurrentPage } from '../articlesSlice';
 
 const queryString = require('query-string');
 
@@ -21,7 +21,7 @@ interface ArticlePaginationProps {
   currentPage: number;
 }
 
-const ArticlePagination: React.FC<ArticlePaginationProps> = ({
+const AuthorArticlePagination: React.FC<ArticlePaginationProps> = ({
   articleCount,
   articlePerPage,
   tagByArticle,
@@ -83,4 +83,4 @@ const ArticlePagination: React.FC<ArticlePaginationProps> = ({
   );
 };
 
-export default ArticlePagination;
+export default AuthorArticlePagination;
