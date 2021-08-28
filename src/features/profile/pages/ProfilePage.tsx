@@ -10,7 +10,7 @@ export default function ProfilePage() {
   const currentUser = useAppSelector(selectUser);
   useEffect(() => {
     dispatch(getProfile(currentUser?.username));
-  }, [dispatch, currentUser?.username]);
+  }, [dispatch]);
   if (currentProfile) {
     return <ProfileComponent author={currentProfile} />;
   } else {
