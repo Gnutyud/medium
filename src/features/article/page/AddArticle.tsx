@@ -1,7 +1,6 @@
-import { Box, Button, Container, makeStyles, TextareaAutosize, TextField } from '@material-ui/core';
+import { Box, Button, Container, makeStyles } from '@material-ui/core';
 import { postArticle } from 'features/articles/articlesSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React from 'react';
 import FormikInput from 'share/components/FormikInput';
 import * as Yup from 'yup';
 import { useAppDispatch } from '../../../app/hooks';

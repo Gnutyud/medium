@@ -1,10 +1,8 @@
-import React from 'react';
-import ProfileInfo from './ProfileInfo';
-import { useEffect } from 'react';
+import { selectUser } from 'features/setting/settingSlice';
+import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { getProfile, profileSelector } from '../profileSlice';
-import { userSelector } from '../../auth/authSlice';
-import { selectUser } from 'features/setting/settingSlice';
+import ProfileInfo from './ProfileInfo';
 
 export default function ProfilePage() {
   const dispatch = useAppDispatch();
