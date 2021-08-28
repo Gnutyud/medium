@@ -41,10 +41,8 @@ const AuthorPage = () => {
   }, [dispatch]);
 
   // persist state first time of is in author page
-  useEffect(() => {
-    dispatch(setInAuthorPage(true));
-    localStorage.setItem('inAuthorPage', 'true');
-  }, [dispatch]);
+  dispatch(setInAuthorPage(true));
+  localStorage.setItem('inAuthorPage', 'true');
 
   // fetch list articles + pagination by offset + author
   useEffect(() => {
