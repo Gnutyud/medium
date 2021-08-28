@@ -1,4 +1,4 @@
-import { Box, Button, Container, makeStyles, TextareaAutosize, TextField } from '@material-ui/core';
+import { Box, Button, Container, makeStyles } from '@material-ui/core';
 import { postArticle } from 'features/articles/articlesSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
@@ -38,7 +38,6 @@ function AddArticle() {
   const dispatch = useAppDispatch();
 
   const onSubmit = (values: FormInputArticleType) => {
-    //   dispatch(createArticle({ article: values }));
     dispatch({
       type: postArticle.type,
       payload: { article: values },
