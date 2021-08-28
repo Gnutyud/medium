@@ -26,15 +26,16 @@ export function* getListArticleSaga(action: PayloadAction<PayloadActionType>): S
 }
 
 export function* postArticleSaga(
-  action: PayloadAction<{ article: FormInputArticleType }>
+  action: PayloadAction<{ data: { article: FormInputArticleType }; history: any }>
 ): SagaIterator<void> {
   try {
-    const data = action.payload;
+    const { data, history } = action.payload;
     const res = yield call(articlesApi.addOne, data);
     yield put({
       type: addArticleFromSaga.type,
       payload: res,
     });
+    history.push(`/article/${res.article.slug}`);
   } catch (error) {
     console.error(error);
   }
