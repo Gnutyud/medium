@@ -25,10 +25,11 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
   const inAuthorPage = useAppSelector(selectInAuthorPage);
+  console.log('in app - in author page: ', inAuthorPage);
   return (
     <>
       <Box className={classes.root}>
-        {!inAuthorPage && <Header />}
+        {inAuthorPage !== true && <Header />}
         <Switch>
           <Route path="/" component={HomeLayout} exact />
           <Route path="/author/:authorname" component={AuthorPage} exact />
