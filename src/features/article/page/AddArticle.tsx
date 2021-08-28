@@ -1,6 +1,7 @@
 import { Box, Button, Container, makeStyles } from '@material-ui/core';
 import { postArticle } from 'features/articles/articlesSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useHistory } from 'react-router-dom';
 import FormikInput from 'share/components/FormikInput';
 import * as Yup from 'yup';
 import { useAppDispatch } from '../../../app/hooks';
@@ -35,11 +36,11 @@ const validationSchema = Yup.object().shape({
 
 function AddArticle() {
   const dispatch = useAppDispatch();
-
+  const history = useHistory();
   const onSubmit = (values: FormInputArticleType) => {
     dispatch({
       type: postArticle.type,
-      payload: { article: values },
+      payload: { data: { article: values }, history },
     });
   };
   const classes = useStyles();
