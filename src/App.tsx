@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { Header, NotFound } from 'components/common';
 import HomeLayout from 'components/layout/Home';
 import AddArticle from 'features/article/page/AddArticle';
+import DetailArticle from 'features/article/page/DetailArticle';
 import LoginPage from 'features/auth/pages/LoginPage';
 import { selectInAuthorPage, setInAuthorPage } from 'features/author/authorSlice';
 import AuthorPage from 'features/author/pages/AuthorPage';
@@ -44,6 +45,7 @@ function App() {
           <Route path="/auth" component={LoginPage} />
           <Route path="/home" component={HomeLayout} />
           <Route path="/article/create" component={AddArticle} />
+          <Route path="/article/:slug" component={DetailArticle} />
           <Route path="/settings" component={SettingPage} />
           <Route path="/profile" component={ProfilePage} />
           <Route component={NotFound} />
