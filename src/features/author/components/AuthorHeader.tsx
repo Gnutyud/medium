@@ -13,23 +13,40 @@ const useStyles = makeStyles((theme) => ({
   root: {
     background: grey[50],
     color: grey[800],
+    [theme.breakpoints.down('md')]: {
+      padding: 0,
+    },
   },
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
+    [theme.breakpoints.down('md')]: {
+      padding: '0 5px',
+    },
   },
   authorInfosContainer: {
     display: 'flex',
     flex: 1,
+    [theme.breakpoints.down('md')]: {
+      margin: '0',
+    },
   },
   authorInfoContainer: {
     marginRight: '20px',
+    [theme.breakpoints.down('md')]: {
+      margin: '0',
+    },
+  },
+  usernameContainer: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   navBrand: {
     cursor: 'pointer',
   },
   textSmall: {
-    fontSize: '0.8rem',
+    fontSize: '0.6rem',
   },
 }));
 
@@ -54,7 +71,7 @@ const AuthorHeader: React.FC<AuthorHeaderProps> = ({ author }) => {
     <AppBar className={classes.root} position="static">
       <Toolbar className={classes.toolbar}>
         <Box className={classes.authorInfosContainer}>
-          <Box className={classes.authorInfoContainer}>
+          <Box className={clsx(classes.authorInfoContainer, classes.usernameContainer)}>
             <Typography variant="h6">{author?.username?.toUpperCase()}</Typography>
           </Box>
           <Box className={clsx(classes.authorInfoContainer, classes.textSmall)}>
