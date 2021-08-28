@@ -1,10 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+
+const inAuthorPagePersist = localStorage.getItem('inAuthorPage');
+
 interface InitialState {
   inAuthorPage: boolean;
 }
 
 const initialState: InitialState = {
-  inAuthorPage: false,
+  inAuthorPage: inAuthorPagePersist === 'true' ? true : false,
 };
 
 export const authorSlice = createSlice({
@@ -12,7 +15,7 @@ export const authorSlice = createSlice({
   initialState,
   reducers: {
     setInAuthorPage: (state, action) => {
-      state.inAuthorPage = action.payload;
+      state.inAuthorPage = inAuthorPagePersist === 'true' ? true : action.payload;
     },
   },
 });

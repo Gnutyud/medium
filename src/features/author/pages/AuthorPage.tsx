@@ -1,4 +1,6 @@
 import { AppBar, Box, Button, Toolbar, Typography, makeStyles } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import CheckIcon from '@material-ui/icons/Check';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
   getListArticle,
@@ -21,18 +23,18 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  leftContentContainer: {
+  authorInfosContainer: {
     display: 'flex',
-    flex: '1',
+    flex: 1,
   },
-  rightContentContainer: {
-    cursor: 'pointer',
-  },
-  leftContentItem: {
+  authorInfoContainer: {
     marginRight: '20px',
   },
-  leftBrand: {
-    fontSize: '1.6rem',
+  navBrand: {
+    cursor: 'pointer',
+  },
+  textSmall: {
+    fontSize: '0.8rem',
   },
 }));
 
@@ -79,6 +81,7 @@ const AuthorPage = () => {
   // handle event go to home page
   const handleGoToHomePage = () => {
     history.push('/');
+    localStorage.setItem('inAuthorPage', 'false');
     dispatch(setInAuthorPage(false));
   };
 
@@ -89,29 +92,27 @@ const AuthorPage = () => {
   const following = authorInfo?.following;
   const image = authorInfo?.image;
 
-  // log
-  // console.log('article list ', articleList, isLoading);
-  // console.log('author name ', authorname);
-  console.log('author info ', authorInfo);
-  // console.log('in author page!!');
-  // console.log('username ', username);
-  // console.log(articleList, isLoading);
-  // console.log('current page ', currentPage);
-
   return (
     <Box>
       <AppBar position="static">
         <Toolbar className={classes.toolbar}>
-          <Box className={classes.leftContentContainer}>
-            <Typography className={clsx(classes.leftContentItem, classes.leftBrand)}>
-              {username}
-            </Typography>
-            <Typography className={classes.leftContentItem} onClick={handleGoToHomePage}>
-              {totalArticle} articles
-            </Typography>
-            <Button color="inherit">Follow</Button>
+          <Box className={classes.authorInfosContainer}>
+            <Box className={classes.authorInfoContainer}>
+              <Typography variant="h6">{username?.toUpperCase()}</Typography>
+            </Box>
+            <Box className={clsx(classes.authorInfoContainer, classes.textSmall)}>
+              <Typography variant="h6" component="p">
+                {totalArticle} articles
+              </Typography>
+            </Box>
+
+            <Box className={classes.textSmall}>
+              <Button startIcon={following ? <CheckIcon /> : <AddIcon />} color="inherit">
+                Follow
+              </Button>
+            </Box>
           </Box>
-          <Box className={classes.rightContentContainer}>
+          <Box className={classes.navBrand}>
             <Typography variant="h6" onClick={handleGoToHomePage}>
               Medium
             </Typography>

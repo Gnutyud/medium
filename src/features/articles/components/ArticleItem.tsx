@@ -103,6 +103,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
 
   // handle event go to author page
   const handleClickAuthor = () => {
+    localStorage.setItem('inAuthorPage', 'true');
     dispatch(setInAuthorPage(true));
   };
 
