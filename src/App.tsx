@@ -8,8 +8,8 @@ import { setNumberCurrentPage } from 'features/articles/articlesSlice';
 import LoginPage from 'features/auth/pages/LoginPage';
 import ProfilePage from 'features/profile/pages/ProfilePage';
 import SettingPage from 'features/setting/pages/SettingPage';
+import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
-import { Route, Switch } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {

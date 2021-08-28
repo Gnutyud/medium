@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import { getCurrentUser, updateCurrentUser } from '../../api/authApi';
 import { RootState } from '../../app/store';
 
 interface userType {
@@ -8,7 +8,16 @@ interface userType {
   email: undefined | string;
   'email or password': undefined | string;
 }
-
+export interface userPayload {
+  username?: string;
+  email: string;
+  password: string;
+}
+export interface LoginPayload {
+  userInfo: userPayload;
+  endPoint: string;
+  history: any;
+}
 export interface authState {
   isRegister: boolean;
   isLoggedIn: boolean;
@@ -32,29 +41,19 @@ const initialState: authState = {
   currentUser: null,
 };
 
-export const updateUser = createAsyncThunk('user/updateUser', async (data: { user: any }) => {
-  const response = await updateCurrentUser(data);
-  return response.data.user;
-});
-
-export const getUser = createAsyncThunk('user/getUser', async () => {
-  const response = await getCurrentUser();
-  return response.data.user;
-});
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginPending(state) {
+    loginPending(state, action: PayloadAction<LoginPayload>) {
       state.isLoading = true;
     },
     loginSuccess(state, action) {
       state.isLoggedIn = true;
       state.isLoading = false;
       state.error = null;
-      state.currentUser = action.payload;
-      localStorage.setItem('user', JSON.stringify(action.payload));
+      state.currentUser = action.payload.data.user;
+      localStorage.setItem('user', JSON.stringify(action.payload.data.user));
     },
     loginFail(state, action) {
       state.isLoading = false;
@@ -64,21 +63,9 @@ const authSlice = createSlice({
       state.isRegister = !state.isRegister;
     },
     logoutHandler(state) {
-      localStorage.removeItem('user');
       state.isLoggedIn = false;
       state.currentUser = null;
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(getUser.fulfilled, (state, action) => {
-        state.currentUser = action.payload;
-        console.log(action.payload);
-        localStorage.setItem('user', JSON.stringify(action.payload));
-      })
-      .addCase(updateUser.fulfilled, (state, action) => {
-        state.currentUser = action.payload;
-      });
   },
 });
 export const authActions = authSlice.actions;
