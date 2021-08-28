@@ -1,26 +1,18 @@
-import ProfileComponent from 'features/articles/components/ProfileComponent';
 import { selectUser } from 'features/setting/settingSlice';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import ProfileComponent from '../components/ProfileComponent';
 import { getProfile, profileSelector } from '../profileSlice';
-import ProfileInfo from './ProfileInfo';
 
 export default function ProfilePage() {
   const dispatch = useAppDispatch();
   const currentProfile = useAppSelector(profileSelector);
   const currentUser = useAppSelector(selectUser);
   useEffect(() => {
-    dispatch(getProfile(currentUser.username));
-  }, [dispatch]);
+    dispatch(getProfile(currentUser?.username));
+  }, [dispatch, currentUser?.username]);
   if (currentProfile) {
-    return (
-      <ProfileInfo
-        image={currentProfile.image}
-        username={currentProfile.username}
-        bio={currentProfile.bio}
-        following={currentProfile.following}
-      />
-    );
+    return <ProfileComponent author={currentProfile} />;
   } else {
     return <h3>Loading...</h3>;
   }
