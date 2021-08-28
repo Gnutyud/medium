@@ -27,8 +27,8 @@ function App() {
   const inAuthorPage = useAppSelector(selectInAuthorPage);
   return (
     <>
+      {!inAuthorPage && <Header />}
       <Box className={classes.root}>
-        {!inAuthorPage && <Header />}
         <Switch>
           <Route path="/" component={HomeLayout} exact />
           <Route path="/author/:authorname" component={AuthorPage} exact />

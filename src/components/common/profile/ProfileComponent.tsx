@@ -1,6 +1,8 @@
 import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { useAppDispatch } from 'app/hooks';
+import { setInAuthorPage } from 'features/author/authorSlice';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ArticleComponent from '../article/ArticleComponent';
@@ -75,9 +77,9 @@ interface ProfileComponentProps {
 
 const ProfileComponent: React.FC<ProfileComponentProps> = ({ author, articleList, isLoading }) => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
 
   let articleListElement;
-
   if (!articleList) return (articleListElement = null);
   if (!articleList.length) return (articleListElement = null);
 
@@ -96,13 +98,19 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({ author, articleList
       </Box>
     );
 
+  // handle go to setting
+  const handleGoToSetting = () => {
+    dispatch(setInAuthorPage(false));
+    localStorage.setItem('inAuthorPage', 'false');
+  };
+
   return (
     <Card className={classes.root}>
       <CardMedia
         className={classes.media}
         image="https://st.quantrimang.com/photos/image/2018/09/20/anh-bia-facebook-mau-den-1.jpg"
       >
-        <Link className={classes.settingBtn} to="/settings">
+        <Link className={classes.settingBtn} to="/settings" onClick={handleGoToSetting}>
           <SettingsIcon />
           Edit Profile Setting
         </Link>
