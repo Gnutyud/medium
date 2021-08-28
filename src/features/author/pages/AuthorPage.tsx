@@ -10,6 +10,7 @@ import {
 } from 'features/articles/articlesSlice';
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import { setInAuthorPage } from '../authorSlice';
 import AuthorHeader from '../components/AuthorHeader';
 import AuthorProfileComponent from '../components/AuthorProfileComponent';
 
@@ -37,6 +38,12 @@ const AuthorPage = () => {
   // set initial value of current page
   useEffect(() => {
     dispatch(setNumberCurrentPage(1));
+  }, [dispatch]);
+
+  // persist state first time of is in author page
+  useEffect(() => {
+    dispatch(setInAuthorPage(true));
+    localStorage.setItem('inAuthorPage', 'true');
   }, [dispatch]);
 
   // fetch list articles + pagination by offset + author
