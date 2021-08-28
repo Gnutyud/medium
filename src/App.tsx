@@ -6,8 +6,7 @@ import HomeLayout from 'components/layout/Home';
 import LoginPage from 'features/auth/pages/LoginPage';
 import ProfilePage from 'features/profile/pages/ProfilePage';
 import SettingPage from 'features/setting/pages/SettingPage';
-import { Redirect, Route, Switch } from 'react-router';
-
+import { Redirect, Route, Switch } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '80%',
