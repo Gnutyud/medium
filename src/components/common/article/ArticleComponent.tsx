@@ -96,7 +96,7 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
     // sync url param
     const queryParams = { tag: tagLabel, page: '1' };
     history.push({
-      pathname: match.path,
+      pathname: '/author',
       search: queryString.stringify(queryParams),
     });
   };
