@@ -8,10 +8,10 @@ import {
   selectNumberCurrentPage,
   setNumberCurrentPage,
 } from 'features/articles/articlesSlice';
-import ProfileComponent from 'features/articles/components/ProfileComponent';
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import AuthorHeader from '../components/AuthorHeader';
+import AuthorProfileComponent from '../components/AuthorProfileComponent';
 
 const queryString = require('query-string');
 
@@ -59,7 +59,7 @@ const AuthorPage = () => {
   return (
     <Box>
       <AuthorHeader author={authorInfo} />
-      <ProfileComponent author={authorInfo} articleList={articleList} isLoading={isLoading} />
+      <AuthorProfileComponent author={authorInfo} articleList={articleList} isLoading={isLoading} />
     </Box>
   );
 };

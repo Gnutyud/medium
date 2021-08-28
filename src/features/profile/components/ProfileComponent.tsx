@@ -1,12 +1,10 @@
-import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
+import { Avatar, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useAppDispatch } from 'app/hooks';
 import { setInAuthorPage } from 'features/author/authorSlice';
+import ProfileMenuTabs from 'features/author/components/ProfileMenuTabs';
 import { Link } from 'react-router-dom';
-import Loading from '../../../components/common/Loading';
-import ArticleComponent from '../../author/components/ArticleComponent';
-import ProfileMenuTabs from './ProfileMenuTabs';
 
 const HEIGHT = window.screen.height;
 
@@ -78,26 +76,6 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({ author, articleList
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
-  // display article list
-  let articleListElement;
-  if (!articleList) return (articleListElement = null);
-  if (!articleList.length) return (articleListElement = null);
-
-  articleListElement =
-    articleList?.length === 0 ? null : (
-      <Box>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          <Box className={classes.articleList}>
-            {articleList?.map((article) => (
-              <ArticleComponent key={article.slug} article={article} />
-            ))}
-          </Box>
-        )}
-      </Box>
-    );
-
   // handle go to setting
   const handleGoToSetting = () => {
     dispatch(setInAuthorPage(false));
@@ -129,7 +107,6 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({ author, articleList
       </div>
       <CardContent className={classes.contentContainer}>
         <ProfileMenuTabs tab1="My articles" tab2="My favorite articles" />
-        <Box className={classes.articleListContainer}>{articleListElement}</Box>
       </CardContent>
     </Card>
   );
