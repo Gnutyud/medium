@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar,
@@ -19,6 +19,7 @@ import { authActions } from '../../../features/auth/authSlice';
 import { useHistory } from 'react-router-dom';
 import { userSelector } from '../../../features/auth/authSlice';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { getUser, selectUser } from 'features/setting/settingSlice';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -38,11 +39,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Account = () => {
+  const currentUser = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
   const classes = useStyles();
   const history = useHistory();
-  const dispatch = useAppDispatch();
 
-  const currentUser = useAppSelector(userSelector);
+  console.log(currentUser);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<null | any>(null);
 

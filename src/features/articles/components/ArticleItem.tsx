@@ -16,8 +16,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
+import { setInAuthorPage } from 'features/author/authorSlice';
 import React from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useHistory, useRouteMatch, Link } from 'react-router-dom';
 import { setTag } from '../articlesSlice';
 
 interface ArticleItemProps {
@@ -72,6 +73,9 @@ const useStyles = makeStyles((theme) =>
       width: '100%',
       textAlign: 'right',
     },
+    link: {
+      textDecoration: 'none',
+    },
   })
 );
 
@@ -87,7 +91,6 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
 
   // update tags from store
   const handleClickTag = (tagLabel: string) => {
-    console.info('You clicked the Chip. ', tagLabel);
     dispatch(setTag(tagLabel));
 
     // sync url param
@@ -96,6 +99,12 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
       pathname: match.path,
       search: queryString.stringify(queryParams),
     });
+  };
+
+  // handle event go to author page
+  const handleClickAuthor = () => {
+    localStorage.setItem('inAuthorPage', 'true');
+    dispatch(setInAuthorPage(true));
   };
 
   return (
@@ -110,7 +119,13 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
             }
             title={
               <Box className={classes.authorName} component="div" display="inline">
-                {author?.username}
+                <Link
+                  className={classes.link}
+                  to={`/author/${author?.username}`}
+                  onClick={handleClickAuthor}
+                >
+                  {author?.username}
+                </Link>
               </Box>
             }
             subheader={updatedAt}
