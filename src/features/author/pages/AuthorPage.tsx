@@ -1,4 +1,4 @@
-import { Box, makeStyles } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import ProfileComponent from 'components/common/profile/ProfileComponent';
 import {
@@ -15,10 +15,7 @@ import AuthorHeader from '../components/AuthorHeader';
 
 const queryString = require('query-string');
 
-const useStyles = makeStyles((theme) => ({}));
-
 const AuthorPage = () => {
-  const classes = useStyles();
   const location = useLocation();
   const dispatch = useAppDispatch();
 
@@ -58,10 +55,11 @@ const AuthorPage = () => {
   // get author info (must use profile slice later!!)
   const authorInfo = articleList?.[0]?.author;
 
+  console.log('article list ', articleList);
   return (
     <Box>
       <AuthorHeader author={authorInfo} />
-      <ProfileComponent author={authorInfo} />
+      <ProfileComponent author={authorInfo} articleList={articleList} isLoading={isLoading} />
     </Box>
   );
 };

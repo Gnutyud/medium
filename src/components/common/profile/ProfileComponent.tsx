@@ -1,15 +1,17 @@
-import React from 'react';
-import { Avatar, Typography, Card, CardContent, CardMedia } from '@material-ui/core';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { Link } from 'react-router-dom';
+import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import SettingsIcon from '@material-ui/icons/Settings';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import ArticleComponent from '../article/ArticleComponent';
+import Loading from '../Loading';
 import MenuTabs from './MenuTabs';
 
 const HEIGHT = window.screen.height;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: 700,
+    minHeight: 400,
   },
   media: {
     height: HEIGHT / 3,
@@ -57,14 +59,43 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     top: '-90px',
   },
+  articleListContainer: {
+    marginTop: '30px',
+  },
+  articleList: {
+    width: '100%',
+  },
 }));
 
 interface ProfileComponentProps {
   author: AuthorType;
+  articleList?: ArticleType[];
+  isLoading?: boolean;
 }
 
-const ProfileComponent: React.FC<ProfileComponentProps> = ({ author }) => {
+const ProfileComponent: React.FC<ProfileComponentProps> = ({ author, articleList, isLoading }) => {
   const classes = useStyles();
+
+  let articleListElement;
+
+  if (!articleList) return (articleListElement = null);
+  if (!articleList.length) return (articleListElement = null);
+
+  articleListElement =
+    articleList?.length === 0 ? null : (
+      <Box>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Box className={classes.articleList}>
+            {articleList?.map((article) => (
+              <ArticleComponent key={article.slug} article={article} />
+            ))}
+          </Box>
+        )}
+      </Box>
+    );
+
   return (
     <Card className={classes.root}>
       <CardMedia
@@ -90,6 +121,7 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({ author }) => {
       </div>
       <CardContent className={classes.contentContainer}>
         <MenuTabs tab1="My articles" tab2="My favorite articles" />
+        <Box className={classes.articleListContainer}>{articleListElement}</Box>
       </CardContent>
     </Card>
   );
