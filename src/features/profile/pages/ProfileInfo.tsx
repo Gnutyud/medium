@@ -3,7 +3,7 @@ import { Avatar, Typography, Card, CardContent, CardMedia } from '@material-ui/c
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import MenuTabs from '../../../components/common/MenuTabs';
+import MenuTabs from '../../../components/common/profile/MenuTabs';
 interface Props {
   image: string;
   username: string;
