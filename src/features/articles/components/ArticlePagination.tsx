@@ -37,8 +37,6 @@ const ArticlePagination = () => {
 
   // navigate to page event
   const handleNavigate = (event: any, pageNumber: number) => {
-    console.log('pageNumber ', pageNumber, typeof pageNumber);
-    console.log('tag ', tagByArticle);
     dispatch(setNumberCurrentPage(pageNumber));
 
     // sync url param

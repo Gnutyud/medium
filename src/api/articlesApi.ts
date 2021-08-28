@@ -4,13 +4,15 @@ const articlesApi = {
   getAll: (
     offsetParam?: number,
     limitParam?: number,
-    tagParam?: string
+    tagParam?: string,
+    authorNameParam?: string
   ): Promise<ArticleType[]> => {
     return axiosClient.get('/articles', {
       params: {
         offset: offsetParam,
         limit: limitParam,
         tag: tagParam,
+        author: authorNameParam,
       },
     });
   },

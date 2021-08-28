@@ -1,13 +1,13 @@
 import '@fontsource/roboto';
 import { Box, makeStyles } from '@material-ui/core';
-import { useAppDispatch } from 'app/hooks';
+import { useAppSelector } from 'app/hooks';
 import { Header, NotFound } from 'components/common';
 import HomeLayout from 'components/layout/Home';
-import { setNumberCurrentPage } from 'features/articles/articlesSlice';
 import LoginPage from 'features/auth/pages/LoginPage';
+import { selectInAuthorPage } from 'features/author/authorSlice';
+import AuthorPage from 'features/author/pages/AuthorPage';
 import ProfilePage from 'features/profile/pages/ProfilePage';
 import SettingPage from 'features/setting/pages/SettingPage';
-import { useEffect } from 'react';
 import { Route, Switch } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,18 +23,14 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const dispatch = useAppDispatch();
-  // initial page = 1
-  useEffect(() => {
-    dispatch(setNumberCurrentPage(1));
-  }, [dispatch]);
-
+  const inAuthorPage = useAppSelector(selectInAuthorPage);
   return (
     <>
-      <Header />
       <Box className={classes.root}>
+        {!inAuthorPage && <Header />}
         <Switch>
           <Route path="/" component={HomeLayout} exact />
+          <Route path="/author/:authorname" component={AuthorPage} exact />
           <Route path="/auth" component={LoginPage} />
           <Route path="/home" component={HomeLayout} />
           <Route path="/settings" component={SettingPage} />
