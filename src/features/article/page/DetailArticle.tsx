@@ -42,7 +42,7 @@ function DetailArticle() {
       type: getArticle.type,
       payload: slug,
     });
-  }, [dispatch]);
+  }, [dispatch, slug]);
 
   const classes = useStyle();
 
@@ -72,7 +72,7 @@ function DetailArticle() {
                   variant="body1"
                   className={classes.avatar}
                   onClick={() => {
-                    history.push(`/author/${article?.author?.username}`);
+                    history.push(`/profile/${article?.author?.username}`);
                   }}
                 >
                   {article?.author?.username}
