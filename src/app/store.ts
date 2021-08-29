@@ -3,6 +3,8 @@ import createSagaMiddleware from 'redux-saga';
 import articleReducer from '../features/articles/articlesSlice';
 import authReducer from '../features/auth/authSlice';
 import profileReducer from '../features/profile/profileSlice';
+import { oneArticleReducer } from 'features/article/articleSlice';
+import authorReducer from '../features/profile/profileSlice';
 import tagReducer from '../features/tags/tagsSlice';
 import settingReducer from './../features/setting/settingSlice';
 import rootSaga from './rootSaga';
@@ -17,6 +19,8 @@ export const store = configureStore({
     article: articleReducer,
     setting: settingReducer,
     profile: profileReducer,
+    author: authorReducer,
+    oneArticleReducer: oneArticleReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });

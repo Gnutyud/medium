@@ -1,5 +1,10 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
 
 export const NotFound = () => {
-  return <div>Not Found!</div>;
+  return (
+    <Typography style={{ textAlign: 'center' }} variant="h3">
+      Not Found!!
+    </Typography>
+  );
 };
