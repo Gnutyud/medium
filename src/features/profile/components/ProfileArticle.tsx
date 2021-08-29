@@ -17,7 +17,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
 import { setTag } from 'features/articles/articlesSlice';
-import { setInAuthorPage } from 'features/author/authorSlice';
+import { setInAuthorPage } from 'features/profile/profileSlice';
 import React from 'react';
 import { useHistory, useRouteMatch, Link } from 'react-router-dom';
 
@@ -96,7 +96,7 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
     // sync url param
     const queryParams = { tag: tagLabel, page: '1' };
     history.push({
-      pathname: match.path,
+      pathname: match.url,
       search: queryString.stringify(queryParams),
     });
   };

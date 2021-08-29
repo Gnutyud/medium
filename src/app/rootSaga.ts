@@ -1,16 +1,14 @@
-import { authActions } from '../features/auth/authSlice';
 import { takeEvery } from '@redux-saga/core/effects';
 import { getListArticleSaga, postArticleSaga } from 'features/articles/articlesSaga';
-import { postArticle, getListArticle } from 'features/articles/articlesSlice';
+import { getListArticle, postArticle } from 'features/articles/articlesSlice';
 import { getCurrentUserSaga, updateCurrentUserSaga } from 'features/setting/settingSaga';
 import { getUser, updateUser } from 'features/setting/settingSlice';
 import { getListTagSaga } from 'features/tags/tagsSaga';
 import { getListTag } from 'features/tags/tagsSlice';
 import authSaga from '../features/auth/authSaga';
-import { getProfile } from 'features/profile/profileSlice';
-import { profileSaga } from 'features/profile/profileSaga';
 import { getArticle } from 'features/article/articleSlice';
 import { getArticleBySlugSaga } from 'features/article/articleSaga';
+import { authActions } from '../features/auth/authSlice';
 export default function* rootSaga() {
   // auth feature
   yield takeEvery(authActions.loginPending.type, authSaga);
@@ -24,5 +22,4 @@ export default function* rootSaga() {
   yield takeEvery(getUser.type, getCurrentUserSaga);
   yield takeEvery(updateUser.type, updateCurrentUserSaga);
   // profile feature
-  yield takeEvery(getProfile.type, profileSaga);
 }

@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   getListArticle,
+  selectCountArticles,
   selectListArticles,
   selectLoadingArticles,
   selectNumberArticlePerPage,
@@ -13,6 +14,7 @@ import {
   selectTagByArticle,
 } from '../articlesSlice';
 import ArticleItem from './ArticleItem';
+import ArticlePagination from './ArticlePagination';
 
 const queryString = require('query-string');
 
@@ -36,6 +38,7 @@ const ArticleList = () => {
   const isLoading = useAppSelector(selectLoadingArticles);
 
   // select data for pagination from store
+  const articleCount = useAppSelector(selectCountArticles);
   const currentPage = useAppSelector(selectNumberCurrentPage);
   const articlePerPage = useAppSelector(selectNumberArticlePerPage);
 
@@ -70,10 +73,20 @@ const ArticleList = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        <Box className={classes.articleList}>
-          {articleList.map((article) => (
-            <ArticleItem key={article.slug} article={article} />
-          ))}
+        <Box>
+          <Box className={classes.articleList}>
+            {articleList.map((article) => (
+              <ArticleItem key={article.slug} article={article} />
+            ))}
+          </Box>
+          <Box>
+            <ArticlePagination
+              articleCount={articleCount}
+              articlePerPage={articlePerPage}
+              tagByArticle={tagByArticle}
+              currentPage={currentPage}
+            />
+          </Box>
         </Box>
       )}
     </Box>

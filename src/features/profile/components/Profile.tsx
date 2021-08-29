@@ -2,12 +2,11 @@ import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useAppDispatch } from 'app/hooks';
-import { setInAuthorPage } from 'features/author/authorSlice';
-import React from 'react';
+import { setInAuthorPage } from 'features/profile/profileSlice';
 import { Link } from 'react-router-dom';
-import ArticleComponent from '../article/ArticleComponent';
-import Loading from '../Loading';
-import MenuTabs from './MenuTabs';
+import Loading from '../../../components/common/Loading';
+import ArticleComponent from './ProfileArticle';
+import ProfileMenuTabs from './ProfileMenuTabs';
 
 const HEIGHT = window.screen.height;
 
@@ -69,16 +68,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface ProfileComponentProps {
+interface AuthorProfileComponentProps {
   author: AuthorType;
   articleList?: ArticleType[];
   isLoading?: boolean;
 }
 
-const ProfileComponent: React.FC<ProfileComponentProps> = ({ author, articleList, isLoading }) => {
+const AuthorProfileComponent: React.FC<AuthorProfileComponentProps> = ({
+  author,
+  articleList,
+  isLoading,
+}) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
+  // display article list
   let articleListElement;
   if (!articleList) return (articleListElement = null);
   if (!articleList.length) return (articleListElement = null);
@@ -128,10 +132,10 @@ const ProfileComponent: React.FC<ProfileComponentProps> = ({ author, articleList
         </Typography>
       </div>
       <CardContent className={classes.contentContainer}>
-        <MenuTabs tab1="My articles" tab2="My favorite articles" />
+        <ProfileMenuTabs tab1="My articles" tab2="My favorite articles" />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
       </CardContent>
     </Card>
   );
 };
-export default ProfileComponent;
+export default AuthorProfileComponent;

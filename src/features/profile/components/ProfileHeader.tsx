@@ -6,8 +6,8 @@ import CheckIcon from '@material-ui/icons/Check';
 import { grey } from '@material-ui/core/colors';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { setInAuthorPage } from '../authorSlice';
-import { selectCountArticles } from 'features/articles/articlesSlice';
+import { setInAuthorPage } from '../profileSlice';
+import { selectCountArticles, setTag } from 'features/articles/articlesSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -64,6 +64,7 @@ const AuthorHeader: React.FC<AuthorHeaderProps> = ({ author }) => {
   // handle event go to home page
   const handleGoToHomePage = () => {
     dispatch(setInAuthorPage(false));
+    dispatch(setTag(null));
     localStorage.setItem('inAuthorPage', 'false');
     history.push('/');
   };

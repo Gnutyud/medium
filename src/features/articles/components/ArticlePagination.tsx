@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
 import { Box } from '@material-ui/core';
 import { Pagination, PaginationItem } from '@material-ui/lab';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch } from 'app/hooks';
+import { useEffect } from 'react';
 import {
   Link,
   MemoryRouter,
@@ -10,27 +10,27 @@ import {
   useLocation,
   useRouteMatch,
 } from 'react-router-dom';
-import {
-  selectCountArticles,
-  selectNumberArticlePerPage,
-  selectNumberCurrentPage,
-  selectTagByArticle,
-  setNumberCurrentPage,
-} from '../articlesSlice';
+import { setNumberCurrentPage } from '../articlesSlice';
 
 const queryString = require('query-string');
 
-const ArticlePagination = () => {
+interface ArticlePaginationProps {
+  articleCount: number;
+  articlePerPage: number;
+  tagByArticle: string | undefined;
+  currentPage: number;
+}
+
+const ArticlePagination: React.FC<ArticlePaginationProps> = ({
+  articleCount,
+  articlePerPage,
+  tagByArticle,
+  currentPage,
+}) => {
   const history = useHistory();
   const location = useLocation();
   const match = useRouteMatch();
   const dispatch = useAppDispatch();
-
-  // get data for pagination
-  const articleCount = useAppSelector(selectCountArticles);
-  const articlePerPage = useAppSelector(selectNumberArticlePerPage);
-  const tagByArticle = useAppSelector(selectTagByArticle);
-  const currentPage = useAppSelector(selectNumberCurrentPage);
 
   // get total page
   const totalPage = Math.ceil(articleCount / articlePerPage);
