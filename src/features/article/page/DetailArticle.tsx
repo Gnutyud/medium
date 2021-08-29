@@ -1,5 +1,10 @@
-import { Avatar, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Box, Grid, Link, makeStyles, Typography } from '@material-ui/core';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { NotFound } from 'components/common';
+import Loading from 'components/common/Loading';
 import React from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import { getArticle, selectArticle, selectError, selectIsloading } from '../articleSlice';
 import SidebarDetail from '../components/SidebarDetail';
 
 const useStyle = makeStyles(() => ({
@@ -25,42 +30,67 @@ const useStyle = makeStyles(() => ({
 }));
 
 function DetailArticle() {
+  const { slug }: { slug: string } = useParams();
+  const article = useAppSelector(selectArticle);
+  const isloading = useAppSelector(selectIsloading);
+  const error = useAppSelector(selectError);
+  const dispatch = useAppDispatch();
+  const body = article.body ? article.body.split('\n') : [];
+  const history = useHistory();
+  React.useEffect(() => {
+    dispatch({
+      type: getArticle.type,
+      payload: slug,
+    });
+  }, [dispatch]);
+
   const classes = useStyle();
-  return (
-    <div style={{ marginTop: '50px' }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={3}>
-          <SidebarDetail />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h5" className={classes.title}>
-            Highway to Inferno: On the Road with the Oregon Proud Boys
-          </Typography>
-          <Typography variant="h5" className={classes.description}>
-            Law-and-order rebels. Freedom-loving fascists. What makes the far right tick?
-          </Typography>
-          <Typography style={{ display: 'flex', marginBottom: '30px' }}>
-            <Avatar alt="Dat" src="/static/images/avatar/1.jpg" />
-            <span className={classes.avatar}>Lê Thành Đạt</span>
-            <span className={classes.avatarDate}>May 8, 2021</span>
-          </Typography>
-          <Typography variant="body1">
-            Toby Keith’s daddy isn’t the only one. I’m idling on a sun-baked Oregon interstate just
-            south of Portland, surrounded by lifted trucks carrying on the Keith tradition. The
-            light summer breeze makes the countless flags dance in the shimmering heat. Trump 2020.
-            Blue Lives Matter. American. Punisher. Gadsden. Confederate.
-          </Typography>
-          <br />
-          <Typography variant="body1">
-            Toby Keith’s daddy isn’t the only one. I’m idling on a sun-baked Oregon interstate just
-            south of Portland, surrounded by lifted trucks carrying on the Keith tradition. The
-            light summer breeze makes the countless flags dance in the shimmering heat. Trump 2020.
-            Blue Lives Matter. American. Punisher. Gadsden. Confederate.
-          </Typography>
-        </Grid>
-      </Grid>
-    </div>
-  );
+
+  if (isloading) {
+    return <Loading />;
+  } else if (error) {
+    return <NotFound />;
+  } else {
+    return (
+      article && (
+        <div style={{ marginTop: '50px' }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={3}>
+              <SidebarDetail article={article} />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h5" className={classes.title}>
+                {article.title}
+              </Typography>
+              <Typography variant="h5" className={classes.description}>
+                {article.description}
+              </Typography>
+              <Box style={{ display: 'flex', marginBottom: '30px' }}>
+                <Avatar alt={article?.author?.username} src={article?.author?.image} />
+                <Link
+                  component="button"
+                  variant="body1"
+                  className={classes.avatar}
+                  onClick={() => {
+                    history.push(`/author/${article?.author?.username}`);
+                  }}
+                >
+                  {article?.author?.username}
+                </Link>
+                <span className={classes.avatarDate}>{article.createdAt}</span>
+              </Box>
+              {body.map((item: string) => (
+                <>
+                  <Typography variant="body1">{item}</Typography>
+                  <br />
+                </>
+              ))}
+            </Grid>
+          </Grid>
+        </div>
+      )
+    );
+  }
 }
 
 export default DetailArticle;
