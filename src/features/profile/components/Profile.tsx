@@ -1,9 +1,10 @@
 import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Loading from '../../../components/common/Loading';
 import ArticleComponent from './ProfileArticle';
+import ProfileArticlePagination from './ProfileArticlePagination';
 import ProfileMenuTabs from './ProfileMenuTabs';
 
 const HEIGHT = window.screen.height;
@@ -64,15 +65,32 @@ const useStyles = makeStyles((theme) => ({
   articleList: {
     width: '100%',
   },
+  navlink: {
+    textDecoration: 'none',
+  },
 }));
 
 interface ProfileProps {
   author: ProfileType;
   articleList?: ArticleType[];
   isLoading?: boolean;
+  articleCount?: number;
+  tagByArticle?: string;
+  currentPage?: number;
+  articlePerPage?: number;
+  username?: string;
 }
 
-const Profile: React.FC<ProfileProps> = ({ author, articleList, isLoading }) => {
+const Profile: React.FC<ProfileProps> = ({
+  author,
+  articleList,
+  isLoading,
+  articleCount,
+  tagByArticle,
+  currentPage,
+  articlePerPage,
+  username,
+}) => {
   const classes = useStyles();
 
   // display article list
@@ -106,11 +124,14 @@ const Profile: React.FC<ProfileProps> = ({ author, articleList, isLoading }) => 
           Edit Profile Setting
         </Link>
       </CardMedia>
+
       <Avatar src={author?.image} className={classes.profileImage} />
       <div className={classes.profileInfoContainer}>
-        <Typography align={'center'} className={classes.userName} variant="h4" gutterBottom>
-          {author?.username}
-        </Typography>
+        <NavLink to={`/profile/${username}`} className={classes.navlink}>
+          <Typography align={'center'} className={classes.userName} variant="h4" gutterBottom>
+            {author?.username}
+          </Typography>
+        </NavLink>
         <Typography align={'center'} variant="subtitle2" gutterBottom className={classes.userTag}>
           {author?.following}
         </Typography>
@@ -121,6 +142,13 @@ const Profile: React.FC<ProfileProps> = ({ author, articleList, isLoading }) => 
       <CardContent className={classes.contentContainer}>
         <ProfileMenuTabs tab1="My articles" tab2="My favorite articles" />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
+        <ProfileArticlePagination
+          articleCount={articleCount}
+          articlePerPage={articlePerPage}
+          tagByArticle={tagByArticle}
+          currentPage={currentPage}
+          username={username}
+        />
       </CardContent>
     </Card>
   );
