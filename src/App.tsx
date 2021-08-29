@@ -1,15 +1,12 @@
 import '@fontsource/roboto';
 import { Box, makeStyles } from '@material-ui/core';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { Header, NotFound } from 'components/common';
 import HomeLayout from 'components/layout/Home';
 import AddArticle from 'features/article/page/AddArticle';
 import DetailArticle from 'features/article/page/DetailArticle';
 import LoginPage from 'features/auth/pages/LoginPage';
-import { selectInAuthorPage, setInAuthorPage } from 'features/profile/profileSlice';
 import ProfilePage from 'features/profile/pages/ProfilePage';
 import SettingPage from 'features/setting/pages/SettingPage';
-import { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,18 +22,9 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
-  const dispatch = useAppDispatch();
-  const inAuthorPage = useAppSelector(selectInAuthorPage);
-
-  // persist state first time of is in author page
-  useEffect(() => {
-    dispatch(setInAuthorPage(false));
-    localStorage.setItem('inAuthorPage', 'false');
-  }, [dispatch]);
-
   return (
     <>
-      {!inAuthorPage && <Header />}
+      <Header />
       <Box className={classes.root}>
         <Switch>
           <Route path="/" component={HomeLayout} exact />

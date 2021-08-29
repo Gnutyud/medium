@@ -1,5 +1,6 @@
 import { Box } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import Loading from 'components/common/Loading';
 import {
   getListArticle,
   selectListArticles,
@@ -10,9 +11,8 @@ import {
 } from 'features/articles/articlesSlice';
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { getProfile, selectIsLoading, selectProfile, setInAuthorPage } from '../profileSlice';
-import AuthorHeader from '../components/ProfileHeader';
-import AuthorProfileComponent from '../components/Profile';
+import Profile from '../components/Profile';
+import { getProfile, selectIsLoading, selectProfile } from '../profileSlice';
 
 const queryString = require('query-string');
 
@@ -28,18 +28,9 @@ const ProfilePage = () => {
     dispatch(setNumberCurrentPage(1));
   }, [dispatch]);
 
-  // persist state first time of is in author page
-  useEffect(() => {
-    dispatch(setInAuthorPage(true));
-    localStorage.setItem('inAuthorPage', 'true');
-  }, [dispatch]);
-
   // select profile + loading state
   const profile = useAppSelector(selectProfile);
   const isLoadingProfile = useAppSelector(selectIsLoading);
-
-  console.log('profile ', profile);
-  console.log('is loading profile ', isLoadingProfile);
 
   // select data from store
   const articleList = useAppSelector(selectListArticles);
@@ -77,8 +68,13 @@ const ProfilePage = () => {
 
   return (
     <Box>
-      <AuthorHeader author={profile} />
-      <AuthorProfileComponent author={profile} articleList={articleList} isLoading={isLoading} />
+      {isLoadingProfile ? (
+        <Loading />
+      ) : (
+        <Box>
+          <Profile author={profile} articleList={articleList} isLoading={isLoading} />
+        </Box>
+      )}
     </Box>
   );
 };
