@@ -8,7 +8,7 @@ interface ArticleType {
   tagList: string[];
   favorited: boolean;
   favoritesCount: number;
-  author: AuthorType;
+  author: ProfileType;
 }
 
 interface FormInputArticleType {

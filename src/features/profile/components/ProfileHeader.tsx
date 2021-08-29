@@ -6,7 +6,6 @@ import CheckIcon from '@material-ui/icons/Check';
 import { grey } from '@material-ui/core/colors';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { setInAuthorPage } from '../profileSlice';
 import { selectCountArticles, setTag } from 'features/articles/articlesSlice';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface AuthorHeaderProps {
-  author: AuthorType;
+  author: ProfileType;
 }
 
 const AuthorHeader: React.FC<AuthorHeaderProps> = ({ author }) => {
@@ -63,9 +62,7 @@ const AuthorHeader: React.FC<AuthorHeaderProps> = ({ author }) => {
   const totalArticle = useAppSelector(selectCountArticles);
   // handle event go to home page
   const handleGoToHomePage = () => {
-    dispatch(setInAuthorPage(false));
     dispatch(setTag(null));
-    localStorage.setItem('inAuthorPage', 'false');
     history.push('/');
   };
   return (

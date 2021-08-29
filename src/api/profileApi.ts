@@ -29,4 +29,11 @@ const profileApi = {
     return axiosClient.get(profileUrl, axiosConfig);
   },
 };
+
+export const profileApi2 = {
+  getProfileByUsername: (username: string): Promise<ProfileType> => {
+    return axiosClient.get(`/profiles/${username}`);
+  },
+};
+
 export default profileApi;
