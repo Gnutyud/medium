@@ -4,6 +4,7 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import SplitButton from './SplitButton';
 
 const useStyle = makeStyles(() => ({
   position: {
@@ -34,6 +35,8 @@ function SidebarDetail({ article }: { article: ArticleType }) {
     }
     setState({ right: open });
   };
+  const local: any = localStorage.getItem('user');
+  const curUser = JSON.parse(local);
 
   return (
     <Box className={classes.position}>
@@ -42,14 +45,14 @@ function SidebarDetail({ article }: { article: ArticleType }) {
         variant="h6"
         className={classes.name}
         onClick={() => {
-          history.push(`/author/${article?.author?.username}`);
+          history.push(`/profile/${article?.author?.username}`);
         }}
       >
         {article?.author?.username}
       </Link>
       <Typography className={classes.bio}>{article?.author?.bio}</Typography>
       <Divider light />
-      <Box style={{ marginTop: '20px' }}>
+      <Box style={{ marginTop: '20px', display: 'flex', lineHeight: '48px' }}>
         <IconButton aria-label="like" color="default">
           <FavoriteBorderIcon />
         </IconButton>
@@ -70,6 +73,7 @@ function SidebarDetail({ article }: { article: ArticleType }) {
           </SwipeableDrawer>
         </React.Fragment>
         <span>100</span>
+        {curUser?.username === article?.author?.username ? <SplitButton /> : ''}
       </Box>
     </Box>
   );
