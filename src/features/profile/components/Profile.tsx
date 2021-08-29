@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface AuthorProfileComponentProps {
-  author: AuthorType;
+  author: ProfileType;
   articleList?: ArticleType[];
   isLoading?: boolean;
 }

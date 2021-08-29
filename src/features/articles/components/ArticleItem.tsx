@@ -17,8 +17,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
 import { setInAuthorPage } from 'features/profile/profileSlice';
-import React from 'react';
-import { useHistory, useRouteMatch, Link } from 'react-router-dom';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { setTag } from '../articlesSlice';
 
 interface ArticleItemProps {

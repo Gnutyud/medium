@@ -7,7 +7,7 @@ import AddArticle from 'features/article/page/AddArticle';
 import DetailArticle from 'features/article/page/DetailArticle';
 import LoginPage from 'features/auth/pages/LoginPage';
 import { selectInAuthorPage, setInAuthorPage } from 'features/profile/profileSlice';
-import AuthorPage from 'features/profile/pages/ProfilePage';
+import ProfilePage from 'features/profile/pages/ProfilePage';
 import SettingPage from 'features/setting/pages/SettingPage';
 import { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
@@ -45,7 +45,7 @@ function App() {
           <Route path="/article/create" component={AddArticle} />
           <Route path="/article/:slug" component={DetailArticle} />
           <Route path="/settings" component={SettingPage} />
-          <Route path="/profile/:username" component={AuthorPage} exact />
+          <Route path="/profile/:username" component={ProfilePage} exact />
           <Route component={NotFound} />
         </Switch>
       </Box>

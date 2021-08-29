@@ -2,7 +2,7 @@ import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import articleReducer from '../features/articles/articlesSlice';
 import authReducer from '../features/auth/authSlice';
-import authorReducer from '../features/profile/profileSlice';
+import profileReducer from '../features/profile/profileSlice';
 import tagReducer from '../features/tags/tagsSlice';
 import settingReducer from './../features/setting/settingSlice';
 import rootSaga from './rootSaga';
@@ -13,10 +13,10 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    article: articleReducer,
     tag: tagReducer,
+    article: articleReducer,
     setting: settingReducer,
-    author: authorReducer,
+    profile: profileReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
 });

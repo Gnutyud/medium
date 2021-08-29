@@ -46,7 +46,6 @@ export const Account = () => {
   const classes = useStyles();
   const history = useHistory();
 
-  console.log(currentUser);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<null | any>(null);
 
@@ -71,7 +70,8 @@ export const Account = () => {
     setOpen(false);
   };
   const handleProfile = () => {
-    history.replace('/profile/' + currentUser?.username);
+    // history.replace('/profile/' + currentUser?.username);
+    history.push(`/profile/${currentUser?.username}`);
     setOpen(false);
   };
   function handleListKeyDown(event: any) {

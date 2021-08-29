@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface AuthorHeaderProps {
-  author: AuthorType;
+  author: ProfileType;
 }
 
 const AuthorHeader: React.FC<AuthorHeaderProps> = ({ author }) => {

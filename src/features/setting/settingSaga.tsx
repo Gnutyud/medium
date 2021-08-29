@@ -6,7 +6,6 @@ import { getUserSaga, updateError, updateUserSaga } from './settingSlice';
 
 export function* getCurrentUserSaga(): SagaIterator<void> {
   try {
-    console.log('run');
     const res = yield call(settingApi.getCurrentUser);
     yield put({
       type: getUserSaga.type,
