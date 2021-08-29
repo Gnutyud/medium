@@ -1,10 +1,10 @@
-import { Avatar, Box, Grid, Link, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { NotFound } from 'components/common';
 import Loading from 'components/common/Loading';
 import { nanoid } from 'nanoid';
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { getArticle, selectArticle, selectError, selectIsloading } from '../articleSlice';
 import SidebarDetail from '../components/SidebarDetail';
 
@@ -23,6 +23,7 @@ const useStyle = makeStyles(() => ({
     lineHeight: '40px',
     marginLeft: '10px',
     color: 'green',
+    textDecoration: 'none',
   },
   avatarDate: {
     lineHeight: '40px',
@@ -37,7 +38,6 @@ function DetailArticle() {
   const error = useAppSelector(selectError);
   const dispatch = useAppDispatch();
   const body = article.body ? article.body.split('\n') : [];
-  const history = useHistory();
   React.useEffect(() => {
     dispatch({
       type: getArticle.type,
@@ -68,16 +68,9 @@ function DetailArticle() {
               </Typography>
               <Box style={{ display: 'flex', marginBottom: '30px' }}>
                 <Avatar alt={article?.author?.username} src={article?.author?.image} />
-                <Link
-                  component="button"
-                  variant="body1"
-                  className={classes.avatar}
-                  onClick={() => {
-                    history.push(`/profile/${article?.author?.username}`);
-                  }}
-                >
+                <NavLink className={classes.avatar} to={`/profile/${article?.author?.username}`}>
                   {article?.author?.username}
-                </Link>
+                </NavLink>
                 <span className={classes.avatarDate}>{article.createdAt}</span>
               </Box>
               {body.map((item: string) => (

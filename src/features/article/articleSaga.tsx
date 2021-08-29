@@ -19,3 +19,12 @@ export function* getArticleBySlugSaga(action: PayloadAction<string>): SagaIterat
     });
   }
 }
+
+export function* deleteArticleBySlug(action: PayloadAction<string>): SagaIterator<void> {
+  try {
+    const slug = action.payload;
+    yield call(articlesApi.deleteOne, slug);
+  } catch (error) {
+    console.log(error);
+  }
+}
