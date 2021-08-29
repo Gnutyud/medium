@@ -6,9 +6,8 @@ import HomeLayout from 'components/layout/Home';
 import AddArticle from 'features/article/page/AddArticle';
 import DetailArticle from 'features/article/page/DetailArticle';
 import LoginPage from 'features/auth/pages/LoginPage';
-import { selectInAuthorPage, setInAuthorPage } from 'features/author/authorSlice';
-import AuthorPage from 'features/author/pages/AuthorPage';
-import ProfilePage from 'features/profile/pages/ProfilePage';
+import { selectInAuthorPage, setInAuthorPage } from 'features/profile/profileSlice';
+import AuthorPage from 'features/profile/pages/ProfilePage';
 import SettingPage from 'features/setting/pages/SettingPage';
 import { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
@@ -41,13 +40,12 @@ function App() {
       <Box className={classes.root}>
         <Switch>
           <Route path="/" component={HomeLayout} exact />
-          <Route path="/author/:authorname" component={AuthorPage} exact />
           <Route path="/auth" component={LoginPage} />
           <Route path="/home" component={HomeLayout} />
           <Route path="/article/create" component={AddArticle} />
           <Route path="/article/:slug" component={DetailArticle} />
           <Route path="/settings" component={SettingPage} />
-          <Route path="/profile" component={ProfilePage} />
+          <Route path="/profile/:username" component={AuthorPage} exact />
           <Route component={NotFound} />
         </Switch>
       </Box>

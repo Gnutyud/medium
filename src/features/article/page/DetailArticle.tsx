@@ -1,4 +1,4 @@
-import { Avatar, Box, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Avatar, Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import SidebarDetail from '../components/SidebarDetail';
 
