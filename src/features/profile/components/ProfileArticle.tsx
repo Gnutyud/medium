@@ -110,6 +110,11 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
     history.push(`/article/${slug}`);
   };
 
+  // handle go to profile home page
+  const handleGoToProfileHomePage = () => {
+    dispatch(setTag(null));
+  };
+
   return (
     <Box className={classes.root}>
       <Card className={classes.card}>
@@ -122,7 +127,11 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
             }
             title={
               <Box className={classes.authorName} component="div" display="inline">
-                <Link className={classes.link} to={`/profile/${author?.username}`}>
+                <Link
+                  className={classes.link}
+                  to={`/profile/${author?.username}`}
+                  onClick={handleGoToProfileHomePage}
+                >
                   {author?.username}
                 </Link>
               </Box>
