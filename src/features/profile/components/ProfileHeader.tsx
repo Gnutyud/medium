@@ -6,7 +6,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import { grey } from '@material-ui/core/colors';
 import { useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { setInAuthorPage } from '../authorSlice';
+import { setInAuthorPage } from '../profileSlice';
 import { selectCountArticles, setTag } from 'features/articles/articlesSlice';
 
 const useStyles = makeStyles((theme) => ({

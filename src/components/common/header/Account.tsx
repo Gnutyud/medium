@@ -1,25 +1,24 @@
-import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Avatar,
   Button,
   ClickAwayListener,
-  Paper,
-  Popper,
-  MenuItem,
-  MenuList,
   Divider,
   ListItemAvatar,
   ListItemText,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper,
 } from '@material-ui/core';
-import SettingsIcon from '@material-ui/icons/Settings';
+import { makeStyles } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
-import { authActions } from '../../../features/auth/authSlice';
-import { useHistory } from 'react-router-dom';
-import { userSelector } from '../../../features/auth/authSlice';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import SettingsIcon from '@material-ui/icons/Settings';
 import { getUser, selectUser } from 'features/setting/settingSlice';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { authActions } from '../../../features/auth/authSlice';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',

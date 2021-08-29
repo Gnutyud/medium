@@ -1,19 +1,72 @@
-import { selectUser } from 'features/setting/settingSlice';
+import { Box } from '@material-ui/core';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import {
+  getListArticle,
+  selectListArticles,
+  selectLoadingArticles,
+  selectNumberArticlePerPage,
+  selectNumberCurrentPage,
+  setNumberCurrentPage,
+} from 'features/articles/articlesSlice';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import ProfileComponent from '../components/ProfileComponent';
-import { getProfile, profileSelector } from '../profileSlice';
+import { useLocation, useParams } from 'react-router-dom';
+import { setInAuthorPage } from '../profileSlice';
+import AuthorHeader from '../components/ProfileHeader';
+import AuthorProfileComponent from '../components/Profile';
 
-export default function ProfilePage() {
+const queryString = require('query-string');
+
+const AuthorPage = () => {
+  const location = useLocation();
   const dispatch = useAppDispatch();
-  const currentProfile = useAppSelector(profileSelector);
-  const currentUser = useAppSelector(selectUser);
+
+  // select author name from url
+  const { username } = useParams<{ username: string }>();
+
+  // select data from store
+  const articleList = useAppSelector(selectListArticles);
+  const isLoading = useAppSelector(selectLoadingArticles);
+
+  // select data for pagination from store
+  const currentPage = useAppSelector(selectNumberCurrentPage);
+  const articlePerPage = useAppSelector(selectNumberArticlePerPage);
+
+  // get page from url param
+  const { page } = queryString.parse(location.search);
+  const offsetIndex = +page - 1 || currentPage - 1;
+
+  // set initial value of current page
   useEffect(() => {
-    dispatch(getProfile(currentUser?.username));
+    dispatch(setNumberCurrentPage(1));
   }, [dispatch]);
-  if (currentProfile) {
-    return <ProfileComponent author={currentProfile} />;
-  } else {
-    return <h3>Loading...</h3>;
-  }
-}
+
+  // persist state first time of is in author page
+  dispatch(setInAuthorPage(true));
+  localStorage.setItem('inAuthorPage', 'true');
+
+  // fetch list articles + pagination by offset + author
+  useEffect(() => {
+    const action = {
+      type: getListArticle.type,
+      payload: {
+        offset: offsetIndex * articlePerPage,
+        limit: articlePerPage,
+        author: username,
+      },
+    };
+    dispatch(action);
+  }, [username, offsetIndex, articlePerPage, dispatch]);
+
+  // get author info (must use profile slice later!!)
+  const authorInfo = articleList?.[0]?.author;
+
+  console.log('article list ', articleList);
+  return (
+    <Box>
+      <AuthorHeader author={authorInfo} />
+      <AuthorProfileComponent author={authorInfo} articleList={articleList} isLoading={isLoading} />
+    </Box>
+  );
+};
+
+export default AuthorPage;

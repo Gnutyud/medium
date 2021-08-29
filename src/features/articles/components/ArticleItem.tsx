@@ -16,7 +16,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
-import { setInAuthorPage } from 'features/author/authorSlice';
+import { setInAuthorPage } from 'features/profile/profileSlice';
 import React from 'react';
 import { useHistory, useRouteMatch, Link } from 'react-router-dom';
 import { setTag } from '../articlesSlice';
@@ -121,7 +121,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
               <Box className={classes.authorName} component="div" display="inline">
                 <Link
                   className={classes.link}
-                  to={`/author/${author?.username}`}
+                  to={`/profile/${author?.username}`}
                   onClick={handleClickAuthor}
                 >
                   {author?.username}

@@ -1,28 +1,29 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
-interface ProfileType {
-  username: string;
-  image: string;
-  following: boolean;
-  bio: string;
+
+const inAuthorPagePersist = localStorage.getItem('inAuthorPage');
+
+interface InitialState {
+  inAuthorPage: boolean;
 }
-interface Profile {
-  profile: ProfileType | null;
-}
-const initialState: Profile = {
-  profile: null,
+
+const initialState: InitialState = {
+  inAuthorPage: inAuthorPagePersist ? JSON.parse(inAuthorPagePersist) : false,
 };
 
-const profileSlice = createSlice({
-  name: 'profile',
+export const authorSlice = createSlice({
+  name: 'author',
   initialState,
   reducers: {
-    getProfile: (state, action) => {},
-    getProfileSaga: (state, action) => {
-      state.profile = action.payload;
+    setInAuthorPage: (state, action) => {
+      state.inAuthorPage = action.payload;
     },
   },
 });
-export const { getProfile, getProfileSaga } = profileSlice.actions;
-export const profileSelector = (state: RootState) => state.profile.profile;
-export default profileSlice.reducer;
+
+// actions
+export const { setInAuthorPage } = authorSlice.actions;
+
+// selector
+export const selectInAuthorPage = (state: any) => state.author.inAuthorPage;
+
+export default authorSlice.reducer;
