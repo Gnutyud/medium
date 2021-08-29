@@ -19,6 +19,7 @@ import { useAppDispatch } from 'app/hooks';
 import { setTag } from 'features/articles/articlesSlice';
 import React from 'react';
 import { useHistory, useRouteMatch, Link } from 'react-router-dom';
+import clsx from 'clsx';
 
 interface ArticleComponentProps {
   article: ArticleType;
@@ -75,6 +76,9 @@ const useStyles = makeStyles((theme) =>
     link: {
       textDecoration: 'none',
     },
+    title: {
+      cursor: 'pointer',
+    },
   })
 );
 
@@ -106,6 +110,11 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
     history.push(`/article/${slug}`);
   };
 
+  // handle go to profile home page
+  const handleGoToProfileHomePage = () => {
+    dispatch(setTag(null));
+  };
+
   return (
     <Box className={classes.root}>
       <Card className={classes.card}>
@@ -118,7 +127,11 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
             }
             title={
               <Box className={classes.authorName} component="div" display="inline">
-                <Link className={classes.link} to={`/author/${author?.username}`}>
+                <Link
+                  className={classes.link}
+                  to={`/profile/${author?.username}`}
+                  onClick={handleGoToProfileHomePage}
+                >
                   {author?.username}
                 </Link>
               </Box>
@@ -127,7 +140,7 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
           />
           <CardContent>
             <Box
-              className={classes.description}
+              className={clsx(classes.description, classes.title)}
               fontWeight="fontWeightMedium"
               onClick={handleGoToArticleDetail}
             >

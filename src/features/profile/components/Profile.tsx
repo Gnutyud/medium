@@ -1,10 +1,18 @@
 import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Loading from '../../../components/common/Loading';
 import ArticleComponent from './ProfileArticle';
+import ProfileArticlePagination from './ProfileArticlePagination';
 import ProfileMenuTabs from './ProfileMenuTabs';
+import { useAppDispatch } from 'app/hooks';
+import { setTag } from 'features/articles/articlesSlice';
+
+// local storage user
+const local: any = localStorage.getItem('user');
+const curUser = JSON.parse(local);
 
 const HEIGHT = window.screen.height;
 
@@ -64,16 +72,34 @@ const useStyles = makeStyles((theme) => ({
   articleList: {
     width: '100%',
   },
+  navlink: {
+    textDecoration: 'none',
+  },
 }));
 
 interface ProfileProps {
   author: ProfileType;
   articleList?: ArticleType[];
   isLoading?: boolean;
+  articleCount?: number;
+  tagByArticle?: string;
+  currentPage?: number;
+  articlePerPage?: number;
+  username?: string;
 }
 
-const Profile: React.FC<ProfileProps> = ({ author, articleList, isLoading }) => {
+const Profile: React.FC<ProfileProps> = ({
+  author,
+  articleList,
+  isLoading,
+  articleCount,
+  tagByArticle,
+  currentPage,
+  articlePerPage,
+  username,
+}) => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
 
   // display article list
   let articleListElement;
@@ -95,22 +121,41 @@ const Profile: React.FC<ProfileProps> = ({ author, articleList, isLoading }) => 
       </Box>
     );
 
+  // handle go to profile home page
+  const handleGoToProfileHomePage = () => {
+    dispatch(setTag(null));
+  };
+
   return (
     <Card className={classes.root}>
       <CardMedia
         className={classes.media}
         image="https://st.quantrimang.com/photos/image/2018/09/20/anh-bia-facebook-mau-den-1.jpg"
       >
-        <Link className={classes.settingBtn} to="/settings">
-          <SettingsIcon />
-          Edit Profile Setting
-        </Link>
+        {curUser?.username === username ? (
+          <Link className={classes.settingBtn} to="/settings">
+            <SettingsIcon />
+            Edit Profile Setting
+          </Link>
+        ) : (
+          <Link className={classes.settingBtn} to="/settings">
+            <CheckIcon />
+            Following
+          </Link>
+        )}
       </CardMedia>
+
       <Avatar src={author?.image} className={classes.profileImage} />
       <div className={classes.profileInfoContainer}>
-        <Typography align={'center'} className={classes.userName} variant="h4" gutterBottom>
-          {author?.username}
-        </Typography>
+        <NavLink
+          to={`/profile/${username}`}
+          onClick={handleGoToProfileHomePage}
+          className={classes.navlink}
+        >
+          <Typography align={'center'} className={classes.userName} variant="h4" gutterBottom>
+            {author?.username}
+          </Typography>
+        </NavLink>
         <Typography align={'center'} variant="subtitle2" gutterBottom className={classes.userTag}>
           {author?.following}
         </Typography>
@@ -121,6 +166,13 @@ const Profile: React.FC<ProfileProps> = ({ author, articleList, isLoading }) => 
       <CardContent className={classes.contentContainer}>
         <ProfileMenuTabs tab1="My articles" tab2="My favorite articles" />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
+        <ProfileArticlePagination
+          articleCount={articleCount}
+          articlePerPage={articlePerPage}
+          tagByArticle={tagByArticle}
+          currentPage={currentPage}
+          username={username}
+        />
       </CardContent>
     </Card>
   );

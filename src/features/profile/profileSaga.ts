@@ -10,7 +10,6 @@ interface PayloadActionType {
 export function* getProfileSaga(action: PayloadAction<PayloadActionType>): SagaIterator<void> {
   try {
     const { username } = action.payload;
-    console.log('in profile saga: username ', username);
     const res = yield call(profileApi2.getProfileByUsername, username);
 
     yield put({
