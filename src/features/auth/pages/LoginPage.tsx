@@ -98,7 +98,7 @@ const LoginPage = () => {
       };
       endPoint = 'users';
     }
-    dispatch(authActions.loginPending({ userInfo, endPoint, history }));
+    dispatch(authActions.loginPending({ userInfo, endPoint }));
   };
   // switch sign in and sign up
   const switchAuthModeHandler = () => {
