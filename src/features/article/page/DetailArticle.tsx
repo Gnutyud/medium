@@ -2,6 +2,7 @@ import { Avatar, Box, Grid, Link, makeStyles, Typography } from '@material-ui/co
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { NotFound } from 'components/common';
 import Loading from 'components/common/Loading';
+import { nanoid } from 'nanoid';
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { getArticle, selectArticle, selectError, selectIsloading } from '../articleSlice';
@@ -80,10 +81,10 @@ function DetailArticle() {
                 <span className={classes.avatarDate}>{article.createdAt}</span>
               </Box>
               {body.map((item: string) => (
-                <>
+                <Box key={nanoid()}>
                   <Typography variant="body1">{item}</Typography>
                   <br />
-                </>
+                </Box>
               ))}
             </Grid>
           </Grid>

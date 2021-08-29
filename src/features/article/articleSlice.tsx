@@ -21,6 +21,13 @@ export const articleSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    deleteArticle: (state) => {
+      state.isLoading = true;
+    },
+    deleteArticleSaga: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 

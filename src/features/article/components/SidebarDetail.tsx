@@ -1,9 +1,9 @@
-import { Box, Divider, IconButton, Link, makeStyles, Typography } from '@material-ui/core';
+import { Box, Divider, IconButton, makeStyles, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import SplitButton from './SplitButton';
 
 const useStyle = makeStyles(() => ({
@@ -28,7 +28,6 @@ function SidebarDetail({ article }: { article: ArticleType }) {
   const [state, setState] = React.useState({
     right: false,
   });
-  const history = useHistory();
   const toggleDrawer = (open: boolean) => (event: any) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -40,16 +39,15 @@ function SidebarDetail({ article }: { article: ArticleType }) {
 
   return (
     <Box className={classes.position}>
-      <Link
-        component="button"
-        variant="h6"
+      <NavLink
         className={classes.name}
-        onClick={() => {
-          history.push(`/profile/${article?.author?.username}`);
-        }}
+        to={`/profile/${article?.author?.username}`}
+        // onClick={() => {
+        //   history.push(`/profile/${article?.author?.username}`);
+        // }}
       >
         {article?.author?.username}
-      </Link>
+      </NavLink>
       <Typography className={classes.bio}>{article?.author?.bio}</Typography>
       <Divider light />
       <Box style={{ marginTop: '20px', display: 'flex', lineHeight: '48px' }}>

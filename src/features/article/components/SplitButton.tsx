@@ -12,15 +12,11 @@ import { IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
 
-const options = ['Update', 'Delete'];
-
 function SplitButton(props: any) {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<any>(null);
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-  const handleMenuItemClick = (event: any, index: number) => {
-    setSelectedIndex(index);
+  const handleMenuItemClick = () => {
     setOpen(false);
   };
 
@@ -62,17 +58,14 @@ function SplitButton(props: any) {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList id="split-button-menu">
-                    {options.map((option, index) => (
-                      <MenuItem
-                        key={option}
-                        disabled={index === 2}
-                        selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}
-                      >
-                        {option == 'Delete' ? <DeleteIcon /> : <UpdateIcon />}
-                        {option}
-                      </MenuItem>
-                    ))}
+                    <MenuItem onClick={handleMenuItemClick}>
+                      <UpdateIcon />
+                      Update
+                    </MenuItem>
+                    <MenuItem onClick={handleMenuItemClick}>
+                      <DeleteIcon />
+                      Delete
+                    </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

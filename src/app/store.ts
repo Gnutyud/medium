@@ -1,9 +1,8 @@
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
+import { oneArticleReducer } from 'features/article/articleSlice';
 import createSagaMiddleware from 'redux-saga';
 import articleReducer from '../features/articles/articlesSlice';
 import authReducer from '../features/auth/authSlice';
-import profileReducer from '../features/profile/profileSlice';
-import { oneArticleReducer } from 'features/article/articleSlice';
 import authorReducer from '../features/profile/profileSlice';
 import tagReducer from '../features/tags/tagsSlice';
 import settingReducer from './../features/setting/settingSlice';
