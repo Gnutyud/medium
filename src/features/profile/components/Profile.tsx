@@ -7,12 +7,13 @@ import Loading from '../../../components/common/Loading';
 import ArticleComponent from './ProfileArticle';
 import ProfileArticlePagination from './ProfileArticlePagination';
 import ProfileMenuTabs from './ProfileMenuTabs';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTag } from 'features/articles/articlesSlice';
+import { userSelector } from 'features/auth/authSlice';
 
 // local storage user
-const local: any = localStorage.getItem('user');
-const curUser = JSON.parse(local);
+// const local: any = localStorage.getItem('user');
+// const curUser = JSON.parse(local);
 
 const HEIGHT = window.screen.height;
 
@@ -101,6 +102,10 @@ const Profile: React.FC<ProfileProps> = ({
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
+  // auth
+  const curUser = useAppSelector(userSelector);
+  console.log('current user ', curUser);
+
   // display article list
   let articleListElement;
   if (!articleList) return (articleListElement = null);
@@ -126,6 +131,9 @@ const Profile: React.FC<ProfileProps> = ({
     dispatch(setTag(null));
   };
 
+  // check click following when not auth
+  // const pass = curUser.username;
+
   return (
     <Card className={classes.root}>
       <CardMedia
@@ -138,7 +146,7 @@ const Profile: React.FC<ProfileProps> = ({
             Edit Profile Setting
           </Link>
         ) : (
-          <Link className={classes.settingBtn} to="/settings">
+          <Link className={classes.settingBtn} to={curUser ? '/settings' : '/auth'}>
             <CheckIcon />
             Following
           </Link>
