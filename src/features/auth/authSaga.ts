@@ -3,9 +3,11 @@ import { authActions } from './authSlice';
 import { take, fork, call, put } from '@redux-saga/core/effects';
 import { LoginPayload } from './authSlice';
 import authApi from 'api/authApi';
+import { push } from 'connected-react-router';
 
 function* handleLogin(payload: LoginPayload) {
   try {
+    console.log('handle login saga');
     const res: PayloadAction<any> = yield call(
       authApi.loginHandler,
       payload.userInfo,
@@ -13,7 +15,8 @@ function* handleLogin(payload: LoginPayload) {
     );
     yield put(authActions.loginSuccess(res));
     // redirect to home page
-    payload.history.push('/');
+    yield put(push('/'));
+    // payload.history.push('/');
   } catch (error) {
     if (error.response.data.errors) {
       yield put(authActions.loginFail(error.response.data.errors));
@@ -22,24 +25,8 @@ function* handleLogin(payload: LoginPayload) {
     }
   }
 }
-function* handleLogout() {
-  console.log('logout saga');
-  yield localStorage.removeItem('user');
-}
-function* watchLoginFlow() {
-  while (true) {
-    console.log('flow');
-    const isLoggedIn = Boolean(localStorage.getItem('user'));
-    if (!isLoggedIn) {
-      console.log('login flow');
-      const action: PayloadAction<LoginPayload> = yield take(authActions.loginPending.type);
-      yield fork(handleLogin, action.payload);
-    }
 
-    yield take(authActions.logoutHandler.type);
-    yield fork(handleLogout);
-  }
-}
 export default function* authSaga() {
-  yield fork(watchLoginFlow);
+  const action: PayloadAction<LoginPayload> = yield take(authActions.loginPending.type);
+  yield fork(handleLogin, action.payload);
 }

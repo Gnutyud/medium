@@ -23,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
-  paper: {
-    marginRight: theme.spacing(2),
-  },
   menuItem: {
     '&:hover, &:hover $menuIcon': {
       color: 'blue',
@@ -113,7 +110,7 @@ export const Account = () => {
         placement="bottom"
         disablePortal
       >
-        <Paper>
+        <Paper elevation={3}>
           <ClickAwayListener onClickAway={handleClose}>
             <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
               <MenuItem onClick={handleClose} className={classes.menuItem}>
