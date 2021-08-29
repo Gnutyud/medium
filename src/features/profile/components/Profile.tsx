@@ -1,7 +1,7 @@
 import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Loading from '../../../components/common/Loading';
 import ArticleComponent from './ProfileArticle';
 import ProfileArticlePagination from './ProfileArticlePagination';
@@ -65,6 +65,9 @@ const useStyles = makeStyles((theme) => ({
   articleList: {
     width: '100%',
   },
+  navlink: {
+    textDecoration: 'none',
+  },
 }));
 
 interface ProfileProps {
@@ -121,11 +124,14 @@ const Profile: React.FC<ProfileProps> = ({
           Edit Profile Setting
         </Link>
       </CardMedia>
+
       <Avatar src={author?.image} className={classes.profileImage} />
       <div className={classes.profileInfoContainer}>
-        <Typography align={'center'} className={classes.userName} variant="h4" gutterBottom>
-          {author?.username}
-        </Typography>
+        <NavLink to={`/profile/${username}`} className={classes.navlink}>
+          <Typography align={'center'} className={classes.userName} variant="h4" gutterBottom>
+            {author?.username}
+          </Typography>
+        </NavLink>
         <Typography align={'center'} variant="subtitle2" gutterBottom className={classes.userTag}>
           {author?.following}
         </Typography>
