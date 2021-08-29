@@ -16,9 +16,6 @@ const articlesApi = {
       },
     });
   },
-  getOne: (slug: string): Promise<ArticleType> => {
-    return axiosClient.get(`/article/${slug}`);
-  },
   addOne: (data: { article: FormInputArticleType }): Promise<FormInputArticleType> => {
     let Storage: any = localStorage.getItem('user');
     let user = JSON.parse(Storage);

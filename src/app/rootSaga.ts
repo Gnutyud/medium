@@ -9,6 +9,8 @@ import { getListTag } from 'features/tags/tagsSlice';
 import authSaga from '../features/auth/authSaga';
 import { getProfile } from 'features/profile/profileSlice';
 import { profileSaga } from 'features/profile/profileSaga';
+import { getArticle } from 'features/article/articleSlice';
+import { getArticleBySlugSaga } from 'features/article/articleSaga';
 export default function* rootSaga() {
   // auth feature
   yield takeEvery(authActions.loginPending.type, authSaga);
@@ -16,6 +18,8 @@ export default function* rootSaga() {
   yield takeEvery(getListArticle.type, getListArticleSaga);
   yield takeEvery(getListTag.type, getListTagSaga);
   yield takeEvery(postArticle.type, postArticleSaga);
+  //article feature
+  yield takeEvery(getArticle.type, getArticleBySlugSaga);
   //setting feature
   yield takeEvery(getUser.type, getCurrentUserSaga);
   yield takeEvery(updateUser.type, updateCurrentUserSaga);

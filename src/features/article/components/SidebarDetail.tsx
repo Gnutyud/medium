@@ -1,8 +1,9 @@
-import { Box, Divider, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { Box, Divider, IconButton, Link, makeStyles, Typography } from '@material-ui/core';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const useStyle = makeStyles(() => ({
   position: {
@@ -11,20 +12,22 @@ const useStyle = makeStyles(() => ({
     margin: '20px',
   },
   name: {
-    fontSize: '20px',
+    fontSize: '25px',
     fontWeight: 'bold',
     marginBottom: '15px',
+    color: 'black',
   },
   bio: {
     fontSize: '15px',
   },
 }));
 
-function SidebarDetail(props: any) {
+function SidebarDetail({ article }: { article: ArticleType }) {
   const classes = useStyle();
   const [state, setState] = React.useState({
     right: false,
   });
+  const history = useHistory();
   const toggleDrawer = (open: boolean) => (event: any) => {
     if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -34,13 +37,17 @@ function SidebarDetail(props: any) {
 
   return (
     <Box className={classes.position}>
-      <Typography variant="h6" className={classes.name}>
-        Lê Thành Đạt
-      </Typography>
-      <Typography className={classes.bio}>
-        Writer, videographer, journalist with opinions. Come, let us walk into the apocalypse
-        together. She/Hers. I’m on Twitter: @LauraJedeed
-      </Typography>
+      <Link
+        component="button"
+        variant="h6"
+        className={classes.name}
+        onClick={() => {
+          history.push(`/author/${article?.author?.username}`);
+        }}
+      >
+        {article?.author?.username}
+      </Link>
+      <Typography className={classes.bio}>{article?.author?.bio}</Typography>
       <Divider light />
       <Box style={{ marginTop: '20px' }}>
         <IconButton aria-label="like" color="default">
