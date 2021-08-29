@@ -21,11 +21,19 @@ export const articleSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    deleteArticle: (state) => {
+      state.isLoading = true;
+    },
+    // ,
+    // deleteArticleSaga: (state) => {
+    //   state.isLoading = false;
+    // },
   },
 });
 
-export const oneArticleReducer = articleSlice.reducer;
+const oneArticleReducer = articleSlice.reducer;
+export default oneArticleReducer;
 export const selectArticle = (state: RootState) => state.oneArticleReducer.article;
 export const selectIsloading = (state: RootState) => state.oneArticleReducer.isLoading;
 export const selectError = (state: RootState) => state.oneArticleReducer.error;
-export const { getArticle, getArticleSaga, getError } = articleSlice.actions;
+export const { getArticle, getArticleSaga, getError, deleteArticle } = articleSlice.actions;
