@@ -4,6 +4,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 import Loading from '../../../components/common/Loading';
 import ArticleComponent from './ProfileArticle';
+import ProfileArticlePagination from './ProfileArticlePagination';
 import ProfileMenuTabs from './ProfileMenuTabs';
 
 const HEIGHT = window.screen.height;
@@ -70,9 +71,23 @@ interface ProfileProps {
   author: ProfileType;
   articleList?: ArticleType[];
   isLoading?: boolean;
+  articleCount?: number;
+  tagByArticle?: string;
+  currentPage?: number;
+  articlePerPage?: number;
+  username?: string;
 }
 
-const Profile: React.FC<ProfileProps> = ({ author, articleList, isLoading }) => {
+const Profile: React.FC<ProfileProps> = ({
+  author,
+  articleList,
+  isLoading,
+  articleCount,
+  tagByArticle,
+  currentPage,
+  articlePerPage,
+  username,
+}) => {
   const classes = useStyles();
 
   // display article list
@@ -121,6 +136,13 @@ const Profile: React.FC<ProfileProps> = ({ author, articleList, isLoading }) => 
       <CardContent className={classes.contentContainer}>
         <ProfileMenuTabs tab1="My articles" tab2="My favorite articles" />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
+        <ProfileArticlePagination
+          articleCount={articleCount}
+          articlePerPage={articlePerPage}
+          tagByArticle={tagByArticle}
+          currentPage={currentPage}
+          username={username}
+        />
       </CardContent>
     </Card>
   );
