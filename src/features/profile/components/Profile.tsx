@@ -1,4 +1,5 @@
 import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Link, NavLink } from 'react-router-dom';
@@ -6,6 +7,12 @@ import Loading from '../../../components/common/Loading';
 import ArticleComponent from './ProfileArticle';
 import ProfileArticlePagination from './ProfileArticlePagination';
 import ProfileMenuTabs from './ProfileMenuTabs';
+import { useAppDispatch } from 'app/hooks';
+import { setTag } from 'features/articles/articlesSlice';
+
+// local storage user
+const local: any = localStorage.getItem('user');
+const curUser = JSON.parse(local);
 
 const HEIGHT = window.screen.height;
 
@@ -92,6 +99,7 @@ const Profile: React.FC<ProfileProps> = ({
   username,
 }) => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
 
   // display article list
   let articleListElement;
@@ -113,21 +121,37 @@ const Profile: React.FC<ProfileProps> = ({
       </Box>
     );
 
+  // handle go to profile home page
+  const handleGoToProfileHomePage = () => {
+    dispatch(setTag(null));
+  };
+
   return (
     <Card className={classes.root}>
       <CardMedia
         className={classes.media}
         image="https://st.quantrimang.com/photos/image/2018/09/20/anh-bia-facebook-mau-den-1.jpg"
       >
-        <Link className={classes.settingBtn} to="/settings">
-          <SettingsIcon />
-          Edit Profile Setting
-        </Link>
+        {curUser?.username === username ? (
+          <Link className={classes.settingBtn} to="/settings">
+            <SettingsIcon />
+            Edit Profile Setting
+          </Link>
+        ) : (
+          <Link className={classes.settingBtn} to="/settings">
+            <CheckIcon />
+            Following
+          </Link>
+        )}
       </CardMedia>
 
       <Avatar src={author?.image} className={classes.profileImage} />
       <div className={classes.profileInfoContainer}>
-        <NavLink to={`/profile/${username}`} className={classes.navlink}>
+        <NavLink
+          to={`/profile/${username}`}
+          onClick={handleGoToProfileHomePage}
+          className={classes.navlink}
+        >
           <Typography align={'center'} className={classes.userName} variant="h4" gutterBottom>
             {author?.username}
           </Typography>
