@@ -1,4 +1,4 @@
-interface AuthorType {
+interface ProfileType {
   username: string;
   bio: string;
   image: string;

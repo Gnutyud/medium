@@ -17,7 +17,6 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
 import { setTag } from 'features/articles/articlesSlice';
-import { setInAuthorPage } from 'features/profile/profileSlice';
 import React from 'react';
 import { useHistory, useRouteMatch, Link } from 'react-router-dom';
 
@@ -87,7 +86,8 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
   const match = useRouteMatch();
   const dispatch = useAppDispatch();
 
-  const { author, title, updatedAt, description, favorited, favoritesCount, tagList } = article;
+  const { slug, author, title, updatedAt, description, favorited, favoritesCount, tagList } =
+    article;
 
   // update tags from store
   const handleClickTag = (tagLabel: string) => {
@@ -101,10 +101,9 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
     });
   };
 
-  // handle event go to author page
-  const handleClickAuthor = () => {
-    localStorage.setItem('inAuthorPage', 'true');
-    dispatch(setInAuthorPage(true));
+  // handle go to article detail
+  const handleGoToArticleDetail = () => {
+    history.push(`/article/${slug}`);
   };
 
   return (
@@ -119,11 +118,7 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
             }
             title={
               <Box className={classes.authorName} component="div" display="inline">
-                <Link
-                  className={classes.link}
-                  to={`/author/${author?.username}`}
-                  onClick={handleClickAuthor}
-                >
+                <Link className={classes.link} to={`/author/${author?.username}`}>
                   {author?.username}
                 </Link>
               </Box>
@@ -131,7 +126,11 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
             subheader={updatedAt}
           />
           <CardContent>
-            <Box className={classes.description} fontWeight="fontWeightMedium">
+            <Box
+              className={classes.description}
+              fontWeight="fontWeightMedium"
+              onClick={handleGoToArticleDetail}
+            >
               {title}
             </Box>
             <Typography variant="body2" color="textSecondary" component="p">

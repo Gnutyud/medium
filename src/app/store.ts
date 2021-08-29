@@ -15,9 +15,10 @@ const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    article: articleReducer,
     tag: tagReducer,
+    article: articleReducer,
     setting: settingReducer,
+    profile: profileReducer,
     author: authorReducer,
     oneArticleReducer: oneArticleReducer,
   },

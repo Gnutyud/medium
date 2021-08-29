@@ -1,5 +1,6 @@
 import { Box } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import Loading from 'components/common/Loading';
 import {
   getListArticle,
   selectListArticles,
@@ -10,18 +11,26 @@ import {
 } from 'features/articles/articlesSlice';
 import { useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { setInAuthorPage } from '../profileSlice';
-import AuthorHeader from '../components/ProfileHeader';
-import AuthorProfileComponent from '../components/Profile';
+import Profile from '../components/Profile';
+import { getProfile, selectIsLoading, selectProfile } from '../profileSlice';
 
 const queryString = require('query-string');
 
-const AuthorPage = () => {
+const ProfilePage = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
   // select author name from url
   const { username } = useParams<{ username: string }>();
+
+  // set initial value of current page
+  useEffect(() => {
+    dispatch(setNumberCurrentPage(1));
+  }, [dispatch]);
+
+  // select profile + loading state
+  const profile = useAppSelector(selectProfile);
+  const isLoadingProfile = useAppSelector(selectIsLoading);
 
   // select data from store
   const articleList = useAppSelector(selectListArticles);
@@ -34,15 +43,6 @@ const AuthorPage = () => {
   // get page from url param
   const { page } = queryString.parse(location.search);
   const offsetIndex = +page - 1 || currentPage - 1;
-
-  // set initial value of current page
-  useEffect(() => {
-    dispatch(setNumberCurrentPage(1));
-  }, [dispatch]);
-
-  // persist state first time of is in author page
-  dispatch(setInAuthorPage(true));
-  localStorage.setItem('inAuthorPage', 'true');
 
   // fetch list articles + pagination by offset + author
   useEffect(() => {
@@ -57,16 +57,26 @@ const AuthorPage = () => {
     dispatch(action);
   }, [username, offsetIndex, articlePerPage, dispatch]);
 
-  // get author info (must use profile slice later!!)
-  const authorInfo = articleList?.[0]?.author;
+  // fetch profile by username
+  useEffect(() => {
+    const action = {
+      type: getProfile.type,
+      payload: { username },
+    };
+    dispatch(action);
+  }, [dispatch, username]);
 
-  console.log('article list ', articleList);
   return (
     <Box>
-      <AuthorHeader author={authorInfo} />
-      <AuthorProfileComponent author={authorInfo} articleList={articleList} isLoading={isLoading} />
+      {isLoadingProfile ? (
+        <Loading />
+      ) : (
+        <Box>
+          <Profile author={profile} articleList={articleList} isLoading={isLoading} />
+        </Box>
+      )}
     </Box>
   );
 };
 
-export default AuthorPage;
+export default ProfilePage;

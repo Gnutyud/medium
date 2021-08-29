@@ -16,10 +16,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
-import { setInAuthorPage } from 'features/profile/profileSlice';
-import React from 'react';
-import { useHistory, useRouteMatch, Link } from 'react-router-dom';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { setTag } from '../articlesSlice';
+import clsx from 'clsx';
 
 interface ArticleItemProps {
   article: ArticleType;
@@ -76,6 +75,9 @@ const useStyles = makeStyles((theme) =>
     link: {
       textDecoration: 'none',
     },
+    title: {
+      cursor: 'pointer',
+    },
   })
 );
 
@@ -87,7 +89,8 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
   const match = useRouteMatch();
   const dispatch = useAppDispatch();
 
-  const { author, title, updatedAt, description, favorited, favoritesCount, tagList } = article;
+  const { slug, author, title, updatedAt, description, favorited, favoritesCount, tagList } =
+    article;
 
   // update tags from store
   const handleClickTag = (tagLabel: string) => {
@@ -101,10 +104,9 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
     });
   };
 
-  // handle event go to author page
-  const handleClickAuthor = () => {
-    localStorage.setItem('inAuthorPage', 'true');
-    dispatch(setInAuthorPage(true));
+  // handle go to article detail
+  const handleGoToArticleDetail = () => {
+    history.push(`/article/${slug}`);
   };
 
   return (
@@ -119,11 +121,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
             }
             title={
               <Box className={classes.authorName} component="div" display="inline">
-                <Link
-                  className={classes.link}
-                  to={`/profile/${author?.username}`}
-                  onClick={handleClickAuthor}
-                >
+                <Link className={classes.link} to={`/profile/${author?.username}`}>
                   {author?.username}
                 </Link>
               </Box>
@@ -131,7 +129,11 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
             subheader={updatedAt}
           />
           <CardContent>
-            <Box className={classes.description} fontWeight="fontWeightMedium">
+            <Box
+              className={clsx(classes.description, classes.title)}
+              fontWeight="fontWeightMedium"
+              onClick={handleGoToArticleDetail}
+            >
               {title}
             </Box>
             <Typography variant="body2" color="textSecondary" component="p">
