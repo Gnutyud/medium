@@ -16,7 +16,6 @@ function* handleLogin(payload: LoginPayload) {
     yield put(authActions.loginSuccess(res));
     // redirect to home page
     yield put(push('/'));
-    // payload.history.push('/');
   } catch (error) {
     if (error.response.data.errors) {
       yield put(authActions.loginFail(error.response.data.errors));
@@ -27,6 +26,8 @@ function* handleLogin(payload: LoginPayload) {
 }
 
 export default function* authSaga() {
-  const action: PayloadAction<LoginPayload> = yield take(authActions.loginPending.type);
-  yield fork(handleLogin, action.payload);
+  while (true) {
+    const action: PayloadAction<LoginPayload> = yield take(authActions.loginPending.type);
+    yield fork(handleLogin, action.payload);
+  }
 }
