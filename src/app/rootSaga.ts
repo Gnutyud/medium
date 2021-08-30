@@ -44,5 +44,5 @@ export default function* rootSaga() {
   // unfollow feature
   yield throttle(1000, unFollowProfile.type, getUnFollowProfileSaga);
   // favorite feature
-  yield takeEvery(favoriteRequest.type, favoriteActionSaga);
+  yield throttle(1000, favoriteRequest.type, favoriteActionSaga);
 }

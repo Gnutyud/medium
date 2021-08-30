@@ -16,7 +16,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
-import { setTag } from 'features/articles/articlesSlice';
+import { favoriteRequest, setTag } from 'features/articles/articlesSlice';
 import React from 'react';
 import { useHistory, useRouteMatch, Link } from 'react-router-dom';
 import clsx from 'clsx';
@@ -114,14 +114,18 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
   const handleGoToProfileHomePage = () => {
     dispatch(setTag(null));
   };
-
+  // handle favorite
+  const handleFavorite = () => {
+    let favoritePayload: FavoritePayloadProps = { slug: slug, favorited: favorited };
+    dispatch(favoriteRequest(favoritePayload));
+  };
   return (
     <Box className={classes.root}>
       <Card className={classes.card}>
         <Box className={classes.cardLeft}>
           <CardHeader
             avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
+              <Avatar aria-label="recipe" className={classes.avatar} src={author?.image}>
                 {author?.username[0].toUpperCase()}
               </Avatar>
             }
@@ -156,8 +160,8 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
           <CardActions className={classes.cardAction}>
             <Box className={classes.favoritesContainer}>
               {favoritesCount}
-              <IconButton aria-label="add to favorites">
-                {favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              <IconButton aria-label="add to favorites" onClick={handleFavorite}>
+                {favorited ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
               </IconButton>
             </Box>
             <Box>

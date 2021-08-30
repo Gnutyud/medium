@@ -2,6 +2,7 @@ import { Avatar, Box, Grid, makeStyles, Typography } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { NotFound } from 'components/common';
 import Loading from 'components/common/Loading';
+import { getListArticle, selectListArticles } from 'features/articles/articlesSlice';
 import { nanoid } from 'nanoid';
 import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
@@ -43,11 +44,20 @@ function DetailArticle() {
   const isloading = useAppSelector(selectIsloading);
   const error = useAppSelector(selectError);
   const dispatch = useAppDispatch();
+  // test
+  const articleList = useAppSelector(selectListArticles);
+  const currentArticle = articleList.find((item) => item.slug === slug);
   const body = article.body ? article.body.split('\n') : [];
   React.useEffect(() => {
     dispatch({
       type: getArticle.type,
       payload: slug,
+    });
+    dispatch({
+      type: getListArticle.type,
+      payload: {
+        offset: 0,
+      },
     });
   }, [dispatch, slug]);
 
@@ -63,7 +73,7 @@ function DetailArticle() {
         <div style={{ marginTop: '50px' }}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={3}>
-              <SidebarDetail article={article} />
+              {currentArticle && <SidebarDetail article={currentArticle} />}
             </Grid>
             <Grid item xs={12} md={6}>
               <Typography variant="h5" className={classes.title}>

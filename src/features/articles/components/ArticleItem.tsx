@@ -120,7 +120,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
         <Box className={classes.cardLeft}>
           <CardHeader
             avatar={
-              <Avatar aria-label="recipe" className={classes.avatar}>
+              <Avatar aria-label="recipe" className={classes.avatar} src={author?.image}>
                 {author?.username[0].toUpperCase()}
               </Avatar>
             }
