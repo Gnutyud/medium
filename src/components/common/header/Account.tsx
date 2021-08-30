@@ -61,7 +61,6 @@ export const Account = () => {
     setOpen(false);
   };
   const handleLogout = () => {
-    console.log('logout');
     history.replace('/');
     dispatch(authActions.logoutHandler());
     setOpen(false);

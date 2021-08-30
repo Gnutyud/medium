@@ -7,7 +7,6 @@ import { push } from 'connected-react-router';
 
 function* handleLogin(payload: LoginPayload) {
   try {
-    console.log('handle login saga');
     const res: PayloadAction<any> = yield call(
       authApi.loginHandler,
       payload.userInfo,
@@ -16,7 +15,6 @@ function* handleLogin(payload: LoginPayload) {
     yield put(authActions.loginSuccess(res));
     // redirect to home page
     yield put(push('/'));
-    // payload.history.push('/');
   } catch (error) {
     if (error.response.data.errors) {
       yield put(authActions.loginFail(error.response.data.errors));
@@ -27,6 +25,8 @@ function* handleLogin(payload: LoginPayload) {
 }
 
 export default function* authSaga() {
-  const action: PayloadAction<LoginPayload> = yield take(authActions.loginPending.type);
-  yield fork(handleLogin, action.payload);
+  while (true) {
+    const action: PayloadAction<LoginPayload> = yield take(authActions.loginPending.type);
+    yield fork(handleLogin, action.payload);
+  }
 }

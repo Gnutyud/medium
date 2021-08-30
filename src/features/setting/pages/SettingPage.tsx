@@ -38,7 +38,7 @@ const validationSchema = Yup.object().shape({
   username: Yup.string().required('Username is required!'),
   email: Yup.string().required('Email is required!'),
   image: Yup.string().required('Url image is required').url('Must be Url'),
-  bio: Yup.string().required('Email is required!'),
+  bio: Yup.string().required('Bio is required!'),
 });
 
 const SettingPage = () => {

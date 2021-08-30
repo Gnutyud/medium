@@ -71,7 +71,6 @@ const LoginPage = () => {
   const [validationSchema, setValidationSchema] = useState(() => formSchema(isRegister));
 
   useEffect(() => {
-    console.log('switch mode');
     setValidationSchema(formSchema(isRegister));
   }, [isRegister]);
   //  initialValues
@@ -82,7 +81,6 @@ const LoginPage = () => {
   };
   // Handle submit
   const submitHandler = async (values: any) => {
-    console.log('submit handler');
     let userInfo, endPoint;
     if (!isRegister) {
       userInfo = {

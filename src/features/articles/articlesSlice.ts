@@ -42,9 +42,8 @@ export const articlesSlice = createSlice({
     postArticle: (state) => {
       state.isLoading = true;
     },
-    addArticleFromSaga: (state, action) => {
+    addArticleFromSaga: (state) => {
       state.isLoading = false;
-      state.articleList.unshift(action.payload);
     },
   },
 });
