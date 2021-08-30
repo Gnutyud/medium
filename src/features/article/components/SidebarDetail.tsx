@@ -2,9 +2,12 @@ import { Box, Divider, IconButton, makeStyles, Typography } from '@material-ui/c
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import ButtonSplit from './ButtonSplit';
+import { useAppDispatch } from 'app/hooks';
+import { favoriteRequest } from 'features/articles/articlesSlice';
 
 const useStyle = makeStyles(() => ({
   position: {
@@ -30,6 +33,7 @@ const useStyle = makeStyles(() => ({
 }));
 
 function SidebarDetail({ article }: { article: ArticleType }) {
+  const dispatch = useAppDispatch();
   const classes = useStyle();
   const [state, setState] = React.useState({
     right: false,
@@ -42,7 +46,17 @@ function SidebarDetail({ article }: { article: ArticleType }) {
   };
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);
-
+  // handle favorite
+  const handleFavorite = () => {
+    let favoritePayload: FavoritePayloadProps = {
+      slug: article.slug,
+      favorited: article.favorited,
+    };
+    dispatch(favoriteRequest(favoritePayload));
+  };
+  if (!article) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <Box className={classes.position}>
       <NavLink className={classes.name} to={`/profile/${article?.author?.username}`}>
@@ -52,10 +66,10 @@ function SidebarDetail({ article }: { article: ArticleType }) {
       <Divider light />
       <Box style={{ marginTop: '20px', display: 'flex', lineHeight: '48px' }}>
         <Box>
-          <IconButton aria-label="like" color="default">
-            <FavoriteBorderIcon />
+          <IconButton aria-label="like" color="default" onClick={handleFavorite}>
+            {article?.favorited ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
           </IconButton>
-          <span>100</span>
+          <span>{article?.favoritesCount}</span>
         </Box>
         <Box>
           <React.Fragment key="right">
