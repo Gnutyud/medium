@@ -1,14 +1,14 @@
 import { call, put } from '@redux-saga/core/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import followApi from 'api/followApi';
-import { profileApi2 } from 'api/profileApi';
+import { profileApi } from 'api/profileApi';
 import { SagaIterator } from 'redux-saga';
 import { followProfileSuccess, getProfileSuccess } from './profileSlice';
 
 export function* getProfileSaga(action: PayloadAction<{ username: string }>): SagaIterator<void> {
   try {
     const { username } = action.payload;
-    const res = yield call(profileApi2.getProfileByUsername, username);
+    const res = yield call(profileApi.getProfileByUsername, username);
 
     yield put({
       type: getProfileSuccess.type,
