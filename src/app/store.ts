@@ -1,4 +1,6 @@
 import { Action, combineReducers, configureStore, ThunkAction } from '@reduxjs/toolkit';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { history } from '../share';
 import createSagaMiddleware from 'redux-saga';
 import articleReducer from '../features/articles/articlesSlice';
 import authReducer from '../features/auth/authSlice';
@@ -7,9 +9,9 @@ import oneArticleReducer from '../features/article/articleSlice';
 import authorReducer from '../features/profile/profileSlice';
 import tagReducer from '../features/tags/tagsSlice';
 import settingReducer from './../features/setting/settingSlice';
+import followReducer from '../features/follow/followSlice';
 import rootSaga from './rootSaga';
-import { connectRouter, routerMiddleware } from 'connected-react-router';
-import { history } from '../share';
+
 const rootReducer = combineReducers({
   router: connectRouter(history),
   auth: authReducer,
@@ -18,6 +20,7 @@ const rootReducer = combineReducers({
   setting: settingReducer,
   profile: profileReducer,
   author: authorReducer,
+  follow: followReducer,
   oneArticleReducer: oneArticleReducer,
 });
 // create saga middleware

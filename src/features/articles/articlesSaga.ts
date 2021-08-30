@@ -15,7 +15,6 @@ export function* getListArticleSaga(action: PayloadAction<PayloadActionType>): S
   try {
     const { offset, limit, tag, author } = action.payload;
     const res = yield call(articlesApi.getAll, offset, limit, tag, author);
-
     yield put({
       type: getListArticleFromSaga.type,
       payload: res,
