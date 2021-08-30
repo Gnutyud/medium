@@ -20,7 +20,6 @@ export function* updateCurrentUserSaga(action: PayloadAction<any>): SagaIterator
   try {
     const data = action.payload;
     const res = yield call(settingApi.updateCurrentUser, data);
-    console.log(res);
 
     yield put({
       type: updateUserSaga.type,

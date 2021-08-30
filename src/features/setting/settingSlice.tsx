@@ -16,7 +16,6 @@ export const settingSlice = createSlice({
       state.isLoading = true;
     },
     updateError: (state, action: PayloadAction<any>) => {
-      console.log(action.payload);
       state.error = action.payload;
     },
     updateUserSaga: (state, action: PayloadAction<any>) => {
