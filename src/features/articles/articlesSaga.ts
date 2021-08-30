@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { SagaIterator } from 'redux-saga';
 import { call, put } from '@redux-saga/core/effects';
 import articlesApi from 'api/articlesApi';
-import { addArticleFromSaga, getListArticleFromSaga } from './articlesSlice';
+import { addArticleFromSaga, favoriteSuccessSaga, getListArticleFromSaga } from './articlesSlice';
 
 interface PayloadActionType {
   offset: number;
@@ -40,10 +40,24 @@ export function* postArticleSaga(
   }
 }
 
-export function* favoriteActionSaga(action: PayloadAction<string>): SagaIterator<void> {
+export function* favoriteActionSaga(
+  action: PayloadAction<FavoritePayloadProps>
+): SagaIterator<void> {
   try {
-    const slug = action.payload;
-    yield call(articlesApi.favoriteArticle, slug);
+    const { slug, favorited } = action.payload;
+    if (favorited) {
+      const res = yield call(articlesApi.unfavoriteArticle, slug);
+      yield put({
+        type: favoriteSuccessSaga.type,
+        payload: res,
+      });
+    } else {
+      const res = yield call(articlesApi.favoriteArticle, slug);
+      yield put({
+        type: favoriteSuccessSaga.type,
+        payload: res,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
