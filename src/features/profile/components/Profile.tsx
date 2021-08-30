@@ -7,12 +7,13 @@ import Loading from '../../../components/common/Loading';
 import ArticleComponent from './ProfileArticle';
 import ProfileArticlePagination from './ProfileArticlePagination';
 import ProfileMenuTabs from './ProfileMenuTabs';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTag } from 'features/articles/articlesSlice';
+import { userSelector } from 'features/auth/authSlice';
 
 // local storage user
-const local: any = localStorage.getItem('user');
-const curUser = JSON.parse(local);
+// const local: any = localStorage.getItem('user');
+// const curUser = JSON.parse(local);
 
 const HEIGHT = window.screen.height;
 
@@ -101,12 +102,11 @@ const Profile: React.FC<ProfileProps> = ({
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
-  // display article list
-  let articleListElement;
-  if (!articleList) return (articleListElement = null);
-  if (!articleList.length) return (articleListElement = null);
+  // auth
+  const curUser = useAppSelector(userSelector);
 
-  articleListElement =
+  // display article list
+  const articleListElement =
     articleList?.length === 0 ? null : (
       <Box>
         {isLoading ? (
@@ -138,7 +138,7 @@ const Profile: React.FC<ProfileProps> = ({
             Edit Profile Setting
           </Link>
         ) : (
-          <Link className={classes.settingBtn} to="/settings">
+          <Link className={classes.settingBtn} to={curUser ? '/settings' : '/auth'}>
             <CheckIcon />
             Following
           </Link>
@@ -166,13 +166,17 @@ const Profile: React.FC<ProfileProps> = ({
       <CardContent className={classes.contentContainer}>
         <ProfileMenuTabs tab1="My articles" tab2="My favorite articles" />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
-        <ProfileArticlePagination
-          articleCount={articleCount}
-          articlePerPage={articlePerPage}
-          tagByArticle={tagByArticle}
-          currentPage={currentPage}
-          username={username}
-        />
+        {articleCount && articleCount > 0 ? (
+          <ProfileArticlePagination
+            articleCount={articleCount}
+            articlePerPage={articlePerPage}
+            tagByArticle={tagByArticle}
+            currentPage={currentPage}
+            username={username}
+          />
+        ) : (
+          'No Article To Show...'
+        )}
       </CardContent>
     </Card>
   );

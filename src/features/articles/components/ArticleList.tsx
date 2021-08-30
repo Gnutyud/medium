@@ -66,8 +66,6 @@ const ArticleList = () => {
     dispatch(action);
   }, [offsetIndex, articlePerPage, tagFinal, dispatch]);
 
-  // console.log('article list ', articleList);
-
   return (
     <Box>
       {isLoading ? (

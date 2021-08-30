@@ -7,7 +7,6 @@ import { push } from 'connected-react-router';
 
 function* handleLogin(payload: LoginPayload) {
   try {
-    console.log('handle login saga');
     const res: PayloadAction<any> = yield call(
       authApi.loginHandler,
       payload.userInfo,

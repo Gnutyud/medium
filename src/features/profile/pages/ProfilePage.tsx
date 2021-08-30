@@ -74,10 +74,10 @@ const ProfilePage = () => {
   }, [dispatch, username]);
 
   // log
-  console.log('total articles ', totalArticle);
-  console.log('tag ', tagByArticle);
-  console.log('current page ', currentPage);
-  console.log('result per page ', articlePerPage);
+  // console.log('total articles ', totalArticle);
+  // console.log('tag ', tagByArticle);
+  // console.log('current page ', currentPage);
+  // console.log('result per page ', articlePerPage);
 
   return (
     <Box>
