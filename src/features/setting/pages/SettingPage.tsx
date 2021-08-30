@@ -37,8 +37,9 @@ const useStyles = makeStyles((theme) => ({
 const validationSchema = Yup.object().shape({
   username: Yup.string().required('Username is required!'),
   email: Yup.string().required('Email is required!'),
-  image: Yup.string().required('Url image is required').url('Must be Url'),
-  bio: Yup.string().required('Bio is required!'),
+  image: Yup.string().url('Must be Url'),
+  bio: Yup.string(),
+  password: Yup.string().min(6, 'Password must be at least 6 characters'),
 });
 
 const SettingPage = () => {

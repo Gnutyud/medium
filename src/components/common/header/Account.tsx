@@ -61,7 +61,7 @@ export const Account = () => {
     setOpen(false);
   };
   const handleLogout = () => {
-    history.replace('/');
+    history.push('/auth');
     dispatch(authActions.logoutHandler());
     setOpen(false);
   };
