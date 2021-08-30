@@ -16,7 +16,6 @@ export interface userPayload {
 export interface LoginPayload {
   userInfo: userPayload;
   endPoint: string;
-  history: any;
 }
 export interface authState {
   isRegister: boolean;
@@ -65,6 +64,7 @@ const authSlice = createSlice({
     logoutHandler(state) {
       state.isLoggedIn = false;
       state.currentUser = null;
+      localStorage.removeItem('user');
     },
   },
 });
