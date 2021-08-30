@@ -34,7 +34,7 @@ const articlesApi = {
         Authorization: 'Bearer ' + user.token,
       },
     };
-    return axiosClient.post(`/articles/${slug}/favorite`, axiosConfig);
+    return axiosClient.post(`/articles/${slug}/favorite`, null, axiosConfig);
   },
 };
 

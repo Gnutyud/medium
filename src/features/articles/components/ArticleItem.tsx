@@ -110,6 +110,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
   };
   // handle favorite
   const handleFavorite = () => {
+    console.log(favorited);
     dispatch(favoriteRequest(slug));
   };
   return (
@@ -150,8 +151,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
             <Box className={classes.favoritesContainer}>
               {favoritesCount}
               <IconButton aria-label="add to favorites" onClick={handleFavorite}>
-                {/* {favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />} */}
-                <FavoriteIcon color="primary" />
+                {favorited ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
               </IconButton>
             </Box>
             <Box>
