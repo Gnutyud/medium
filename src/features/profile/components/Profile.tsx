@@ -1,15 +1,14 @@
 import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
-import CheckIcon from '@material-ui/icons/Check';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import CheckIcon from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { useAppDispatch } from 'app/hooks';
+import { setTag } from 'features/articles/articlesSlice';
 import { Link, NavLink } from 'react-router-dom';
 import Loading from '../../../components/common/Loading';
 import ArticleComponent from './ProfileArticle';
 import ProfileArticlePagination from './ProfileArticlePagination';
 import ProfileMenuTabs from './ProfileMenuTabs';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { setTag } from 'features/articles/articlesSlice';
-import { userSelector } from 'features/auth/authSlice';
 
 const HEIGHT = window.screen.height;
 
@@ -99,7 +98,8 @@ const Profile: React.FC<ProfileProps> = ({
   const dispatch = useAppDispatch();
 
   // auth
-  const curUser = useAppSelector(userSelector);
+  const local: any = localStorage.getItem('user');
+  const curUser = JSON.parse(local);
 
   // display article list
   const articleListElement =
@@ -122,6 +122,9 @@ const Profile: React.FC<ProfileProps> = ({
     dispatch(setTag(null));
   };
 
+  // log
+  console.log('current user ', curUser);
+
   return (
     <Card className={classes.root}>
       <CardMedia
@@ -142,7 +145,7 @@ const Profile: React.FC<ProfileProps> = ({
       </CardMedia>
 
       <Avatar src={author?.image} className={classes.profileImage} />
-      <div className={classes.profileInfoContainer}>
+      <Box className={classes.profileInfoContainer}>
         <NavLink
           to={`/profile/${username}`}
           onClick={handleGoToProfileHomePage}
@@ -152,13 +155,9 @@ const Profile: React.FC<ProfileProps> = ({
             {author?.username}
           </Typography>
         </NavLink>
-        <Typography align={'center'} variant="subtitle2" gutterBottom className={classes.userTag}>
-          {author?.following}
-        </Typography>
-        <Typography align={'center'} variant="subtitle2" gutterBottom className={classes.userTag}>
-          {author?.bio}
-        </Typography>
-      </div>
+        <p style={{ width: '60%', margin: '0 auto', textAlign: 'center' }}>{author?.following}</p>
+        <p style={{ width: '60%', margin: '0 auto', textAlign: 'center' }}>{author?.bio}</p>
+      </Box>
       <CardContent className={classes.contentContainer}>
         <ProfileMenuTabs tab1="My articles" tab2="My favorite articles" />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
