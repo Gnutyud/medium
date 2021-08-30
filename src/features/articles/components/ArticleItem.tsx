@@ -17,7 +17,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
-import { setTag } from '../articlesSlice';
+import { favoriteRequest, setTag } from '../articlesSlice';
 import clsx from 'clsx';
 
 interface ArticleItemProps {
@@ -108,7 +108,10 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
   const handleGoToArticleDetail = () => {
     history.push(`/article/${slug}`);
   };
-
+  // handle favorite
+  const handleFavorite = () => {
+    dispatch(favoriteRequest(slug));
+  };
   return (
     <Box className={classes.root}>
       <Card className={classes.card}>
@@ -146,8 +149,9 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
           <CardActions className={classes.cardAction}>
             <Box className={classes.favoritesContainer}>
               {favoritesCount}
-              <IconButton aria-label="add to favorites">
-                {favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              <IconButton aria-label="add to favorites" onClick={handleFavorite}>
+                {/* {favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />} */}
+                <FavoriteIcon color="primary" />
               </IconButton>
             </Box>
             <Box>

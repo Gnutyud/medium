@@ -1,7 +1,11 @@
 import { getProfile } from 'features/profile/profileSlice';
 import { fork, takeEvery } from '@redux-saga/core/effects';
-import { getListArticleSaga, postArticleSaga } from 'features/articles/articlesSaga';
-import { getListArticle, postArticle } from 'features/articles/articlesSlice';
+import {
+  favoriteActionSaga,
+  getListArticleSaga,
+  postArticleSaga,
+} from 'features/articles/articlesSaga';
+import { favoriteRequest, getListArticle, postArticle } from 'features/articles/articlesSlice';
 import { getCurrentUserSaga, updateCurrentUserSaga } from 'features/setting/settingSaga';
 import { getUser, updateUser } from 'features/setting/settingSlice';
 import { getListTagSaga } from 'features/tags/tagsSaga';
@@ -25,4 +29,6 @@ export default function* rootSaga() {
   yield takeEvery(updateUser.type, updateCurrentUserSaga);
   // profile feature
   yield takeEvery(getProfile.type, getProfileSaga);
+  // favorite feature
+  yield takeEvery(favoriteRequest.type, favoriteActionSaga);
 }

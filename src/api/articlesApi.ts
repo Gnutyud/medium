@@ -26,6 +26,16 @@ const articlesApi = {
     };
     return axiosClient.post('/articles', data, axiosConfig);
   },
+  favoriteArticle: (slug: string): Promise<ArticleType> => {
+    let Storage: any = localStorage.getItem('user');
+    let user = JSON.parse(Storage);
+    let axiosConfig = {
+      headers: {
+        Authorization: 'Bearer ' + user.token,
+      },
+    };
+    return axiosClient.post(`/articles/${slug}/favorite`, axiosConfig);
+  },
 };
 
 export default articlesApi;
