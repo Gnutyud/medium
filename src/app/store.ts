@@ -9,7 +9,6 @@ import oneArticleReducer from '../features/article/articleSlice';
 import authorReducer from '../features/profile/profileSlice';
 import tagReducer from '../features/tags/tagsSlice';
 import settingReducer from './../features/setting/settingSlice';
-import followReducer from '../features/follow/followSlice';
 import rootSaga from './rootSaga';
 
 const rootReducer = combineReducers({
@@ -20,7 +19,6 @@ const rootReducer = combineReducers({
   setting: settingReducer,
   profile: profileReducer,
   author: authorReducer,
-  follow: followReducer,
   oneArticleReducer: oneArticleReducer,
 });
 // create saga middleware
