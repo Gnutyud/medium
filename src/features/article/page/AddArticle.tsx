@@ -1,11 +1,13 @@
 import { Box, Button, Container, makeStyles } from '@material-ui/core';
 import { postArticle } from 'features/articles/articlesSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import FormikInput from 'share/components/FormikInput';
 import * as Yup from 'yup';
-import { useAppDispatch } from '../../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import FormikTags from '../../../share/components/FormikTags';
+import { getArticle, selectArticle, UpdateArticle } from '../articleSlice';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -35,25 +37,47 @@ const validationSchema = Yup.object().shape({
 });
 
 function AddArticle() {
+  const { slug }: { slug: string } = useParams();
   const dispatch = useAppDispatch();
   const history = useHistory();
+  const article: ArticleType = useAppSelector(selectArticle);
+
+  const initialValues: FormInputArticleType = {
+    title: slug ? (article.title ? article.title : '') : '',
+    description: slug ? (article.description ? article.description : '') : '',
+    body: slug ? (article.body ? article.body : '') : '',
+    tagList: slug ? (article.tagList ? article.tagList : []) : [],
+  };
+
+  useEffect(() => {
+    if (slug) {
+      dispatch({
+        type: getArticle.type,
+        payload: slug,
+      });
+    }
+  }, [dispatch, slug]);
+
   const onSubmit = (values: FormInputArticleType) => {
-    dispatch({
-      type: postArticle.type,
-      payload: { data: { article: values }, history },
-    });
+    if (slug) {
+      dispatch({
+        type: UpdateArticle.type,
+        payload: { slug: slug, data: { article: values } },
+      });
+    } else {
+      dispatch({
+        type: postArticle.type,
+        payload: { data: { article: values }, history },
+      });
+    }
   };
   const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="md">
       <Formik
-        initialValues={{
-          title: '',
-          description: '',
-          body: '',
-          tagList: [],
-        }}
+        enableReinitialize
+        initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={validationSchema}
       >

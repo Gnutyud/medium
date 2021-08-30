@@ -11,8 +11,12 @@ import { getUser, updateUser } from 'features/setting/settingSlice';
 import { getListTagSaga } from 'features/tags/tagsSaga';
 import { getListTag } from 'features/tags/tagsSlice';
 import authSaga from '../features/auth/authSaga';
-import { deleteArticle, getArticle } from 'features/article/articleSlice';
-import { deleteArticleBySlug, getArticleBySlugSaga } from 'features/article/articleSaga';
+import { deleteArticle, getArticle, UpdateArticle } from 'features/article/articleSlice';
+import {
+  deleteArticleBySlug,
+  getArticleBySlugSaga,
+  updateArticleBySlug,
+} from 'features/article/articleSaga';
 import { getProfileSaga } from 'features/profile/profileSaga';
 export default function* rootSaga() {
   // auth feature
@@ -24,6 +28,7 @@ export default function* rootSaga() {
   //article feature
   yield takeEvery(getArticle.type, getArticleBySlugSaga);
   yield takeEvery(deleteArticle.type, deleteArticleBySlug);
+  yield takeEvery(UpdateArticle.type, updateArticleBySlug);
   //setting feature
   yield takeEvery(getUser.type, getCurrentUserSaga);
   yield takeEvery(updateUser.type, updateCurrentUserSaga);

@@ -24,6 +24,12 @@ const useStyle = makeStyles(() => ({
     marginLeft: '10px',
     color: 'green',
     textDecoration: 'none',
+    '&:hover': {
+      transform: 'scale(1.2)',
+      transition: 'all 0.5s',
+      margin: '0 10px',
+      cursor: 'pointer',
+    },
   },
   avatarDate: {
     lineHeight: '40px',

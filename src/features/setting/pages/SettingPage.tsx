@@ -52,21 +52,13 @@ const SettingPage = () => {
     });
   }, [dispatch]);
 
-  const initialValues = currentUser
-    ? {
-        image: currentUser.image ? currentUser.image : '',
-        username: currentUser.username ? currentUser.username : '',
-        bio: currentUser.bio ? currentUser.bio : '',
-        email: currentUser.email ? currentUser.email : '',
-        password: currentUser.password ? currentUser.password : '',
-      }
-    : {
-        image: '',
-        username: '',
-        bio: '',
-        email: '',
-        password: '',
-      };
+  const initialValues = {
+    image: currentUser ? currentUser.image : '',
+    username: currentUser ? currentUser.username : '',
+    bio: currentUser ? currentUser.bio : '',
+    email: currentUser ? currentUser.email : '',
+    password: currentUser ? currentUser.password : '',
+  };
 
   const onsubmit = (values: any, form: any) => {
     const user =

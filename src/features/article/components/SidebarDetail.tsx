@@ -17,6 +17,11 @@ const useStyle = makeStyles(() => ({
     fontSize: '25px',
     fontWeight: 'bold',
     color: 'black',
+    '&:hover': {
+      transition: 'all 0.5s',
+      fontSize: '30px',
+      cursor: 'pointer',
+    },
   },
   bio: {
     marginTop: '25px',
