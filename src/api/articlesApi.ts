@@ -1,5 +1,8 @@
 import axiosClient from './axiosClient';
 
+const Storage: any = localStorage.getItem('user');
+const user = JSON.parse(Storage);
+
 const articlesApi = {
   getAll: (
     offsetParam?: number,
@@ -7,14 +10,29 @@ const articlesApi = {
     tagParam?: string,
     authorNameParam?: string
   ): Promise<ArticleType[]> => {
-    return axiosClient.get('/articles', {
-      params: {
-        offset: offsetParam,
-        limit: limitParam,
-        tag: tagParam,
-        author: authorNameParam,
-      },
-    });
+    const axiosConfig = user
+      ? {
+          headers: {
+            Authorization: 'Bearer ' + user.token,
+            params: {
+              offset: offsetParam,
+              limit: limitParam,
+              tag: tagParam,
+              author: authorNameParam,
+            },
+          },
+        }
+      : {
+          headers: {
+            params: {
+              offset: offsetParam,
+              limit: limitParam,
+              tag: tagParam,
+              author: authorNameParam,
+            },
+          },
+        };
+    return axiosClient.get('/articles', axiosConfig);
   },
   addOne: (data: { article: FormInputArticleType }): Promise<FormInputArticleType> => {
     let Storage: any = localStorage.getItem('user');

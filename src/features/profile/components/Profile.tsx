@@ -11,10 +11,6 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTag } from 'features/articles/articlesSlice';
 import { userSelector } from 'features/auth/authSlice';
 
-// local storage user
-// const local: any = localStorage.getItem('user');
-// const curUser = JSON.parse(local);
-
 const HEIGHT = window.screen.height;
 
 const useStyles = makeStyles((theme) => ({
