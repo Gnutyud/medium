@@ -21,7 +21,7 @@ import React from 'react';
 import { useHistory, useRouteMatch, Link } from 'react-router-dom';
 import clsx from 'clsx';
 
-interface ArticleComponentProps {
+interface ProfileArticleProps {
   article: ArticleType;
 }
 
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) =>
 
 const queryString = require('query-string');
 
-const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
+const ProfileArticle: React.FC<ProfileArticleProps> = ({ article }) => {
   const classes = useStyles();
   const history = useHistory();
   const match = useRouteMatch();
@@ -181,4 +181,4 @@ const ArticleComponent: React.FC<ArticleComponentProps> = ({ article }) => {
   );
 };
 
-export default ArticleComponent;
+export default ProfileArticle;

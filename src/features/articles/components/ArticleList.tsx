@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -6,6 +7,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   getListArticle,
+  getListArticleByFeed,
   selectCountArticles,
   selectListArticles,
   selectLoadingArticles,
@@ -14,6 +16,7 @@ import {
   selectTagByArticle,
 } from '../articlesSlice';
 import ArticleItem from './ArticleItem';
+import ArticleMenuTabs from './ArticleMenuTabs';
 import ArticlePagination from './ArticlePagination';
 
 const queryString = require('query-string');
@@ -26,12 +29,28 @@ const useStyles = makeStyles((theme) => ({
       border: 'none',
     },
   },
+  menuTab: {
+    marginBottom: '30px',
+  },
+  newFeedEmpty: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      textAlign: 'center',
+    },
+  },
 }));
 
 const ArticleList = () => {
   const classes = useStyles();
   const location = useLocation();
   const dispatch = useAppDispatch();
+
+  // state
+  const [listArticleDisplay, setListArticleDisplay] = useState(0);
+
+  const handleListArticleDisplay = (choose: number) => {
+    setListArticleDisplay(choose);
+  };
 
   // select data from store
   const articleList = useAppSelector(selectListArticles);
@@ -56,7 +75,7 @@ const ArticleList = () => {
   // fetch list articles + pagination by offset + filter by tags
   useEffect(() => {
     const action = {
-      type: getListArticle.type,
+      type: listArticleDisplay === 0 ? getListArticle.type : getListArticleByFeed.type,
       payload: {
         offset: offsetIndex * articlePerPage,
         limit: articlePerPage,
@@ -64,7 +83,7 @@ const ArticleList = () => {
       },
     };
     dispatch(action);
-  }, [offsetIndex, articlePerPage, tagFinal, dispatch]);
+  }, [offsetIndex, articlePerPage, tagFinal, listArticleDisplay, dispatch]);
 
   return (
     <Box>
@@ -72,18 +91,29 @@ const ArticleList = () => {
         <Loading />
       ) : (
         <Box>
-          <Box className={classes.articleList}>
-            {articleList.map((article) => (
-              <ArticleItem key={article.slug} article={article} />
-            ))}
+          <Box className={classes.menuTab}>
+            <ArticleMenuTabs handleDisplay={handleListArticleDisplay} />
           </Box>
+
+          {articleList.length > 0 ? (
+            <Box className={classes.articleList}>
+              {articleList.map((article) => (
+                <ArticleItem key={article.slug} article={article} />
+              ))}
+            </Box>
+          ) : (
+            <Box className={classes.newFeedEmpty}>You haven't follow any author..</Box>
+          )}
+
           <Box>
-            <ArticlePagination
-              articleCount={articleCount}
-              articlePerPage={articlePerPage}
-              tagByArticle={tagByArticle}
-              currentPage={currentPage}
-            />
+            {articleCount > 0 && (
+              <ArticlePagination
+                articleCount={articleCount}
+                articlePerPage={articlePerPage}
+                tagByArticle={tagByArticle}
+                currentPage={currentPage}
+              />
+            )}
           </Box>
         </Box>
       )}

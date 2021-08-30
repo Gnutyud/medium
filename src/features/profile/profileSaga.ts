@@ -24,9 +24,7 @@ export function* getFollowProfileSaga(
 ): SagaIterator<void> {
   try {
     const { username } = action.payload;
-    console.log('in runner function username ', username);
     const res = yield call(followApi.followOne, username);
-    console.log('res ', res);
     yield put({
       type: followProfileSuccess.type,
       payload: res,
