@@ -2,6 +2,7 @@ import { Box, makeStyles } from '@material-ui/core';
 import { blue } from '@material-ui/core/colors';
 
 interface Props {
+  option: number;
   handleDisplay: (choose: number) => void;
 }
 
@@ -18,17 +19,24 @@ const useStyles = makeStyles((theme) => ({
     marginRight: '20px',
     transition: 'all 2s',
     fontSize: '1.3rem',
-    '&:active': {
-      borderBottom: '2px solid',
-      borderBottomColor: blue[500],
+    [theme.breakpoints.down('xs')]: {
+      width: '50%',
     },
+  },
+  itemActive: {
+    borderBottom: '2px solid',
+    borderBottomColor: blue[500],
+    cursor: 'pointer',
+    marginRight: '20px',
+    transition: 'all 2s',
+    fontSize: '1.3rem',
     [theme.breakpoints.down('xs')]: {
       width: '50%',
     },
   },
 }));
 
-const ArticleMenuTabs: React.FC<Props> = ({ handleDisplay }) => {
+const ArticleMenuTabs: React.FC<Props> = ({ option, handleDisplay }) => {
   const classes = useStyles();
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);
@@ -39,11 +47,17 @@ const ArticleMenuTabs: React.FC<Props> = ({ handleDisplay }) => {
 
   return (
     <Box className={classes.root} width="100%">
-      <Box className={classes.item} onClick={() => handleClick(0)}>
+      <Box
+        className={option === 0 ? classes.itemActive : classes.item}
+        onClick={() => handleClick(0)}
+      >
         Global
       </Box>
       {curUser && (
-        <Box className={classes.item} onClick={() => handleClick(1)}>
+        <Box
+          className={option === 1 ? classes.itemActive : classes.item}
+          onClick={() => handleClick(1)}
+        >
           Feed
         </Box>
       )}

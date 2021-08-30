@@ -92,7 +92,7 @@ const ArticleList = () => {
       ) : (
         <Box>
           <Box className={classes.menuTab}>
-            <ArticleMenuTabs handleDisplay={handleListArticleDisplay} />
+            <ArticleMenuTabs option={listArticleDisplay} handleDisplay={handleListArticleDisplay} />
           </Box>
 
           {articleList.length > 0 ? (
