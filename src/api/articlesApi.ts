@@ -54,6 +54,16 @@ const articlesApi = {
     };
     return axiosClient.post(`/articles/${slug}/favorite`, null, axiosConfig);
   },
+  unfavoriteArticle: (slug: string): Promise<ArticleType> => {
+    let Storage: any = localStorage.getItem('user');
+    let user = JSON.parse(Storage);
+    let axiosConfig = {
+      headers: {
+        Authorization: 'Bearer ' + user.token,
+      },
+    };
+    return axiosClient.delete(`/articles/${slug}/favorite`, axiosConfig);
+  },
 };
 
 export default articlesApi;

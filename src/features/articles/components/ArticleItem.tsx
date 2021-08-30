@@ -111,7 +111,8 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
   // handle favorite
   const handleFavorite = () => {
     console.log(favorited);
-    dispatch(favoriteRequest(slug));
+    let favoritePayload: FavoritePayloadProps = { slug: slug, favorited: favorited };
+    dispatch(favoriteRequest(favoritePayload));
   };
   return (
     <Box className={classes.root}>
