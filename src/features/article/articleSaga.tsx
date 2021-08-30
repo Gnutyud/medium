@@ -3,6 +3,7 @@ import articlesApi from 'api/articleApi';
 import { SagaIterator } from 'redux-saga';
 import { call, put } from '@redux-saga/core/effects';
 import { getArticleSaga, getError } from './articleSlice';
+import { push } from 'connected-react-router';
 
 export function* getArticleBySlugSaga(action: PayloadAction<string>): SagaIterator<void> {
   try {
@@ -24,6 +25,18 @@ export function* deleteArticleBySlug(action: PayloadAction<string>): SagaIterato
   try {
     const slug = action.payload;
     yield call(articlesApi.deleteOne, slug);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function* updateArticleBySlug(
+  action: PayloadAction<{ slug: string; data: FormInputArticleType }>
+): SagaIterator<void> {
+  try {
+    const { slug, data } = action.payload;
+    yield call(articlesApi.updateOne, slug, data);
+    yield put(push(`/article/${slug}`));
   } catch (error) {
     console.log(error);
   }

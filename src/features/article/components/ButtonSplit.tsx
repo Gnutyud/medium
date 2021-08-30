@@ -6,6 +6,8 @@ import { useAppDispatch } from 'app/hooks';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { deleteArticle } from '../articleSlice';
+import DeleteIcon from '@material-ui/icons/Delete';
+import UpdateIcon from '@material-ui/icons/Update';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
@@ -43,6 +45,10 @@ function ButtonSplit({ slug, username }: { slug: string; username: string }) {
     history.push(`/profile/${username}`);
   };
 
+  const handleUpdate = () => {
+    history.push(`/article/${slug}/edit`);
+  };
+
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <div className={classes.root}>
@@ -58,8 +64,14 @@ function ButtonSplit({ slug, username }: { slug: string; username: string }) {
         </IconButton>
         {open && (
           <>
-            <MenuItem>update</MenuItem>
-            <MenuItem onClick={handleDelete}>delete</MenuItem>
+            <MenuItem onClick={handleUpdate}>
+              <UpdateIcon />
+              update
+            </MenuItem>
+            <MenuItem onClick={handleDelete}>
+              <DeleteIcon />
+              delete
+            </MenuItem>
           </>
         )}
       </div>
