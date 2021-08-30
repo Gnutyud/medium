@@ -7,10 +7,16 @@ import {
 import { deleteArticle, getArticle, UpdateArticle } from 'features/article/articleSlice';
 import {
   favoriteActionSaga,
+  getListArticleByFeedSaga,
   getListArticleSaga,
   postArticleSaga,
 } from 'features/articles/articlesSaga';
-import { favoriteRequest, getListArticle, postArticle } from 'features/articles/articlesSlice';
+import {
+  favoriteRequest,
+  getListArticle,
+  getListArticleByFeed,
+  postArticle,
+} from 'features/articles/articlesSlice';
 import {
   getFollowProfileSaga,
   getProfileSaga,
@@ -28,6 +34,7 @@ export default function* rootSaga() {
   yield fork(authSaga);
   //articles feature
   yield takeEvery(getListArticle.type, getListArticleSaga);
+  yield takeEvery(getListArticleByFeed.type, getListArticleByFeedSaga);
   yield takeEvery(getListTag.type, getListTagSaga);
   yield takeEvery(postArticle.type, postArticleSaga);
   //article feature

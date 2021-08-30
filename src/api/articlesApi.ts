@@ -17,6 +17,22 @@ const articlesApi = {
     };
     return axiosClient.get('/articles', axiosConfig);
   },
+  getAllByFeed: (
+    offsetParam?: number,
+    limitParam?: number,
+    tagParam?: string,
+    authorNameParam?: string
+  ): Promise<ArticleType[]> => {
+    const axiosConfig = {
+      params: {
+        offset: offsetParam,
+        limit: limitParam,
+        tag: tagParam,
+        author: authorNameParam,
+      },
+    };
+    return axiosClient.get('/articles/feed', axiosConfig);
+  },
   addOne: (data: { article: FormInputArticleType }): Promise<FormInputArticleType> => {
     return axiosClient.post('/articles', data);
   },

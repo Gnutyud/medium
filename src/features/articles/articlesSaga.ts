@@ -24,6 +24,21 @@ export function* getListArticleSaga(action: PayloadAction<PayloadActionType>): S
   }
 }
 
+export function* getListArticleByFeedSaga(
+  action: PayloadAction<PayloadActionType>
+): SagaIterator<void> {
+  try {
+    const { offset, limit, tag, author } = action.payload;
+    const res = yield call(articlesApi.getAllByFeed, offset, limit, tag, author);
+    yield put({
+      type: getListArticleFromSaga.type,
+      payload: res,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export function* postArticleSaga(
   action: PayloadAction<{ data: { article: FormInputArticleType }; history: any }>
 ): SagaIterator<void> {

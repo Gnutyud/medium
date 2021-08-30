@@ -7,7 +7,7 @@ import { setTag } from 'features/articles/articlesSlice';
 import { Link, NavLink } from 'react-router-dom';
 import Loading from '../../../components/common/Loading';
 import { followProfile, selectProfile, unFollowProfile } from '../profileSlice';
-import ArticleComponent from './ProfileArticle';
+import ProfileArticle from './ProfileArticle';
 import ProfileArticlePagination from './ProfileArticlePagination';
 import ProfileMenuTabs from './ProfileMenuTabs';
 import AddIcon from '@material-ui/icons/Add';
@@ -133,7 +133,7 @@ const Profile: React.FC<ProfileProps> = ({
         ) : (
           <Box className={classes.articleList}>
             {articleList?.map((article) => (
-              <ArticleComponent key={article.slug} article={article} />
+              <ProfileArticle key={article.slug} article={article} />
             ))}
           </Box>
         )}
@@ -147,16 +147,18 @@ const Profile: React.FC<ProfileProps> = ({
 
   // handle follow action
   const handleFollow = () => {
-    if (!followingState) {
-      dispatch({
-        type: followProfile.type,
-        payload: { username: username },
-      });
-    } else {
-      dispatch({
-        type: unFollowProfile.type,
-        payload: { username: username },
-      });
+    if (curUser) {
+      if (!followingState) {
+        dispatch({
+          type: followProfile.type,
+          payload: { username: username },
+        });
+      } else {
+        dispatch({
+          type: unFollowProfile.type,
+          payload: { username: username },
+        });
+      }
     }
   };
 

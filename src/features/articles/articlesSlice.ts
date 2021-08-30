@@ -30,6 +30,14 @@ export const articlesSlice = createSlice({
       state.articlesCount = action.payload.articlesCount;
       state.articleList = action.payload.articles;
     },
+    getListArticleByFeed: (state) => {
+      state.isLoading = true;
+    },
+    getListArticleByFeedFromSaga: (state, action) => {
+      state.isLoading = false;
+      state.articlesCount = action.payload.articlesCount;
+      state.articleList = action.payload.articles;
+    },
     setNumberCurrentPage: (state, action) => {
       state.numberCurrentPage = action.payload;
     },
@@ -62,6 +70,8 @@ export const articlesSlice = createSlice({
 export const {
   getListArticle,
   getListArticleFromSaga,
+  getListArticleByFeed,
+  getListArticleByFeedFromSaga,
   setNumberCurrentPage,
   setTag,
   postArticle,
