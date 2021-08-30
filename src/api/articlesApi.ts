@@ -14,22 +14,20 @@ const articlesApi = {
       ? {
           headers: {
             Authorization: 'Bearer ' + user.token,
-            params: {
-              offset: offsetParam,
-              limit: limitParam,
-              tag: tagParam,
-              author: authorNameParam,
-            },
+          },
+          params: {
+            offset: offsetParam,
+            limit: limitParam,
+            tag: tagParam,
+            author: authorNameParam,
           },
         }
       : {
-          headers: {
-            params: {
-              offset: offsetParam,
-              limit: limitParam,
-              tag: tagParam,
-              author: authorNameParam,
-            },
+          params: {
+            offset: offsetParam,
+            limit: limitParam,
+            tag: tagParam,
+            author: authorNameParam,
           },
         };
     return axiosClient.get('/articles', axiosConfig);
