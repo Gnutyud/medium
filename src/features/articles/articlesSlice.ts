@@ -46,6 +46,13 @@ export const articlesSlice = createSlice({
       state.isLoading = false;
     },
     favoriteRequest: (state, action) => {},
+    favoriteSuccessSaga: (state, action) => {
+      console.log(action.payload.article);
+      const articleExistingIndex = state.articleList.findIndex(
+        (item) => item.slug === action.payload.article.slug
+      );
+      state.articleList[articleExistingIndex] = action.payload.article;
+    },
   },
 });
 
@@ -58,6 +65,7 @@ export const {
   postArticle,
   addArticleFromSaga,
   favoriteRequest,
+  favoriteSuccessSaga,
 } = articlesSlice.actions;
 
 // selector

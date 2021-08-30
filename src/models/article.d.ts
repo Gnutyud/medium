@@ -17,3 +17,7 @@ interface FormInputArticleType {
   body: string;
   tagList: string[];
 }
+interface FavoritePayloadProps {
+  slug: string;
+  favorited: boolean;
+}
