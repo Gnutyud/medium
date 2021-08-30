@@ -9,6 +9,11 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   function (config: AxiosRequestConfig) {
+    let Storage: any = localStorage.getItem('user');
+    let store = JSON.parse(Storage);
+    if (store) {
+      config.headers.Authorization = 'Bearer ' + store.token;
+    }
     return config;
   },
   function (error: AxiosError) {
