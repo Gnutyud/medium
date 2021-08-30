@@ -1,5 +1,5 @@
 import { getProfile } from 'features/profile/profileSlice';
-import { fork, takeEvery } from '@redux-saga/core/effects';
+import { fork, takeEvery, throttle } from '@redux-saga/core/effects';
 import {
   favoriteActionSaga,
   getListArticleSaga,
@@ -36,5 +36,5 @@ export default function* rootSaga() {
   yield takeEvery(getProfile.type, getProfileSaga);
   // follow feature
   // favorite feature
-  yield takeEvery(favoriteRequest.type, favoriteActionSaga);
+  yield throttle(1000, favoriteRequest.type, favoriteActionSaga);
 }
