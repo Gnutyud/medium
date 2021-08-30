@@ -25,4 +25,5 @@ export default function* rootSaga() {
   yield takeEvery(updateUser.type, updateCurrentUserSaga);
   // profile feature
   yield takeEvery(getProfile.type, getProfileSaga);
+  // follow feature
 }
