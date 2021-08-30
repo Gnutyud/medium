@@ -51,7 +51,9 @@ export const articlesSlice = createSlice({
       const articleExistingIndex = state.articleList.findIndex(
         (item) => item.slug === action.payload.article.slug
       );
-      state.articleList[articleExistingIndex] = action.payload.article;
+      state.articleList[articleExistingIndex].favorited = action.payload.article.favorited;
+      state.articleList[articleExistingIndex].favoritesCount =
+        action.payload.article.favoritesCount;
     },
   },
 });

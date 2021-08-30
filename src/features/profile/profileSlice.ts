@@ -21,14 +21,29 @@ export const authorSlice = createSlice({
     getProfileSuccess: (state, action) => {
       state.profile = action.payload.profile;
     },
+    followProfile: (state) => {},
+    followProfileSuccess: (state, action) => {
+      state.profile = action.payload.profile;
+    },
+    unFollowProfile: (state) => {},
+    unFollowProfileSuccess: (state, action) => {
+      state.profile = action.payload.profile;
+    },
   },
 });
 
 // actions
-export const { getProfile, getProfileSuccess } = authorSlice.actions;
+export const {
+  getProfile,
+  getProfileSuccess,
+  followProfile,
+  followProfileSuccess,
+  unFollowProfile,
+  unFollowProfileSuccess,
+} = authorSlice.actions;
 
 // selector
-export const selectIsLoading = (state: RootState) => state.profile.isLoading;
 export const selectProfile = (state: RootState) => state.profile.profile;
+export const selectIsLoading = (state: RootState) => state.profile.isLoading;
 
 export default authorSlice.reducer;
