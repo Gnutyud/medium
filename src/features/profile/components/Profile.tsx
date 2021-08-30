@@ -2,13 +2,15 @@ import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import CheckIcon from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { setTag } from 'features/articles/articlesSlice';
 import { Link, NavLink } from 'react-router-dom';
 import Loading from '../../../components/common/Loading';
+import { followProfile, selectProfile, unFollowProfile } from '../profileSlice';
 import ArticleComponent from './ProfileArticle';
 import ProfileArticlePagination from './ProfileArticlePagination';
 import ProfileMenuTabs from './ProfileMenuTabs';
+import AddIcon from '@material-ui/icons/Add';
 
 const HEIGHT = window.screen.height;
 
@@ -37,6 +39,25 @@ const useStyles = makeStyles((theme) => ({
       opacity: '0.8',
     },
   },
+  followBtn: {
+    cursor: 'pointer',
+    position: 'absolute',
+    right: '20px',
+    bottom: '15px',
+    backgroundColor: 'white',
+    padding: '8px 10px',
+    color: 'black',
+    borderRadius: '5px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textDecoration: 'none',
+    gap: '3px',
+    '&:hover': {
+      opacity: '0.8',
+    },
+  },
+
   profileImage: {
     position: 'relative',
     top: '-110px',
@@ -100,6 +121,8 @@ const Profile: React.FC<ProfileProps> = ({
   // auth
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);
+  const userFromStore = useAppSelector(selectProfile);
+  const followingState = userFromStore.following;
 
   // display article list
   const articleListElement =
@@ -122,8 +145,20 @@ const Profile: React.FC<ProfileProps> = ({
     dispatch(setTag(null));
   };
 
-  // log
-  console.log('current user ', curUser);
+  // handle follow action
+  const handleFollow = () => {
+    if (!followingState) {
+      dispatch({
+        type: followProfile.type,
+        payload: { username: username },
+      });
+    } else {
+      dispatch({
+        type: unFollowProfile.type,
+        payload: { username: username },
+      });
+    }
+  };
 
   return (
     <Card className={classes.root}>
@@ -137,10 +172,10 @@ const Profile: React.FC<ProfileProps> = ({
             Edit Profile Setting
           </Link>
         ) : (
-          <Link className={classes.settingBtn} to={curUser ? '/settings' : '/auth'}>
-            <CheckIcon />
+          <Box className={classes.followBtn} onClick={handleFollow}>
+            {followingState ? <CheckIcon /> : <AddIcon />}
             Following
-          </Link>
+          </Box>
         )}
       </CardMedia>
 
