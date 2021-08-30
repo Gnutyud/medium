@@ -31,7 +31,8 @@ function App() {
           <Route path="/auth" component={LoginPage} />
           <Route path="/home" component={HomeLayout} />
           <Route path="/article/create" component={AddArticle} />
-          <Route path="/article/:slug" component={DetailArticle} />
+          <Route exact path="/article/:slug" component={DetailArticle} />
+          <Route path="/article/:slug/edit" component={AddArticle} />
           <Route path="/settings" component={SettingPage} />
           <Route path="/profile/:username" component={ProfilePage} exact />
           <Route component={NotFound} />

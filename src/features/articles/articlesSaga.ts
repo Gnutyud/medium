@@ -39,3 +39,12 @@ export function* postArticleSaga(
     console.error(error);
   }
 }
+
+export function* favoriteActionSaga(action: PayloadAction<string>): SagaIterator<void> {
+  try {
+    const slug = action.payload;
+    yield call(articlesApi.favoriteArticle, slug);
+  } catch (error) {
+    console.log(error);
+  }
+}

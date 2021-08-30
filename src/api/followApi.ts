@@ -10,7 +10,7 @@ const axiosConfig = {
 
 const followApi = {
   followOne: (username: string): Promise<ProfileType> => {
-    return axios.post(`/profiles/${username}/follow`, axiosConfig);
+    return axios.post(`/profiles/${username}/follow`, undefined, axiosConfig);
   },
   unFollowOne: (username: string): Promise<ProfileType> => {
     return axios.delete(`/profiles/${username}/follow`, axiosConfig);

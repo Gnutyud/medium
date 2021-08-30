@@ -22,12 +22,11 @@ export const articleSlice = createSlice({
       state.error = action.payload;
     },
     deleteArticle: (state) => {
-      state.isLoading = true;
+      state.isLoading = false;
     },
-    // ,
-    // deleteArticleSaga: (state) => {
-    //   state.isLoading = false;
-    // },
+    UpdateArticle: (state) => {
+      state.isLoading = false;
+    },
   },
 });
 
@@ -36,4 +35,5 @@ export default oneArticleReducer;
 export const selectArticle = (state: RootState) => state.oneArticleReducer.article;
 export const selectIsloading = (state: RootState) => state.oneArticleReducer.isLoading;
 export const selectError = (state: RootState) => state.oneArticleReducer.error;
-export const { getArticle, getArticleSaga, getError, deleteArticle } = articleSlice.actions;
+export const { getArticle, getArticleSaga, getError, deleteArticle, UpdateArticle } =
+  articleSlice.actions;
