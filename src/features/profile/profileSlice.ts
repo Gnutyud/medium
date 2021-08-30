@@ -33,7 +33,7 @@ export const { getProfile, getProfileSuccess, followProfile, followProfileSucces
   authorSlice.actions;
 
 // selector
-export const selectIsLoading = (state: RootState) => state.profile.isLoading;
 export const selectProfile = (state: RootState) => state.profile.profile;
+export const selectIsLoading = (state: RootState) => state.profile.isLoading;
 
 export default authorSlice.reducer;

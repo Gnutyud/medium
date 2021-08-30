@@ -122,6 +122,9 @@ const Profile: React.FC<ProfileProps> = ({
     dispatch(setTag(null));
   };
 
+  // log
+  console.log('current user ', curUser);
+
   return (
     <Card className={classes.root}>
       <CardMedia
