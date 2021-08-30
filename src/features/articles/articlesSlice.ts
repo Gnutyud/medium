@@ -45,6 +45,7 @@ export const articlesSlice = createSlice({
     addArticleFromSaga: (state) => {
       state.isLoading = false;
     },
+    favoriteRequest: (state, action) => {},
   },
 });
 
@@ -56,6 +57,7 @@ export const {
   setTag,
   postArticle,
   addArticleFromSaga,
+  favoriteRequest,
 } = articlesSlice.actions;
 
 // selector
