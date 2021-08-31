@@ -1,4 +1,4 @@
-import { Avatar, Box, makeStyles } from '@material-ui/core';
+import { Avatar, Box, Button, Divider, makeStyles } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { followProfile, selectProfile, unFollowProfile } from 'features/profile/profileSlice';
 import React from 'react';
@@ -18,28 +18,23 @@ const useStyle = makeStyles((theme) => ({
     textDecoration: 'none',
   },
   followBtn: {
-    cursor: 'pointer',
-    position: 'absolute',
-    right: '20px',
-    bottom: '15px',
-    backgroundColor: 'white',
-    padding: '8px 10px',
-    color: 'black',
-    borderRadius: '5px',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textDecoration: 'none',
-    gap: '3px',
     '&:hover': {
       opacity: '0.8',
     },
   },
+  containerAvatar: {
+    display: 'flex',
+    marginBottom: theme.spacing(2),
+  },
+  containerFollow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: theme.spacing(2),
+  },
 }));
 
 function Popup({ article }: ArticleProps) {
-  const { slug, author, title, updatedAt, description, favorited, favoritesCount, tagList } =
-    article;
+  const { author } = article;
   const classes = useStyle();
   const dispatch = useAppDispatch();
   // auth
@@ -66,14 +61,25 @@ function Popup({ article }: ArticleProps) {
   };
   return (
     <>
-      <Box style={{ display: 'flex' }}>
-        <Avatar alt={author?.username} src={article?.author?.image} />
-        <NavLink className={classes.avatar} to={`/profile/${article?.author?.username}`}>
-          {upperFirstLetter(author?.username)}
-        </NavLink>
-        <Box className={classes.followBtn} onClick={handleFollow}>
-          {followingState ? <CheckIcon /> : <AddIcon />}
-          Following
+      <Box>
+        <Box className={classes.containerAvatar}>
+          <Avatar alt={author?.username} src={article?.author?.image} />
+          <NavLink className={classes.avatar} to={`/profile/${article?.author?.username}`}>
+            {upperFirstLetter(author?.username)}
+          </NavLink>
+        </Box>
+        <Divider color="black" />
+        <Box className={classes.containerFollow}>
+          <Box style={{ alignSelf: 'center' }}>Articles: 1</Box>
+          <Button
+            variant="outlined"
+            color="primary"
+            className={classes.followBtn}
+            onClick={handleFollow}
+          >
+            {followingState ? <CheckIcon /> : <AddIcon />}
+            Following
+          </Button>
         </Box>
       </Box>
     </>

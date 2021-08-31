@@ -54,13 +54,15 @@ const useStyles = makeStyles((theme) =>
       fontWeight: 600,
       fontSize: '1.2rem',
       position: 'relative',
-      '&:hover $popup': {
-        display: 'Block',
-        position: 'absolute',
-        backgroundColor: 'white',
-        border: '1px solid black',
-        left: '80px',
-        top: '-15px',
+      [theme.breakpoints.up('sm')]: {
+        '&:hover $popup': {
+          display: 'Block',
+          position: 'absolute',
+          backgroundColor: 'white',
+          border: '1px solid black',
+          left: '80px',
+          top: '-15px',
+        },
       },
     },
     description: {
