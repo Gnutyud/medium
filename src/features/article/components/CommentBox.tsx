@@ -11,10 +11,13 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import React, { useState } from 'react';
-import { showComment, toggleComment } from '../articleSlice';
+import { isLoggedInSelector } from 'features/auth/authSlice';
+import { getUser, selectUser } from 'features/setting/settingSlice';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { commentList, commentRequest, showComment, toggleComment } from '../articleSlice';
 import { CommentItem } from './CommentItem';
-const useStyle = makeStyles(() => ({
+const useStyle = makeStyles((theme) => ({
   container: {
     position: 'fixed',
     top: '0',
@@ -26,6 +29,9 @@ const useStyle = makeStyles(() => ({
     overflowY: 'scroll',
     boxShadow: 'inset 1px 0px 0px 0px rgba(0, 0, 0, 0.2)',
     transition: 'all 0.5s ease-in-out',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
   },
   inputBox: {
     border: '1px solid #e8dfec',
@@ -59,29 +65,63 @@ const useStyle = makeStyles(() => ({
     fontSize: '40px',
   },
 }));
-
-export const CommentBox = () => {
+interface PropsType {
+  slug: string;
+}
+export const CommentBox = (props: PropsType) => {
+  const classes = useStyle();
+  const history = useHistory();
   const [show, setShow] = useState(false);
+  const [commentText, setCommentText] = useState('');
   const dispatch = useAppDispatch();
   const isShowComment = useAppSelector(showComment);
-  const classes = useStyle();
+  const currentUser = useAppSelector(selectUser);
+  const comments = useAppSelector(commentList);
+  const isLoggedIn = useAppSelector(isLoggedInSelector);
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
   const toggle = () => {
     dispatch(toggleComment());
   };
+  const handleCancel = () => {
+    setShow(false);
+    setCommentText('');
+  };
+  const handleSubmitComment = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!isLoggedIn) {
+      history.push('/auth');
+    }
+    if (commentText.trim() === '') {
+      setShow(false);
+      setCommentText('');
+      return;
+    }
+    dispatch({
+      type: commentRequest.type,
+      payload: { slug: props.slug, data: commentText },
+    });
+    setShow(false);
+    setCommentText('');
+  };
+  if (!comments) {
+    return <h1>Loading...</h1>;
+  }
   return (
-    <div className={classes.container} style={{ right: !isShowComment ? '-400px' : '0px' }}>
+    <div className={classes.container} style={{ right: !isShowComment ? '-600px' : '0px' }}>
       <div className={classes.content}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant="h6">Responses (7)</Typography>
+          <Typography variant="h6">{`Responses (${comments.length})`}</Typography>
           <CloseIcon onClick={toggle} className={classes.closeBtn} />
         </div>
-        <form className={classes.inputBox}>
-          {show && (
+        <form className={classes.inputBox} onSubmit={handleSubmitComment}>
+          {show && isLoggedIn && (
             <ListItem style={{ padding: '0', marginBottom: '5px' }}>
               <ListItemAvatar>
-                <Avatar>T</Avatar>
+                <Avatar src={currentUser?.image && currentUser.image} />
               </ListItemAvatar>
-              <ListItemText primary="Tungnd24" />
+              <ListItemText primary={currentUser?.username} />
             </ListItem>
           )}
           <TextField
@@ -89,14 +129,17 @@ export const CommentBox = () => {
             multiline
             fullWidth
             InputProps={{ disableUnderline: true }}
+            value={commentText}
+            onChange={(e: any) => setCommentText(e.target.value)}
             onClick={() => setShow(true)}
           />
           {show && (
             <div className={classes.btnGroup}>
-              <Button onClick={() => setShow(false)} style={{ textTransform: 'none' }}>
+              <Button onClick={handleCancel} style={{ textTransform: 'none' }}>
                 Cancel
               </Button>
               <Button
+                type="submit"
                 variant="contained"
                 color="primary"
                 style={{ borderRadius: '25px', marginLeft: '5px', textTransform: 'none' }}
@@ -112,9 +155,9 @@ export const CommentBox = () => {
       </div>
       <Divider />
       <div className={classes.content}>
-        <CommentItem />
-        <CommentItem />
-        <CommentItem />
+        {comments.map((item: CommentType) => (
+          <CommentItem key={item.id} commentData={item} slug={props.slug} />
+        ))}
       </div>
     </div>
   );

@@ -4,9 +4,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { toggleComment } from '../articleSlice';
+import { commentList, toggleComment } from '../articleSlice';
 import ButtonSplit from './ButtonSplit';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { favoriteRequest } from 'features/articles/articlesSlice';
 import { upperFirstLetter } from 'share/methods/upperFirst';
 
@@ -56,6 +56,7 @@ const useStyle = makeStyles((theme) => ({
 
 function SidebarDetail({ article }: { article: ArticleType }) {
   const dispatch = useAppDispatch();
+  const comments = useAppSelector(commentList);
   const classes = useStyle();
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);
@@ -71,7 +72,7 @@ function SidebarDetail({ article }: { article: ArticleType }) {
   const onShowComment = () => {
     dispatch(toggleComment());
   };
-  if (!article) {
+  if (!article && !comments) {
     return <h1>Loading...</h1>;
   }
   return (
@@ -94,7 +95,7 @@ function SidebarDetail({ article }: { article: ArticleType }) {
               <ChatBubbleOutlineIcon />
             </IconButton>
           </React.Fragment>
-          <span>100</span>
+          <span>{comments.length}</span>
         </Box>
         <Box>
           {curUser?.username === article?.author?.username && (

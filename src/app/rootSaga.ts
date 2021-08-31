@@ -1,10 +1,20 @@
 import { fork, takeEvery, throttle } from '@redux-saga/core/effects';
 import {
+  commentActionSaga,
   deleteArticleBySlug,
+  deleteCommentSaga,
   getArticleBySlugSaga,
+  getCommentSaga,
   updateArticleBySlug,
 } from 'features/article/articleSaga';
-import { deleteArticle, getArticle, UpdateArticle } from 'features/article/articleSlice';
+import {
+  commentRequest,
+  deleteArticle,
+  deleteComment,
+  getArticle,
+  getComment,
+  UpdateArticle,
+} from 'features/article/articleSlice';
 import {
   favoriteActionSaga,
   getListArticleByFeedSaga,
@@ -52,4 +62,8 @@ export default function* rootSaga() {
   yield throttle(1000, unFollowProfile.type, getUnFollowProfileSaga);
   // favorite feature
   yield throttle(1000, favoriteRequest.type, favoriteActionSaga);
+  // comment feature
+  yield takeEvery(getComment.type, getCommentSaga);
+  yield takeEvery(commentRequest.type, commentActionSaga);
+  yield takeEvery(deleteComment.type, deleteCommentSaga);
 }

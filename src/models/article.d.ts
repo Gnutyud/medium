@@ -21,3 +21,9 @@ interface FavoritePayloadProps {
   slug: string;
   favorited: boolean;
 }
+interface CommentType {
+  id: string;
+  body: string;
+  createdAt: string;
+  author: ProfileType;
+}

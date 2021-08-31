@@ -7,8 +7,8 @@ import {
   ListItemText,
   makeStyles,
 } from '@material-ui/core';
-import ImageIcon from '@material-ui/icons/Image';
-import React from 'react';
+import { useAppDispatch } from 'app/hooks';
+import { deleteComment } from '../articleSlice';
 const useStyle = makeStyles(() => ({
   footer: {
     marginTop: '10px',
@@ -19,26 +19,41 @@ const useStyle = makeStyles(() => ({
     marginTop: '10px',
   },
 }));
-export const CommentItem = () => {
+interface CommentItemProps {
+  commentData: CommentType;
+  slug: string;
+}
+export const CommentItem = (props: CommentItemProps) => {
   const classes = useStyle();
+  const dispatch = useAppDispatch();
+  const user: any = localStorage.getItem('user');
+  const currentUser = JSON.parse(user);
+  const handleDeleteComment = () => {
+    console.log('id', props.commentData.id);
+    console.log('slug', props.slug);
+    dispatch({
+      type: deleteComment.type,
+      payload: { slug: props.slug, id: props.commentData.id },
+    });
+  };
   return (
-    <div className={classes.container}>
+    <div className={classes.container} key={props.commentData.id}>
       <ListItem style={{ padding: '0', marginBottom: '5px' }}>
         <ListItemAvatar>
-          <Avatar>
-            <ImageIcon />
-          </Avatar>
+          <Avatar src={props.commentData.author.image} />
         </ListItemAvatar>
-        <ListItemText primary="Sontungmtp" secondary="10 hours ago" />
+        <ListItemText
+          primary={props.commentData.author.username}
+          secondary={props.commentData.createdAt}
+        />
       </ListItem>
-      <p>
-        Most people don't do this retrospective. I'm impressed by your attitude of highlighting your
-        mistakes and how you would like to avoid it in the future. Kudos to you! Hope you enjoy your
-        new role as a manager truly. Looking forward to hear how that experience turns out for your
-        sub-ordinates!
-      </p>
+      <p>{props.commentData.body}</p>
       <div className={classes.footer}>
-        <Button style={{ textTransform: 'none' }}>Reply</Button>
+        {currentUser?.username === props.commentData.author.username && (
+          <Button style={{ textTransform: 'none' }} onClick={handleDeleteComment}>
+            Delete
+          </Button>
+        )}
       </div>
       <Divider style={{ marginTop: '10px' }} />
     </div>
