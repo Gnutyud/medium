@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: '100%',
-      height: '200px',
+      minHeight: '200px',
       marginBottom: '20px',
       [theme.breakpoints.down('md')]: {
         borderRight: 'none',
@@ -44,10 +44,14 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.down('sm')]: {
         width: '100%',
         margin: '0',
+        flexDirection: 'column',
       },
     },
     cardLeft: {
       flex: '1',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
     },
     authorName: {
       fontWeight: 600,
@@ -66,6 +70,9 @@ const useStyles = makeStyles((theme) =>
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
+      [theme.breakpoints.down('sm')]: {
+        flexDirection: 'row',
+      },
     },
     chip: {
       marginRight: '5px',
@@ -73,6 +80,10 @@ const useStyles = makeStyles((theme) =>
     favoritesContainer: {
       width: '100%',
       textAlign: 'right',
+      [theme.breakpoints.down('sm')]: {
+        width: 'auto',
+        minWidth: '75px',
+      },
     },
     link: {
       textDecoration: 'none',
