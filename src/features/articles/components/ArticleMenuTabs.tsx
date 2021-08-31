@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
   item: {
     cursor: 'pointer',
     marginRight: '20px',
-    transition: 'all 2s',
     fontSize: '1.3rem',
     [theme.breakpoints.down('xs')]: {
       width: '50%',
@@ -28,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     borderBottomColor: blue[500],
     cursor: 'pointer',
     marginRight: '20px',
-    transition: 'all 2s',
     fontSize: '1.3rem',
     [theme.breakpoints.down('xs')]: {
       width: '50%',
