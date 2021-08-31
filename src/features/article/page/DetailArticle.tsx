@@ -6,6 +6,8 @@ import { getListArticle, selectListArticles } from 'features/articles/articlesSl
 import { nanoid } from 'nanoid';
 import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
+import { convertArticleDate } from 'share/methods/dateFormat';
+import { upperFirstLetter } from 'share/methods/upperFirst';
 import { getArticle, selectArticle, selectError, selectIsloading } from '../articleSlice';
 import SidebarDetail from '../components/SidebarDetail';
 
@@ -112,10 +114,10 @@ function DetailArticle() {
                 <Box style={{ display: 'flex' }}>
                   <Avatar alt={article?.author?.username} src={article?.author?.image} />
                   <NavLink className={classes.avatar} to={`/profile/${article?.author?.username}`}>
-                    {article?.author?.username}
+                    {upperFirstLetter(article?.author?.username)}
                   </NavLink>
                 </Box>
-                <Box className={classes.avatarDate}>{article.createdAt}</Box>
+                <Box className={classes.avatarDate}>{convertArticleDate(article.createdAt)}</Box>
               </Box>
               {body.map((item: string) => (
                 <Box key={nanoid()}>

@@ -8,7 +8,7 @@ import { NavLink } from 'react-router-dom';
 import ButtonSplit from './ButtonSplit';
 import { useAppDispatch } from 'app/hooks';
 import { favoriteRequest } from 'features/articles/articlesSlice';
-import { NONAME } from 'dns';
+import { upperFirstLetter } from 'share/methods/upperFirst';
 
 const useStyle = makeStyles((theme) => ({
   position: {
@@ -71,7 +71,7 @@ function SidebarDetail({ article }: { article: ArticleType }) {
   return (
     <Box className={classes.position}>
       <NavLink className={classes.name} to={`/profile/${article?.author?.username}`}>
-        {article?.author?.username}
+        {upperFirstLetter(article?.author?.username)}
       </NavLink>
       <Typography className={classes.bio}>{article?.author?.bio}</Typography>
       <Divider light />
