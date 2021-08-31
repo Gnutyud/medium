@@ -11,8 +11,10 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { isLoggedInSelector } from 'features/auth/authSlice';
 import { getUser, selectUser } from 'features/setting/settingSlice';
 import React, { FormEvent, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { commentList, commentRequest, showComment, toggleComment } from '../articleSlice';
 import { CommentItem } from './CommentItem';
 const useStyle = makeStyles((theme) => ({
@@ -68,12 +70,14 @@ interface PropsType {
 }
 export const CommentBox = (props: PropsType) => {
   const classes = useStyle();
+  const history = useHistory();
   const [show, setShow] = useState(false);
   const [commentText, setCommentText] = useState('');
   const dispatch = useAppDispatch();
   const isShowComment = useAppSelector(showComment);
   const currentUser = useAppSelector(selectUser);
   const comments = useAppSelector(commentList);
+  const isLoggedIn = useAppSelector(isLoggedInSelector);
   useEffect(() => {
     dispatch(getUser());
   }, [dispatch]);
@@ -86,6 +90,14 @@ export const CommentBox = (props: PropsType) => {
   };
   const handleSubmitComment = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!isLoggedIn) {
+      history.push('/auth');
+    }
+    if (commentText.trim() === '') {
+      setShow(false);
+      setCommentText('');
+      return;
+    }
     dispatch({
       type: commentRequest.type,
       payload: { slug: props.slug, data: commentText },
@@ -104,7 +116,7 @@ export const CommentBox = (props: PropsType) => {
           <CloseIcon onClick={toggle} className={classes.closeBtn} />
         </div>
         <form className={classes.inputBox} onSubmit={handleSubmitComment}>
-          {show && (
+          {show && isLoggedIn && (
             <ListItem style={{ padding: '0', marginBottom: '5px' }}>
               <ListItemAvatar>
                 <Avatar src={currentUser?.image && currentUser.image} />
