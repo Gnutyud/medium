@@ -7,6 +7,7 @@ export const articleSlice = createSlice({
     article: {} as ArticleType,
     isLoading: false,
     error: null,
+    isShowComment: false,
   },
   reducers: {
     getArticle: (state) => {
@@ -27,6 +28,9 @@ export const articleSlice = createSlice({
     UpdateArticle: (state) => {
       state.isLoading = false;
     },
+    toggleComment: (state) => {
+      state.isShowComment = !state.isShowComment;
+    },
   },
 });
 
@@ -35,5 +39,6 @@ export default oneArticleReducer;
 export const selectArticle = (state: RootState) => state.oneArticleReducer.article;
 export const selectIsloading = (state: RootState) => state.oneArticleReducer.isLoading;
 export const selectError = (state: RootState) => state.oneArticleReducer.error;
-export const { getArticle, getArticleSaga, getError, deleteArticle, UpdateArticle } =
+export const showComment = (state: RootState) => state.oneArticleReducer.isShowComment;
+export const { getArticle, getArticleSaga, getError, deleteArticle, UpdateArticle, toggleComment } =
   articleSlice.actions;
