@@ -7,6 +7,7 @@ import {
   ListItemText,
   MenuItem,
   MenuList,
+  ListItem,
   Paper,
   Popper,
 } from '@material-ui/core';
@@ -106,13 +107,13 @@ export const Account = () => {
         anchorEl={anchorRef.current}
         role={undefined}
         transition
-        placement="bottom"
+        placement="bottom-end"
         disablePortal
       >
         <Paper elevation={3}>
           <ClickAwayListener onClickAway={handleClose}>
             <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-              <MenuItem onClick={handleClose} className={classes.menuItem}>
+              <ListItem onClick={handleClose} className={classes.menuItem}>
                 <ListItemAvatar>
                   <Avatar src={currentUser?.image && currentUser.image} />
                 </ListItemAvatar>
@@ -125,7 +126,7 @@ export const Account = () => {
                   primary={currentUser?.username}
                   secondary={'@' + currentUser?.email.substring(0, currentUser?.email.indexOf('@'))}
                 />
-              </MenuItem>
+              </ListItem>
               <Divider />
               <MenuItem onClick={handleProfile} className={classes.menuItem}>
                 <PersonIcon color="action" className={classes.menuIcon} />

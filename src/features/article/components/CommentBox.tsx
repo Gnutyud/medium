@@ -15,7 +15,7 @@ import { getUser, selectUser } from 'features/setting/settingSlice';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { commentList, commentRequest, showComment, toggleComment } from '../articleSlice';
 import { CommentItem } from './CommentItem';
-const useStyle = makeStyles(() => ({
+const useStyle = makeStyles((theme) => ({
   container: {
     position: 'fixed',
     top: '0',
@@ -27,6 +27,9 @@ const useStyle = makeStyles(() => ({
     overflowY: 'scroll',
     boxShadow: 'inset 1px 0px 0px 0px rgba(0, 0, 0, 0.2)',
     transition: 'all 0.5s ease-in-out',
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+    },
   },
   inputBox: {
     border: '1px solid #e8dfec',
@@ -94,7 +97,7 @@ export const CommentBox = (props: PropsType) => {
     return <h1>Loading...</h1>;
   }
   return (
-    <div className={classes.container} style={{ right: !isShowComment ? '-400px' : '0px' }}>
+    <div className={classes.container} style={{ right: !isShowComment ? '-600px' : '0px' }}>
       <div className={classes.content}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Typography variant="h6">{`Responses (${comments.length})`}</Typography>
