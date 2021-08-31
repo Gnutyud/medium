@@ -16,22 +16,17 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
 import { useAppDispatch } from 'app/hooks';
-import { favoriteRequest, setTag } from 'features/articles/articlesSlice';
-import React from 'react';
-import { useHistory, useRouteMatch, Link } from 'react-router-dom';
 import clsx from 'clsx';
+import { favoriteRequest, setTag } from 'features/articles/articlesSlice';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { convertArticleDate } from 'share/methods/dateFormat';
 import { upperFirstLetter } from 'share/methods/upperFirst';
-
-interface ProfileArticleProps {
-  article: ArticleType;
-}
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: '100%',
-      height: '200px',
+      minHeight: '200px',
       marginBottom: '20px',
       [theme.breakpoints.down('md')]: {
         borderRight: 'none',
@@ -45,10 +40,14 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.down('sm')]: {
         width: '100%',
         margin: '0',
+        flexDirection: 'column',
       },
     },
     cardLeft: {
       flex: '1',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
     },
     authorName: {
       fontWeight: 600,
@@ -67,6 +66,9 @@ const useStyles = makeStyles((theme) =>
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
+      [theme.breakpoints.down('sm')]: {
+        flexDirection: 'row',
+      },
     },
     chip: {
       marginRight: '5px',
@@ -74,6 +76,10 @@ const useStyles = makeStyles((theme) =>
     favoritesContainer: {
       width: '100%',
       textAlign: 'right',
+      [theme.breakpoints.down('sm')]: {
+        width: 'auto',
+        minWidth: '75px',
+      },
     },
     link: {
       textDecoration: 'none',
@@ -84,9 +90,13 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
+interface ArticleProps {
+  article: ArticleType;
+}
+
 const queryString = require('query-string');
 
-const ProfileArticle: React.FC<ProfileArticleProps> = ({ article }) => {
+const Article: React.FC<ArticleProps> = ({ article }) => {
   const classes = useStyles();
   const history = useHistory();
   const match = useRouteMatch();
@@ -102,7 +112,7 @@ const ProfileArticle: React.FC<ProfileArticleProps> = ({ article }) => {
     // sync url param
     const queryParams = { tag: tagLabel, page: '1' };
     history.push({
-      pathname: match.url,
+      pathname: match.path,
       search: queryString.stringify(queryParams),
     });
   };
@@ -111,13 +121,9 @@ const ProfileArticle: React.FC<ProfileArticleProps> = ({ article }) => {
   const handleGoToArticleDetail = () => {
     history.push(`/article/${slug}`);
   };
-
-  // handle go to profile home page
-  const handleGoToProfileHomePage = () => {
-    dispatch(setTag(null));
-  };
   // handle favorite
   const handleFavorite = () => {
+    console.log(favorited);
     let favoritePayload: FavoritePayloadProps = { slug: slug, favorited: favorited };
     dispatch(favoriteRequest(favoritePayload));
   };
@@ -133,11 +139,7 @@ const ProfileArticle: React.FC<ProfileArticleProps> = ({ article }) => {
             }
             title={
               <Box className={classes.authorName} component="div" display="inline">
-                <Link
-                  className={classes.link}
-                  to={`/profile/${author?.username}`}
-                  onClick={handleGoToProfileHomePage}
-                >
+                <Link className={classes.link} to={`/profile/${author?.username}`}>
                   {upperFirstLetter(author?.username)}
                 </Link>
               </Box>
@@ -183,4 +185,4 @@ const ProfileArticle: React.FC<ProfileArticleProps> = ({ article }) => {
   );
 };
 
-export default ProfileArticle;
+export default Article;

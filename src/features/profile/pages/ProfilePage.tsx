@@ -25,10 +25,6 @@ const ProfilePage = () => {
   // select author name from url
   const { username } = useParams<{ username: string }>();
 
-  // auth
-  const local: any = localStorage.getItem('user');
-  const curUser = JSON.parse(local);
-
   // state
   const [displayMode, setDisplayMode] = useState(0);
 
@@ -81,7 +77,7 @@ const ProfilePage = () => {
               offset: offsetIndex * articlePerPage,
               limit: articlePerPage,
               tag: tagByArticle,
-              favorited: curUser?.username,
+              favorited: username,
             },
           };
     dispatch(action);

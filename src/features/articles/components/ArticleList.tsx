@@ -1,9 +1,9 @@
-import { useState } from 'react';
 import { Box, makeStyles } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import Article from 'components/common/Article';
 import Loading from 'components/common/Loading';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   getListArticle,
@@ -15,7 +15,6 @@ import {
   selectNumberCurrentPage,
   selectTagByArticle,
 } from '../articlesSlice';
-import ArticleItem from './ArticleItem';
 import ArticleMenuTabs from './ArticleMenuTabs';
 import ArticlePagination from './ArticlePagination';
 
@@ -98,7 +97,7 @@ const ArticleList = () => {
           {articleList.length > 0 ? (
             <Box className={classes.articleList}>
               {articleList.map((article) => (
-                <ArticleItem key={article.slug} article={article} />
+                <Article key={article.slug} article={article} />
               ))}
             </Box>
           ) : (

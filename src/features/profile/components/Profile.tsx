@@ -1,16 +1,16 @@
 import { Avatar, Box, Card, CardContent, CardMedia, Typography } from '@material-ui/core';
 import makeStyles from '@material-ui/core/styles/makeStyles';
+import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
+import Article from 'components/common/Article';
 import { setTag } from 'features/articles/articlesSlice';
 import { Link, NavLink } from 'react-router-dom';
 import Loading from '../../../components/common/Loading';
 import { followProfile, selectProfile, unFollowProfile } from '../profileSlice';
-import ProfileArticle from './ProfileArticle';
 import ProfileArticlePagination from './ProfileArticlePagination';
 import ProfileMenuTabs from './ProfileMenuTabs';
-import AddIcon from '@material-ui/icons/Add';
 
 const HEIGHT = window.screen.height;
 
@@ -122,6 +122,8 @@ const Profile: React.FC<ProfileProps> = ({
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
+  console.log('username ', username);
+
   // auth
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);
@@ -137,7 +139,7 @@ const Profile: React.FC<ProfileProps> = ({
         ) : (
           <Box className={classes.articleList}>
             {articleList?.map((article) => (
-              <ProfileArticle key={article.slug} article={article} />
+              <Article key={article.slug} article={article} />
             ))}
           </Box>
         )}
