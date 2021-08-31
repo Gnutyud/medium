@@ -19,6 +19,7 @@ interface ArticlePaginationProps {
   articlePerPage: number;
   tagByArticle: string | undefined;
   currentPage: number;
+  displayMode: number;
 }
 
 const ArticlePagination: React.FC<ArticlePaginationProps> = ({
@@ -26,6 +27,7 @@ const ArticlePagination: React.FC<ArticlePaginationProps> = ({
   articlePerPage,
   tagByArticle,
   currentPage,
+  displayMode,
 }) => {
   const history = useHistory();
   const location = useLocation();
@@ -39,10 +41,10 @@ const ArticlePagination: React.FC<ArticlePaginationProps> = ({
   const handleNavigate = (event: any, pageNumber: number) => {
     dispatch(setNumberCurrentPage(pageNumber));
 
-    // sync url param
     const queryParams = tagByArticle
       ? { page: pageNumber, tag: tagByArticle }
       : { page: pageNumber };
+
     history.push({
       pathname: match.path,
       search: queryString.stringify(queryParams),

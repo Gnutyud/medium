@@ -19,6 +19,8 @@ import { useAppDispatch } from 'app/hooks';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { favoriteRequest, setTag } from '../articlesSlice';
 import clsx from 'clsx';
+import { convertArticleDate } from 'share/methods/dateFormat';
+import { upperFirstLetter } from 'share/methods/upperFirst';
 
 interface ArticleItemProps {
   article: ArticleType;
@@ -28,7 +30,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     root: {
       width: '100%',
-      height: '200px',
+      minHeight: '200px',
       marginBottom: '20px',
       [theme.breakpoints.down('md')]: {
         borderRight: 'none',
@@ -42,10 +44,14 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.down('sm')]: {
         width: '100%',
         margin: '0',
+        flexDirection: 'column',
       },
     },
     cardLeft: {
       flex: '1',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
     },
     authorName: {
       fontWeight: 600,
@@ -64,6 +70,9 @@ const useStyles = makeStyles((theme) =>
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
+      [theme.breakpoints.down('sm')]: {
+        flexDirection: 'row',
+      },
     },
     chip: {
       marginRight: '5px',
@@ -71,6 +80,10 @@ const useStyles = makeStyles((theme) =>
     favoritesContainer: {
       width: '100%',
       textAlign: 'right',
+      [theme.breakpoints.down('sm')]: {
+        width: 'auto',
+        minWidth: '75px',
+      },
     },
     link: {
       textDecoration: 'none',
@@ -127,11 +140,11 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
             title={
               <Box className={classes.authorName} component="div" display="inline">
                 <Link className={classes.link} to={`/profile/${author?.username}`}>
-                  {author?.username}
+                  {upperFirstLetter(author?.username)}
                 </Link>
               </Box>
             }
-            subheader={updatedAt}
+            subheader={convertArticleDate(updatedAt)}
           />
           <CardContent>
             <Box
@@ -142,7 +155,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
               {title}
             </Box>
             <Typography variant="body2" color="textSecondary" component="p">
-              {description?.slice(0, 20) + ' ...'}
+              {description?.slice(0, 30) + ' ...'}
             </Typography>
           </CardContent>
         </Box>

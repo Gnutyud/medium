@@ -6,20 +6,28 @@ import { getListArticle, selectListArticles } from 'features/articles/articlesSl
 import { nanoid } from 'nanoid';
 import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
+import { convertArticleDate } from 'share/methods/dateFormat';
+import { upperFirstLetter } from 'share/methods/upperFirst';
 import { getArticle, selectArticle, selectError, selectIsloading } from '../articleSlice';
 import SidebarDetail from '../components/SidebarDetail';
 import { CommentBox } from '../components/CommentBox';
 
-const useStyle = makeStyles(() => ({
+const useStyle = makeStyles((theme) => ({
   title: {
     fontWeight: 'bold',
     fontSize: '40px',
     marginBottom: '30px',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '1.6rem',
+    },
   },
   description: {
     fontSize: '25px',
     marginBottom: '20px',
     color: 'rgba(117, 117, 117, 1);',
+    [theme.breakpoints.down('xs')]: {
+      fontSize: '1rem',
+    },
   },
   avatar: {
     lineHeight: '40px',
@@ -36,6 +44,26 @@ const useStyle = makeStyles(() => ({
   avatarDate: {
     lineHeight: '40px',
     marginLeft: '10px',
+  },
+  sideBar: {
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '30px',
+    },
+    [theme.breakpoints.down('sm')]: {
+      order: '2',
+    },
+  },
+  boxContent: {
+    [theme.breakpoints.down('sm')]: {
+      margin: '20px',
+    },
+  },
+  authorInfor: {
+    display: 'flex',
+    marginBottom: '30px',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
   },
 }));
 
@@ -73,22 +101,24 @@ function DetailArticle() {
       article && (
         <div style={{ marginTop: '50px' }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={3} className={classes.sideBar}>
               {currentArticle && <SidebarDetail article={currentArticle} />}
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} className={classes.boxContent}>
               <Typography variant="h5" className={classes.title}>
                 {article.title}
               </Typography>
               <Typography variant="h5" className={classes.description}>
                 {article.description}
               </Typography>
-              <Box style={{ display: 'flex', marginBottom: '30px' }}>
-                <Avatar alt={article?.author?.username} src={article?.author?.image} />
-                <NavLink className={classes.avatar} to={`/profile/${article?.author?.username}`}>
-                  {article?.author?.username}
-                </NavLink>
-                <span className={classes.avatarDate}>{article.createdAt}</span>
+              <Box className={classes.authorInfor}>
+                <Box style={{ display: 'flex' }}>
+                  <Avatar alt={article?.author?.username} src={article?.author?.image} />
+                  <NavLink className={classes.avatar} to={`/profile/${article?.author?.username}`}>
+                    {upperFirstLetter(article?.author?.username)}
+                  </NavLink>
+                </Box>
+                <Box className={classes.avatarDate}>{convertArticleDate(article.createdAt)}</Box>
               </Box>
               {body.map((item: string) => (
                 <Box key={nanoid()}>

@@ -5,7 +5,8 @@ const articlesApi = {
     offsetParam?: number,
     limitParam?: number,
     tagParam?: string,
-    authorNameParam?: string
+    authorNameParam?: string,
+    favoritedParam?: string
   ): Promise<ArticleType[]> => {
     const axiosConfig = {
       params: {
@@ -13,6 +14,7 @@ const articlesApi = {
         limit: limitParam,
         tag: tagParam,
         author: authorNameParam,
+        favorited: favoritedParam,
       },
     };
     return axiosClient.get('/articles', axiosConfig);

@@ -2,18 +2,23 @@ import { Box, Divider, IconButton, makeStyles, Typography } from '@material-ui/c
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import { useAppDispatch } from 'app/hooks';
-import { favoriteRequest } from 'features/articles/articlesSlice';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { toggleComment } from '../articleSlice';
 import ButtonSplit from './ButtonSplit';
+import { useAppDispatch } from 'app/hooks';
+import { favoriteRequest } from 'features/articles/articlesSlice';
+import { upperFirstLetter } from 'share/methods/upperFirst';
 
-const useStyle = makeStyles(() => ({
+const useStyle = makeStyles((theme) => ({
   position: {
     position: 'fixed',
     width: '17%',
     margin: '20px',
+    [theme.breakpoints.down('sm')]: {
+      position: 'static',
+      width: '100%',
+    },
   },
   name: {
     textDecoration: 'none',
@@ -25,10 +30,16 @@ const useStyle = makeStyles(() => ({
       fontSize: '30px',
       cursor: 'pointer',
     },
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   bio: {
     marginTop: '25px',
     fontSize: '15px',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
 }));
 
@@ -55,7 +66,7 @@ function SidebarDetail({ article }: { article: ArticleType }) {
   return (
     <Box className={classes.position}>
       <NavLink className={classes.name} to={`/profile/${article?.author?.username}`}>
-        {article?.author?.username}
+        {upperFirstLetter(article?.author?.username)}
       </NavLink>
       <Typography className={classes.bio}>{article?.author?.bio}</Typography>
       <Divider light />
