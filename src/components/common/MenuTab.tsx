@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.3rem',
     [theme.breakpoints.down('xs')]: {
       width: '50%',
+      marginRight: '0',
     },
   },
   itemActive: {
@@ -32,9 +33,11 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   option: number;
   handleDisplay: (choose: number) => void;
+  tab1: string;
+  tab2: string;
 }
 
-const ProfileMenuTabs: React.FC<Props> = ({ option, handleDisplay }) => {
+const MenuTab: React.FC<Props> = ({ option, handleDisplay, tab1, tab2 }) => {
   const classes = useStyles();
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);
@@ -49,18 +52,18 @@ const ProfileMenuTabs: React.FC<Props> = ({ option, handleDisplay }) => {
         className={option === 0 ? classes.itemActive : classes.item}
         onClick={() => handleClick(0)}
       >
-        My Articles
+        {tab1}
       </Box>
       {curUser && (
         <Box
           className={option === 1 ? classes.itemActive : classes.item}
           onClick={() => handleClick(1)}
         >
-          Favorited Articles
+          {tab2}
         </Box>
       )}
     </Box>
   );
 };
 
-export default ProfileMenuTabs;
+export default MenuTab;

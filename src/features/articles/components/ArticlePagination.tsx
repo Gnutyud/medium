@@ -19,7 +19,6 @@ interface ArticlePaginationProps {
   articlePerPage: number;
   tagByArticle: string | undefined;
   currentPage: number;
-  displayMode: number;
 }
 
 const ArticlePagination: React.FC<ArticlePaginationProps> = ({
@@ -27,7 +26,6 @@ const ArticlePagination: React.FC<ArticlePaginationProps> = ({
   articlePerPage,
   tagByArticle,
   currentPage,
-  displayMode,
 }) => {
   const history = useHistory();
   const location = useLocation();
