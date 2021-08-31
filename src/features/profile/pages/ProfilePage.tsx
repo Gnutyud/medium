@@ -11,7 +11,7 @@ import {
   selectTagByArticle,
   setNumberCurrentPage,
 } from 'features/articles/articlesSlice';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import Profile from '../components/Profile';
 import { getProfile, selectIsLoading, selectProfile } from '../profileSlice';
@@ -24,6 +24,18 @@ const ProfilePage = () => {
 
   // select author name from url
   const { username } = useParams<{ username: string }>();
+
+  // auth
+  const local: any = localStorage.getItem('user');
+  const curUser = JSON.parse(local);
+
+  // state
+  const [displayMode, setDisplayMode] = useState(0);
+
+  const handleListArticleDisplay = (choose: number) => {
+    console.log(choose);
+    setDisplayMode(choose);
+  };
 
   // set initial value of current page
   useEffect(() => {
@@ -52,17 +64,28 @@ const ProfilePage = () => {
 
   // fetch list articles + pagination by offset + author
   useEffect(() => {
-    const action = {
-      type: getListArticle.type,
-      payload: {
-        offset: offsetIndex * articlePerPage,
-        limit: articlePerPage,
-        tag: tagByArticle,
-        author: username,
-      },
-    };
+    const action =
+      displayMode === 0
+        ? {
+            type: getListArticle.type,
+            payload: {
+              offset: offsetIndex * articlePerPage,
+              limit: articlePerPage,
+              tag: tagByArticle,
+              author: username,
+            },
+          }
+        : {
+            type: getListArticle.type,
+            payload: {
+              offset: offsetIndex * articlePerPage,
+              limit: articlePerPage,
+              tag: tagByArticle,
+              favorited: curUser?.username,
+            },
+          };
     dispatch(action);
-  }, [username, offsetIndex, tagByArticle, articlePerPage, dispatch]);
+  }, [username, offsetIndex, tagByArticle, articlePerPage, displayMode, dispatch]);
 
   // fetch profile by username
   useEffect(() => {
@@ -72,12 +95,6 @@ const ProfilePage = () => {
     };
     dispatch(action);
   }, [dispatch, username]);
-
-  // log
-  // console.log('total articles ', totalArticle);
-  // console.log('tag ', tagByArticle);
-  // console.log('current page ', currentPage);
-  // console.log('result per page ', articlePerPage);
 
   return (
     <Box>
@@ -94,6 +111,8 @@ const ProfilePage = () => {
             currentPage={currentPage}
             articlePerPage={articlePerPage}
             username={username}
+            displayMode={displayMode}
+            handleDisplay={handleListArticleDisplay}
           />
         </Box>
       )}

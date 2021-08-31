@@ -46,10 +46,10 @@ const ArticleList = () => {
   const dispatch = useAppDispatch();
 
   // state
-  const [listArticleDisplay, setListArticleDisplay] = useState(0);
+  const [displayMode, setDisplayMode] = useState(0);
 
   const handleListArticleDisplay = (choose: number) => {
-    setListArticleDisplay(choose);
+    setDisplayMode(choose);
   };
 
   // select data from store
@@ -75,7 +75,7 @@ const ArticleList = () => {
   // fetch list articles + pagination by offset + filter by tags
   useEffect(() => {
     const action = {
-      type: listArticleDisplay === 0 ? getListArticle.type : getListArticleByFeed.type,
+      type: displayMode === 0 ? getListArticle.type : getListArticleByFeed.type,
       payload: {
         offset: offsetIndex * articlePerPage,
         limit: articlePerPage,
@@ -83,7 +83,7 @@ const ArticleList = () => {
       },
     };
     dispatch(action);
-  }, [offsetIndex, articlePerPage, tagFinal, listArticleDisplay, dispatch]);
+  }, [offsetIndex, articlePerPage, tagFinal, displayMode, dispatch]);
 
   return (
     <Box>
@@ -92,7 +92,7 @@ const ArticleList = () => {
       ) : (
         <Box>
           <Box className={classes.menuTab}>
-            <ArticleMenuTabs option={listArticleDisplay} handleDisplay={handleListArticleDisplay} />
+            <ArticleMenuTabs option={displayMode} handleDisplay={handleListArticleDisplay} />
           </Box>
 
           {articleList.length > 0 ? (
@@ -112,6 +112,7 @@ const ArticleList = () => {
                 articlePerPage={articlePerPage}
                 tagByArticle={tagByArticle}
                 currentPage={currentPage}
+                displayMode={displayMode}
               />
             )}
           </Box>
