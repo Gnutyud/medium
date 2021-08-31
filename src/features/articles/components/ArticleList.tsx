@@ -94,8 +94,8 @@ const ArticleList = () => {
             <MenuTab
               option={displayMode}
               handleDisplay={handleListArticleDisplay}
-              tab1="Global"
-              tab2="Feed"
+              tab1="Global Feed"
+              tab2="Your Feed"
             />
           </Box>
 
