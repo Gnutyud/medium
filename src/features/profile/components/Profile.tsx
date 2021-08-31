@@ -232,7 +232,7 @@ const Profile: React.FC<ProfileProps> = ({
             username={username}
           />
         ) : (
-          <Box style={{ marginTop: '50px' }}>'No Article To Show...'</Box>
+          <Box style={{ marginTop: '50px' }}>No Article To Show...</Box>
         )}
       </CardContent>
     </Card>
