@@ -96,12 +96,6 @@ const ProfilePage = () => {
     dispatch(action);
   }, [dispatch, username]);
 
-  // log
-  // console.log('total articles ', totalArticle);
-  // console.log('tag ', tagByArticle);
-  // console.log('current page ', currentPage);
-  // console.log('result per page ', articlePerPage);
-
   return (
     <Box>
       {isLoadingProfile ? (

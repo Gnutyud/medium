@@ -20,6 +20,8 @@ import { favoriteRequest, setTag } from 'features/articles/articlesSlice';
 import React from 'react';
 import { useHistory, useRouteMatch, Link } from 'react-router-dom';
 import clsx from 'clsx';
+import { convertArticleDate } from 'share/methods/dateFormat';
+import { upperFirstLetter } from 'share/methods/upperFirst';
 
 interface ProfileArticleProps {
   article: ArticleType;
@@ -136,11 +138,11 @@ const ProfileArticle: React.FC<ProfileArticleProps> = ({ article }) => {
                   to={`/profile/${author?.username}`}
                   onClick={handleGoToProfileHomePage}
                 >
-                  {author?.username}
+                  {upperFirstLetter(author?.username)}
                 </Link>
               </Box>
             }
-            subheader={updatedAt}
+            subheader={convertArticleDate(updatedAt)}
           />
           <CardContent>
             <Box
@@ -151,7 +153,7 @@ const ProfileArticle: React.FC<ProfileArticleProps> = ({ article }) => {
               {title}
             </Box>
             <Typography variant="body2" color="textSecondary" component="p">
-              {description?.slice(0, 20) + ' ...'}
+              {description?.slice(0, 30) + ' ...'}
             </Typography>
           </CardContent>
         </Box>

@@ -112,6 +112,7 @@ const ArticleList = () => {
                 articlePerPage={articlePerPage}
                 tagByArticle={tagByArticle}
                 currentPage={currentPage}
+                displayMode={displayMode}
               />
             )}
           </Box>

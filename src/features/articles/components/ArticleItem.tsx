@@ -19,6 +19,8 @@ import { useAppDispatch } from 'app/hooks';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { favoriteRequest, setTag } from '../articlesSlice';
 import clsx from 'clsx';
+import { convertArticleDate } from 'share/methods/dateFormat';
+import { upperFirstLetter } from 'share/methods/upperFirst';
 
 interface ArticleItemProps {
   article: ArticleType;
@@ -127,11 +129,11 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
             title={
               <Box className={classes.authorName} component="div" display="inline">
                 <Link className={classes.link} to={`/profile/${author?.username}`}>
-                  {author?.username}
+                  {upperFirstLetter(author?.username)}
                 </Link>
               </Box>
             }
-            subheader={updatedAt}
+            subheader={convertArticleDate(updatedAt)}
           />
           <CardContent>
             <Box
@@ -142,7 +144,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ article }) => {
               {title}
             </Box>
             <Typography variant="body2" color="textSecondary" component="p">
-              {description?.slice(0, 20) + ' ...'}
+              {description?.slice(0, 30) + ' ...'}
             </Typography>
           </CardContent>
         </Box>
