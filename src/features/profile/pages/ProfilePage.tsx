@@ -80,6 +80,7 @@ const ProfilePage = () => {
             payload: {
               offset: offsetIndex * articlePerPage,
               limit: articlePerPage,
+              tag: tagByArticle,
               favorited: curUser?.username,
             },
           };
