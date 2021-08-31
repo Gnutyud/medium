@@ -122,8 +122,6 @@ const Profile: React.FC<ProfileProps> = ({
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
-  console.log('username ', username);
-
   // auth
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);

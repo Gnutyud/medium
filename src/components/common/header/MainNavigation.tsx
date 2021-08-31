@@ -86,7 +86,7 @@ const MainNavigation = () => {
         {isLoggedIn && (
           <>
             <NavLink to="/article/create">
-              <Button startIcon={<PostAddIcon />} color="inherit">
+              <Button startIcon={<PostAddIcon />} color="inherit" style={{ fontSize: '16px' }}>
                 New Post
               </Button>
             </NavLink>
