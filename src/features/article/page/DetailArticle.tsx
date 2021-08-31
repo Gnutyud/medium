@@ -10,6 +10,7 @@ import { convertArticleDate } from 'share/methods/dateFormat';
 import { upperFirstLetter } from 'share/methods/upperFirst';
 import { getArticle, selectArticle, selectError, selectIsloading } from '../articleSlice';
 import SidebarDetail from '../components/SidebarDetail';
+import { CommentBox } from '../components/CommentBox';
 
 const useStyle = makeStyles((theme) => ({
   title: {
@@ -132,6 +133,9 @@ function DetailArticle() {
                 </Box>
               ))}
             </Grid>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <CommentBox />
           </Grid>
         </Box>
       )
