@@ -65,6 +65,12 @@ const useStyle = makeStyles((theme) => ({
       flexDirection: 'column',
     },
   },
+  container: {
+    marginTop: '50px',
+    [theme.breakpoints.down('xs')]: {
+      marginTop: '0px',
+    },
+  },
 }));
 
 function DetailArticle() {
@@ -99,7 +105,7 @@ function DetailArticle() {
   } else {
     return (
       article && (
-        <div style={{ marginTop: '50px' }}>
+        <Box className={classes.container}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={3} className={classes.sideBar}>
               {currentArticle && <SidebarDetail article={currentArticle} />}
@@ -131,7 +137,7 @@ function DetailArticle() {
           <Grid item xs={12} md={3}>
             <CommentBox />
           </Grid>
-        </div>
+        </Box>
       )
     );
   }
