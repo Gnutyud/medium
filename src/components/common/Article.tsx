@@ -21,6 +21,7 @@ import { favoriteRequest, setTag } from 'features/articles/articlesSlice';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { convertArticleDate } from 'share/methods/dateFormat';
 import { upperFirstLetter } from 'share/methods/upperFirst';
+import Popup from './Popup';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -52,6 +53,15 @@ const useStyles = makeStyles((theme) =>
     authorName: {
       fontWeight: 600,
       fontSize: '1.2rem',
+      position: 'relative',
+      '&:hover $popup': {
+        display: 'Block',
+        position: 'absolute',
+        backgroundColor: 'white',
+        border: '1px solid black',
+        left: '80px',
+        top: '-15px',
+      },
     },
     description: {
       fontSize: '1.6rem',
@@ -86,6 +96,14 @@ const useStyles = makeStyles((theme) =>
     },
     title: {
       cursor: 'pointer',
+    },
+    popup: {
+      display: 'none',
+      minHeight: '150px',
+      minWidth: '300px',
+      boxShadow: '0 8px 60px 0 rgba(103, 151, 255, .11)',
+      padding: '10px',
+      borderRadius: '5px',
     },
   })
 );
@@ -138,10 +156,13 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
               </Avatar>
             }
             title={
-              <Box className={classes.authorName} component="div" display="inline">
+              <Box className={classes.authorName} component="div" display="flex">
                 <Link className={classes.link} to={`/profile/${author?.username}`}>
                   {upperFirstLetter(author?.username)}
                 </Link>
+                <Box className={classes.popup}>
+                  <Popup article={article} />
+                </Box>
               </Box>
             }
             subheader={convertArticleDate(updatedAt)}
