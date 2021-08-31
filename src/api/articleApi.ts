@@ -5,24 +5,10 @@ const articleApi = {
     return axiosClient.get(`/articles/${slug}`);
   },
   deleteOne: (slug: string): Promise<ArticleType> => {
-    let Storage: any = localStorage.getItem('user');
-    let user = JSON.parse(Storage);
-    let axiosConfig = {
-      headers: {
-        Authorization: 'Bearer ' + user.token,
-      },
-    };
-    return axiosClient.delete(`/articles/${slug}`, axiosConfig);
+    return axiosClient.delete(`/articles/${slug}`);
   },
   updateOne: (slug: string, data: FormInputArticleType): Promise<ArticleType> => {
-    let Storage: any = localStorage.getItem('user');
-    let user = JSON.parse(Storage);
-    let axiosConfig = {
-      headers: {
-        Authorization: 'Bearer ' + user.token,
-      },
-    };
-    return axiosClient.put(`/articles/${slug}`, data, axiosConfig);
+    return axiosClient.put(`/articles/${slug}`, data);
   },
 };
 
