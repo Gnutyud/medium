@@ -1,10 +1,10 @@
 import { Box, Divider, IconButton, makeStyles, Typography } from '@material-ui/core';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { toggleComment } from '../articleSlice';
 import ButtonSplit from './ButtonSplit';
 import { useAppDispatch } from 'app/hooks';
 import { favoriteRequest } from 'features/articles/articlesSlice';
@@ -46,15 +46,6 @@ const useStyle = makeStyles((theme) => ({
 function SidebarDetail({ article }: { article: ArticleType }) {
   const dispatch = useAppDispatch();
   const classes = useStyle();
-  const [state, setState] = React.useState({
-    right: false,
-  });
-  const toggleDrawer = (open: boolean) => (event: any) => {
-    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-    setState({ right: open });
-  };
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);
   // handle favorite
@@ -64,6 +55,10 @@ function SidebarDetail({ article }: { article: ArticleType }) {
       favorited: article.favorited,
     };
     dispatch(favoriteRequest(favoritePayload));
+  };
+  // Show comment
+  const onShowComment = () => {
+    dispatch(toggleComment());
   };
   if (!article) {
     return <h1>Loading...</h1>;
@@ -84,19 +79,9 @@ function SidebarDetail({ article }: { article: ArticleType }) {
         </Box>
         <Box>
           <React.Fragment key="right">
-            <IconButton aria-label="comment" color="default" onClick={toggleDrawer(true)}>
+            <IconButton aria-label="comment" color="default" onClick={onShowComment}>
               <ChatBubbleOutlineIcon />
             </IconButton>
-            <SwipeableDrawer
-              anchor="right"
-              open={state['right']}
-              onClose={toggleDrawer(false)}
-              onOpen={toggleDrawer(true)}
-            >
-              <Box style={{ width: '450px' }}>
-                <h1>hello</h1>
-              </Box>
-            </SwipeableDrawer>
           </React.Fragment>
           <span>100</span>
         </Box>
