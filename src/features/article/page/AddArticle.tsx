@@ -74,7 +74,7 @@ function AddArticle() {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="md">
+    <Container component="main" maxWidth="sm">
       <Formik
         enableReinitialize
         initialValues={initialValues}
