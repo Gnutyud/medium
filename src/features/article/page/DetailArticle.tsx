@@ -8,9 +8,15 @@ import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { convertArticleDate } from 'share/methods/dateFormat';
 import { upperFirstLetter } from 'share/methods/upperFirst';
-import { getArticle, selectArticle, selectError, selectIsloading } from '../articleSlice';
-import SidebarDetail from '../components/SidebarDetail';
+import {
+  getArticle,
+  getComment,
+  selectArticle,
+  selectError,
+  selectIsloading,
+} from '../articleSlice';
 import { CommentBox } from '../components/CommentBox';
+import SidebarDetail from '../components/SidebarDetail';
 
 const useStyle = makeStyles((theme) => ({
   title: {
@@ -94,6 +100,10 @@ function DetailArticle() {
         offset: 0,
       },
     });
+    dispatch({
+      type: getComment.type,
+      payload: slug,
+    });
   }, [dispatch, slug]);
 
   const classes = useStyle();
@@ -135,7 +145,7 @@ function DetailArticle() {
             </Grid>
           </Grid>
           <Grid item xs={12} md={3}>
-            <CommentBox />
+            <CommentBox slug={slug} />
           </Grid>
         </Box>
       )

@@ -8,6 +8,8 @@ export const articleSlice = createSlice({
     isLoading: false,
     error: null,
     isShowComment: false,
+    isLoadingComment: false,
+    comments: [] as CommentType[],
   },
   reducers: {
     getArticle: (state) => {
@@ -31,6 +33,18 @@ export const articleSlice = createSlice({
     toggleComment: (state) => {
       state.isShowComment = !state.isShowComment;
     },
+    getComment: (state) => {
+      state.isLoadingComment = true;
+    },
+    getCommentFromSaga: (state, action) => {
+      console.log(action.payload);
+      state.comments = action.payload;
+    },
+    commentRequest: (state) => {},
+    commentSuccess: (state, action) => {
+      state.comments = [action.payload, ...state.comments];
+    },
+    deleteComment: (state) => {},
   },
 });
 
@@ -40,5 +54,17 @@ export const selectArticle = (state: RootState) => state.oneArticleReducer.artic
 export const selectIsloading = (state: RootState) => state.oneArticleReducer.isLoading;
 export const selectError = (state: RootState) => state.oneArticleReducer.error;
 export const showComment = (state: RootState) => state.oneArticleReducer.isShowComment;
-export const { getArticle, getArticleSaga, getError, deleteArticle, UpdateArticle, toggleComment } =
-  articleSlice.actions;
+export const commentList = (state: RootState) => state.oneArticleReducer.comments;
+export const {
+  getArticle,
+  getArticleSaga,
+  getError,
+  deleteArticle,
+  UpdateArticle,
+  toggleComment,
+  getComment,
+  getCommentFromSaga,
+  commentRequest,
+  commentSuccess,
+  deleteComment,
+} = articleSlice.actions;
