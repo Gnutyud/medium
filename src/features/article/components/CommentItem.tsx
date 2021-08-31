@@ -49,7 +49,7 @@ export const CommentItem = (props: CommentItemProps) => {
       </ListItem>
       <p>{props.commentData.body}</p>
       <div className={classes.footer}>
-        {currentUser.username === props.commentData.author.username && (
+        {currentUser?.username === props.commentData.author.username && (
           <Button style={{ textTransform: 'none' }} onClick={handleDeleteComment}>
             Delete
           </Button>
