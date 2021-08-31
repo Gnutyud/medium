@@ -41,6 +41,17 @@ const useStyle = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  actionContainer: {
+    marginTop: '20px',
+    display: 'flex',
+    lineHeight: '48px',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+    },
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'row',
+    },
+  },
 }));
 
 function SidebarDetail({ article }: { article: ArticleType }) {
@@ -70,7 +81,7 @@ function SidebarDetail({ article }: { article: ArticleType }) {
       </NavLink>
       <Typography className={classes.bio}>{article?.author?.bio}</Typography>
       <Divider light />
-      <Box style={{ marginTop: '20px', display: 'flex', lineHeight: '48px' }}>
+      <Box className={classes.actionContainer}>
         <Box>
           <IconButton aria-label="like" color="default" onClick={handleFavorite}>
             {article?.favorited ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
@@ -85,9 +96,11 @@ function SidebarDetail({ article }: { article: ArticleType }) {
           </React.Fragment>
           <span>100</span>
         </Box>
-        {curUser?.username === article?.author?.username && (
-          <ButtonSplit slug={article.slug} username={article?.author?.username} />
-        )}
+        <Box>
+          {curUser?.username === article?.author?.username && (
+            <ButtonSplit slug={article.slug} username={article?.author?.username} />
+          )}
+        </Box>
       </Box>
     </Box>
   );
