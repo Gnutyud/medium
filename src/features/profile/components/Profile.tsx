@@ -5,22 +5,26 @@ import CheckIcon from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import Article from 'components/common/Article';
+import MenuTab from 'components/common/MenuTab';
 import { setTag } from 'features/articles/articlesSlice';
 import { Link, NavLink } from 'react-router-dom';
 import Loading from '../../../components/common/Loading';
 import { followProfile, selectProfile, unFollowProfile } from '../profileSlice';
 import ProfileArticlePagination from './ProfileArticlePagination';
-import ProfileMenuTabs from './ProfileMenuTabs';
 
 const HEIGHT = window.screen.height;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight: 400,
+    minHeight: 600,
   },
   media: {
     height: HEIGHT / 3,
+    minHeight: 300,
     position: 'relative',
+    [theme.breakpoints.down('xs')]: {
+      minHeight: 150,
+    },
   },
   settingBtn: {
     position: 'absolute',
@@ -37,6 +41,11 @@ const useStyles = makeStyles((theme) => ({
     gap: '3px',
     '&:hover': {
       opacity: '0.8',
+    },
+    [theme.breakpoints.down('xs')]: {
+      transform: 'translateX(15px)',
+      fontSize: '10px',
+      padding: '3px',
     },
   },
   followBtn: {
@@ -55,6 +64,11 @@ const useStyles = makeStyles((theme) => ({
     gap: '3px',
     '&:hover': {
       opacity: '0.8',
+    },
+    [theme.breakpoints.down('xs')]: {
+      transform: 'translateX(15px)',
+      fontSize: '10px',
+      padding: '3px',
     },
   },
 
@@ -202,7 +216,12 @@ const Profile: React.FC<ProfileProps> = ({
         <p style={{ width: '60%', margin: '0 auto', textAlign: 'center' }}>{author?.bio}</p>
       </Box>
       <CardContent className={classes.contentContainer}>
-        <ProfileMenuTabs option={displayMode} handleDisplay={handleDisplay} />
+        <MenuTab
+          option={displayMode}
+          handleDisplay={handleDisplay}
+          tab1="My Articles"
+          tab2="Favorited Articles"
+        />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
         {articleCount && articleCount > 0 ? (
           <ProfileArticlePagination
@@ -213,7 +232,7 @@ const Profile: React.FC<ProfileProps> = ({
             username={username}
           />
         ) : (
-          'No Article To Show...'
+          <Box style={{ marginTop: '50px' }}>'No Article To Show...'</Box>
         )}
       </CardContent>
     </Card>

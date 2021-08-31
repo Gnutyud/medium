@@ -3,6 +3,7 @@ import { grey } from '@material-ui/core/colors';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import Article from 'components/common/Article';
 import Loading from 'components/common/Loading';
+import MenuTab from 'components/common/MenuTab';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
@@ -15,7 +16,6 @@ import {
   selectNumberCurrentPage,
   selectTagByArticle,
 } from '../articlesSlice';
-import ArticleMenuTabs from './ArticleMenuTabs';
 import ArticlePagination from './ArticlePagination';
 
 const queryString = require('query-string');
@@ -91,7 +91,12 @@ const ArticleList = () => {
       ) : (
         <Box>
           <Box className={classes.menuTab}>
-            <ArticleMenuTabs option={displayMode} handleDisplay={handleListArticleDisplay} />
+            <MenuTab
+              option={displayMode}
+              handleDisplay={handleListArticleDisplay}
+              tab1="Global"
+              tab2="Feed"
+            />
           </Box>
 
           {articleList.length > 0 ? (
@@ -111,7 +116,6 @@ const ArticleList = () => {
                 articlePerPage={articlePerPage}
                 tagByArticle={tagByArticle}
                 currentPage={currentPage}
-                displayMode={displayMode}
               />
             )}
           </Box>
