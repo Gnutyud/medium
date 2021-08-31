@@ -8,6 +8,7 @@ import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { getArticle, selectArticle, selectError, selectIsloading } from '../articleSlice';
 import SidebarDetail from '../components/SidebarDetail';
+import { CommentBox } from '../components/CommentBox';
 
 const useStyle = makeStyles(() => ({
   title: {
@@ -96,6 +97,9 @@ function DetailArticle() {
                 </Box>
               ))}
             </Grid>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <CommentBox />
           </Grid>
         </div>
       )
