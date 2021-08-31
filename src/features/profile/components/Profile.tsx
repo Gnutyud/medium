@@ -103,6 +103,8 @@ interface ProfileProps {
   currentPage?: number;
   articlePerPage?: number;
   username?: string;
+  displayMode: number;
+  handleDisplay: (choose: number) => void;
 }
 
 const Profile: React.FC<ProfileProps> = ({
@@ -114,6 +116,8 @@ const Profile: React.FC<ProfileProps> = ({
   currentPage,
   articlePerPage,
   username,
+  displayMode,
+  handleDisplay,
 }) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
@@ -196,7 +200,7 @@ const Profile: React.FC<ProfileProps> = ({
         <p style={{ width: '60%', margin: '0 auto', textAlign: 'center' }}>{author?.bio}</p>
       </Box>
       <CardContent className={classes.contentContainer}>
-        <ProfileMenuTabs tab1="My articles" tab2="My favorite articles" />
+        <ProfileMenuTabs option={displayMode} handleDisplay={handleDisplay} />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
         {articleCount && articleCount > 0 ? (
           <ProfileArticlePagination

@@ -9,12 +9,13 @@ interface PayloadActionType {
   limit: number;
   tag: string;
   author: string;
+  favorited: string;
 }
 
 export function* getListArticleSaga(action: PayloadAction<PayloadActionType>): SagaIterator<void> {
   try {
-    const { offset, limit, tag, author } = action.payload;
-    const res = yield call(articlesApi.getAll, offset, limit, tag, author);
+    const { offset, limit, tag, author, favorited } = action.payload;
+    const res = yield call(articlesApi.getAll, offset, limit, tag, author, favorited);
     yield put({
       type: getListArticleFromSaga.type,
       payload: res,
