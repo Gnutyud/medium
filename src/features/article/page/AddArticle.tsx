@@ -1,13 +1,14 @@
 import { Box, Button, Container, makeStyles } from '@material-ui/core';
 import { postArticle } from 'features/articles/articlesSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import FormikInput from 'share/components/FormikInput';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import FormikTags from '../../../share/components/FormikTags';
 import { getArticle, selectArticle, UpdateArticle } from '../articleSlice';
+import { Editor } from '@tinymce/tinymce-react';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -24,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
   },
   error: {
     color: 'red !important',
+  },
+  textEditer: {
+    width: '100%',
+    marginTop: 15,
+    marginBottom: 15,
   },
 }));
 
@@ -59,6 +65,8 @@ function AddArticle() {
   }, [dispatch, slug]);
 
   const onSubmit = (values: FormInputArticleType) => {
+    console.log(values);
+
     if (slug) {
       dispatch({
         type: UpdateArticle.type,
@@ -72,16 +80,16 @@ function AddArticle() {
     }
   };
   const classes = useStyles();
-
+  const [text, setText] = useState('');
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="md">
       <Formik
         enableReinitialize
         initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={validationSchema}
       >
-        {({ isValid, dirty }) => {
+        {({ values, isValid, dirty, setFieldValue }) => {
           return (
             <Form className={classes.form}>
               <div>
@@ -91,13 +99,33 @@ function AddArticle() {
                 <Box className={classes.title}>
                   <Field label="What's this article about?" name="description" as={FormikInput} />
                 </Box>
-                <Box className={classes.title}>
+                {/* <Box className={classes.title}>
                   <Field
                     label="Write your article (in markdown)"
                     name="body"
                     multiline={true}
                     minsRow={10}
                     as={FormikInput}
+                  />
+                </Box> */}
+                <Box className={classes.textEditer}>
+                  <Editor
+                    apiKey="jb12i6p3jdt0oeipnd0l60gym5ehjx8t67dt4t49tcci14h8"
+                    initialValue={values.body}
+                    init={{
+                      height: 500,
+                      menubar: false,
+                      plugins: [
+                        'advlist autolink lists link image charmap print preview anchor',
+                        'searchreplace visualblocks code fullscreen',
+                        'insertdatetime media table paste code help wordcount',
+                      ],
+                      toolbar:
+                        'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
+                      content_style:
+                        'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                    }}
+                    onEditorChange={(newText) => setFieldValue('body', newText)}
                   />
                 </Box>
                 <Field name="tagList" component={FormikTags} />
