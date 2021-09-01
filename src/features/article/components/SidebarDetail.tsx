@@ -18,6 +18,7 @@ const useStyle = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       position: 'static',
       width: '100%',
+      marginTop: theme.spacing(0),
     },
   },
   name: {
@@ -52,6 +53,11 @@ const useStyle = makeStyles((theme) => ({
       flexDirection: 'row',
     },
   },
+  iconSpacing: {
+    [theme.breakpoints.down('sm')]: {
+      marginRight: '15px',
+    },
+  },
 }));
 
 function SidebarDetail({ article }: { article: ArticleType }) {
@@ -83,13 +89,13 @@ function SidebarDetail({ article }: { article: ArticleType }) {
       <Typography className={classes.bio}>{article?.author?.bio}</Typography>
       <Divider light />
       <Box className={classes.actionContainer}>
-        <Box>
+        <Box className={classes.iconSpacing}>
           <IconButton aria-label="like" color="default" onClick={handleFavorite}>
             {article?.favorited ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
           </IconButton>
           <span>{article?.favoritesCount}</span>
         </Box>
-        <Box>
+        <Box className={classes.iconSpacing}>
           <React.Fragment key="right">
             <IconButton aria-label="comment" color="default" onClick={onShowComment}>
               <ChatBubbleOutlineIcon />
