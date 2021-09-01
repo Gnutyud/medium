@@ -2,9 +2,9 @@ import { Avatar, Box, Button, Divider, makeStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { followProfile, selectProfile, unFollowProfile } from 'features/profile/profileSlice';
-import React from 'react';
+import { useAppDispatch } from 'app/hooks';
+import { followProfile, getProfile, unFollowProfile } from 'features/profile/profileSlice';
+import { useEffect } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { upperFirstLetter } from 'share/methods/upperFirst';
 interface ArticleProps {
@@ -48,9 +48,6 @@ function Popup({ article, followingState }: ArticleProps) {
   // auth
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);
-  // const userFromStore = useAppSelector(selectProfile);
-  // const followingState = userFromStore.following;
-  console.log(followingState);
 
   const history = useHistory();
 
@@ -71,6 +68,16 @@ function Popup({ article, followingState }: ArticleProps) {
       history.push('/settings');
     }
   };
+
+  // fetch profile by username
+  useEffect(() => {
+    const action = {
+      type: getProfile.type,
+      payload: { username: author?.username },
+    };
+    dispatch(action);
+  }, [dispatch, author?.username]);
+
   return (
     <>
       <Box>

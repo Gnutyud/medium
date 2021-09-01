@@ -171,6 +171,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     let favoritePayload: FavoritePayloadProps = { slug: slug, favorited: favorited };
     dispatch(favoriteRequest(favoritePayload));
   };
+
   return (
     <Box className={classes.root}>
       <Card className={classes.card}>
