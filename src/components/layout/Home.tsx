@@ -1,7 +1,7 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import ArticleList from 'features/articles/components/ArticleList';
 import TagList from 'features/tags/components/TagList';
-
+import { Footer } from './Footer';
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: '50px',
@@ -22,6 +22,7 @@ const HomeLayout = () => {
         </Grid>
         <Grid item xs={12} md={3}>
           <TagList />
+          <Footer />
         </Grid>
       </Grid>
     </div>
