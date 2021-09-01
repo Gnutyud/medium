@@ -163,7 +163,6 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
   };
   // handle favorite
   const handleFavorite = () => {
-    console.log(favorited);
     let favoritePayload: FavoritePayloadProps = { slug: slug, favorited: favorited };
     dispatch(favoriteRequest(favoritePayload));
   };

@@ -37,7 +37,6 @@ export const articleSlice = createSlice({
       state.isLoadingComment = true;
     },
     getCommentFromSaga: (state, action) => {
-      console.log(action.payload);
       state.comments = action.payload;
     },
     commentRequest: (state) => {},

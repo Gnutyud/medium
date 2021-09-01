@@ -1,11 +1,12 @@
 import { Box, Button, Container, makeStyles, Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
+import Loading from 'components/common/Loading';
 import { Field, Form, Formik } from 'formik';
 import React, { useEffect } from 'react';
 import FormikInput from 'share/components/FormikInput';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { getUser, selectError, selectUser, updateUser } from '../settingSlice';
+import { getUser, selectError, selectLoading, selectUser, updateUser } from '../settingSlice';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -44,6 +45,7 @@ const validationSchema = Yup.object().shape({
 
 const SettingPage = () => {
   const currentUser = useAppSelector(selectUser);
+  const isLoading = useAppSelector(selectLoading);
   const errMessage = useAppSelector(selectError);
   const dispatch = useAppDispatch();
 
@@ -88,6 +90,9 @@ const SettingPage = () => {
 
   const classes = useStyles();
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <Container maxWidth="sm">
       <Typography variant="h5" className={classes.header}>
