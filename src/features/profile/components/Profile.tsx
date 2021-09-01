@@ -200,7 +200,7 @@ const Profile: React.FC<ProfileProps> = ({
         ) : (
           <Box className={classes.followBtn} onClick={handleFollow}>
             {followingState ? <CheckIcon /> : <AddIcon />}
-            <Typography className={classes.option}>Following</Typography>
+            <Typography>Following</Typography>
           </Box>
         )}
       </CardMedia>
