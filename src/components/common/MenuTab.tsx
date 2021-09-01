@@ -1,5 +1,6 @@
 import { Box, makeStyles } from '@material-ui/core';
 import { blue } from '@material-ui/core/colors';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,12 +45,20 @@ interface Props {
   tab2: string;
 }
 
+const queryString = require('query-string');
+
 const MenuTab: React.FC<Props> = ({ option, handleDisplay, tab1, tab2 }) => {
   const classes = useStyles();
+  const history = useHistory();
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);
 
   const handleClick = (value: number) => {
+    const queryParams = { page: 1 };
+    history.push({
+      pathname: '/',
+      search: queryString.stringify(queryParams),
+    });
     handleDisplay(value);
   };
 

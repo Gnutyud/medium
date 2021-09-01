@@ -11,9 +11,9 @@ body {
 }
 
 a:link {
-  color: #2727d1;
+  color: rgba(41, 41, 41, 1);
 }
 
 a:visited {
-  color: #2727d1;
+  color: rgba(41, 41, 41, 1);
 }

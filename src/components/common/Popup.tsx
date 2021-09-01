@@ -1,19 +1,15 @@
 import { Avatar, Box, Button, Divider, makeStyles } from '@material-ui/core';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import {
-  followProfile,
-  getProfile,
-  selectProfile,
-  unFollowProfile,
-} from 'features/profile/profileSlice';
-import React, { useEffect } from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
-import { upperFirstLetter } from 'share/methods/upperFirst';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { followProfile, selectProfile, unFollowProfile } from 'features/profile/profileSlice';
+import React from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
+import { upperFirstLetter } from 'share/methods/upperFirst';
 interface ArticleProps {
   article: ArticleType;
+  followingState: boolean;
 }
 
 const useStyle = makeStyles((theme) => ({
@@ -45,15 +41,17 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-function Popup({ article }: ArticleProps) {
+function Popup({ article, followingState }: ArticleProps) {
   const { author } = article;
   const classes = useStyle();
   const dispatch = useAppDispatch();
   // auth
   const local: any = localStorage.getItem('user');
   const curUser = JSON.parse(local);
-  const userFromStore = useAppSelector(selectProfile);
-  const followingState = userFromStore.following;
+  // const userFromStore = useAppSelector(selectProfile);
+  // const followingState = userFromStore.following;
+  console.log(followingState);
+
   const history = useHistory();
 
   const handleFollow = () => {
@@ -84,7 +82,6 @@ function Popup({ article }: ArticleProps) {
         </Box>
         <Divider color="black" />
         <Box className={classes.containerFollow}>
-          {/* <Box className={classes.followContent}>10 Articles</Box> */}
           <Button
             variant="contained"
             color="primary"
@@ -95,18 +92,18 @@ function Popup({ article }: ArticleProps) {
               followingState ? (
                 <>
                   <CheckIcon />
-                  Following
+                  <span style={{ marginLeft: '3px' }}>Following</span>
                 </>
               ) : (
                 <>
                   <AddIcon />
-                  Following
+                  <span style={{ marginLeft: '3px' }}>Following</span>
                 </>
               )
             ) : (
               <>
                 <SettingsIcon />
-                Setting
+                <span style={{ marginLeft: '3px' }}>Setting</span>
               </>
             )}
           </Button>
