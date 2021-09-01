@@ -16,10 +16,9 @@ function* handleLogin(payload: LoginPayload) {
     // redirect to home page
     yield put(push('/'));
   } catch (error) {
+    yield put(authActions.loginFail(error.message));
     if (error.response.data.errors) {
       yield put(authActions.loginFail(error.response.data.errors));
-    } else {
-      yield put(authActions.loginFail(error.message));
     }
   }
 }
