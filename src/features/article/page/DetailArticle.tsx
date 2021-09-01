@@ -137,7 +137,7 @@ function DetailArticle() {
                 </Box>
                 <Box className={classes.avatarDate}>{convertArticleDate(article.createdAt)}</Box>
               </Box>
-              {parser(article?.body)}
+              {article?.body && parser(article?.body)}
             </Grid>
           </Grid>
           <Grid item md={12} lg={3}>
