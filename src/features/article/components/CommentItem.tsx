@@ -34,8 +34,6 @@ export const CommentItem = (props: CommentItemProps) => {
   const user: any = localStorage.getItem('user');
   const currentUser = JSON.parse(user);
   const handleDeleteComment = () => {
-    console.log('id', props.commentData.id);
-    console.log('slug', props.slug);
     dispatch({
       type: deleteComment.type,
       payload: { slug: props.slug, id: props.commentData.id },

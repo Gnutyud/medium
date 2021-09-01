@@ -55,7 +55,6 @@ export const articlesSlice = createSlice({
     },
     favoriteRequest: (state, action) => {},
     favoriteSuccessSaga: (state, action) => {
-      console.log(action.payload.article);
       const articleExistingIndex = state.articleList.findIndex(
         (item) => item.slug === action.payload.article.slug
       );

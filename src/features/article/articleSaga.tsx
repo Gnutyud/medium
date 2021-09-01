@@ -49,11 +49,9 @@ export function* updateArticleBySlug(
   }
 }
 export function* getCommentSaga(action: PayloadAction<string>): SagaIterator<void> {
-  console.log('get cmt saga', action.payload);
   try {
     const slug = action.payload;
     const res: { comments: CommentType[] } = yield call(articleApi.getCommentApi, slug);
-    console.log(res.comments);
     yield put({
       type: getCommentFromSaga.type,
       payload: res.comments,
@@ -68,9 +66,7 @@ export function* commentActionSaga(
 ): SagaIterator<void> {
   try {
     const { slug, data } = action.payload;
-    console.log(data);
     const res: { comment: CommentType } = yield call(articleApi.createCommentApi, slug, data);
-    console.log(res.comment);
     yield put({
       type: commentSuccess.type,
       payload: res.comment,
