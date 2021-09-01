@@ -157,7 +157,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
     // sync url param
     const queryParams = { tag: tagLabel, page: '1' };
     history.push({
-      pathname: match.path,
+      pathname: match.url,
       search: queryString.stringify(queryParams),
     });
   };

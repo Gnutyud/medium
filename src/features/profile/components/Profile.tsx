@@ -187,6 +187,8 @@ const Profile: React.FC<ProfileProps> = ({
     }
   };
 
+  console.log('username ', username);
+
   return (
     <Card className={classes.root}>
       <CardMedia
@@ -224,7 +226,7 @@ const Profile: React.FC<ProfileProps> = ({
         <MenuTab
           option={displayMode}
           handleDisplay={handleDisplay}
-          tab1={`${upperFirstLetter(username || 'My')}'s  Articles`}
+          tab1={`${username ? upperFirstLetter(username) : 'My'}'s Articles`}
           tab2="Favorited Articles"
         />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
