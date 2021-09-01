@@ -45,7 +45,6 @@ const validationSchema = Yup.object().shape({
 
 const SettingPage = () => {
   const currentUser = useAppSelector(selectUser);
-  const isLoading = useAppSelector(selectLoading);
   const errMessage = useAppSelector(selectError);
   const dispatch = useAppDispatch();
 
@@ -90,9 +89,6 @@ const SettingPage = () => {
 
   const classes = useStyles();
 
-  if (isLoading) {
-    return <Loading />;
-  }
   return (
     <Container maxWidth="sm">
       <Typography variant="h5" className={classes.header}>
