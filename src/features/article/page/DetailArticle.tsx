@@ -53,7 +53,7 @@ const useStyle = makeStyles((theme) => ({
   },
   sideBar: {
     [theme.breakpoints.down('md')]: {
-      marginLeft: '30px',
+      marginLeft: '0px',
     },
     [theme.breakpoints.down('sm')]: {
       order: '2',
@@ -61,7 +61,7 @@ const useStyle = makeStyles((theme) => ({
   },
   boxContent: {
     [theme.breakpoints.down('sm')]: {
-      margin: '20px',
+      margin: '0px 20px',
     },
   },
   authorInfor: {

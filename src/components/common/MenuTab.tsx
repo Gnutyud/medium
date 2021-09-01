@@ -8,6 +8,12 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       textAlign: 'center',
     },
+    [theme.breakpoints.down('lg')]: {
+      padding: '0 24px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      padding: '0',
+    },
   },
   item: {
     cursor: 'pointer',
@@ -26,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '1.3rem',
     [theme.breakpoints.down('xs')]: {
       width: '50%',
+      marginRight: '0',
     },
   },
 }));
