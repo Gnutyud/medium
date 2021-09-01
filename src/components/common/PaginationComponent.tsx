@@ -1,44 +1,40 @@
 import { Box } from '@material-ui/core';
 import { Pagination, PaginationItem } from '@material-ui/lab';
-import { useAppDispatch } from 'app/hooks';
-import { setNumberCurrentPage } from 'features/articles/articlesSlice';
-import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { selectNumberCurrentPage, setNumberCurrentPage } from 'features/articles/articlesSlice';
+import React, { useEffect } from 'react';
 import { Link, MemoryRouter, Route, useHistory, useLocation } from 'react-router-dom';
 
 const queryString = require('query-string');
 
-interface ProfileArticlePaginationProps {
-  articleCount: number | undefined;
-  articlePerPage: number | undefined;
+interface PaginationComponentProps {
+  pathName: string;
+  totalPage: number;
   tagByArticle: string | undefined;
-  currentPage: number | undefined;
-  username?: string;
 }
 
-const ProfileArticlePagination: React.FC<ProfileArticlePaginationProps> = ({
-  articleCount,
-  articlePerPage,
+const PaginationComponent: React.FC<PaginationComponentProps> = ({
+  pathName,
+  totalPage,
   tagByArticle,
-  currentPage,
-  username,
 }) => {
   const history = useHistory();
   const location = useLocation();
   const dispatch = useAppDispatch();
 
-  // get total page
-  const totalPage = articleCount && articlePerPage ? Math.ceil(articleCount / articlePerPage) : 0;
+  // get currentPage from store
+  const currentPage = useAppSelector(selectNumberCurrentPage);
 
   // navigate to page event
   const handleNavigate = (event: any, pageNumber: number) => {
     dispatch(setNumberCurrentPage(pageNumber));
-
-    // sync url param
+    // preserve url param
     const queryParams = tagByArticle
       ? { page: pageNumber, tag: tagByArticle }
       : { page: pageNumber };
+
     history.push({
-      pathname: `/profile/${username}`,
+      pathname: pathName,
       search: queryString.stringify(queryParams),
     });
   };
@@ -79,4 +75,4 @@ const ProfileArticlePagination: React.FC<ProfileArticlePaginationProps> = ({
   );
 };
 
-export default ProfileArticlePagination;
+export default PaginationComponent;
