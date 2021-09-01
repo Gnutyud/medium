@@ -67,6 +67,8 @@ const ArticlePagination: React.FC<ArticlePaginationProps> = ({
                 page={currentPage}
                 count={totalPage}
                 onChange={handleNavigate}
+                showFirstButton
+                showLastButton
                 renderItem={(item) => (
                   <PaginationItem
                     component={Link}
