@@ -32,6 +32,12 @@ const useStyles = makeStyles((theme) =>
       [theme.breakpoints.down('md')]: {
         borderRight: 'none',
       },
+      [theme.breakpoints.down('lg')]: {
+        padding: '0 24px',
+      },
+      [theme.breakpoints.down('xs')]: {
+        padding: '0',
+      },
     },
     card: {
       display: 'flex',
@@ -89,6 +95,7 @@ const useStyles = makeStyles((theme) =>
     },
     chip: {
       marginRight: '5px',
+      marginBottom: '3px',
     },
     favoritesContainer: {
       width: '100%',

@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('xs')]: {
       transform: 'translateX(15px)',
-      fontSize: '10px',
+      // fontSize: '10px',
       padding: '3px',
     },
   },
@@ -69,6 +69,12 @@ const useStyles = makeStyles((theme) => ({
       transform: 'translateX(15px)',
       fontSize: '10px',
       padding: '3px',
+    },
+  },
+
+  option: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
     },
   },
 
@@ -189,12 +195,12 @@ const Profile: React.FC<ProfileProps> = ({
         {curUser?.username === username ? (
           <Link className={classes.settingBtn} to="/settings">
             <SettingsIcon />
-            Edit Profile Setting
+            <Typography className={classes.option}>Edit Profile Setting</Typography>
           </Link>
         ) : (
           <Box className={classes.followBtn} onClick={handleFollow}>
             {followingState ? <CheckIcon /> : <AddIcon />}
-            Following
+            <Typography className={classes.option}>Following</Typography>
           </Box>
         )}
       </CardMedia>
