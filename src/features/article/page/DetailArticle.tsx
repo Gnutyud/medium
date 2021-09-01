@@ -25,6 +25,7 @@ const useStyle = makeStyles((theme) => ({
     marginBottom: '30px',
     [theme.breakpoints.down('md')]: {
       fontSize: '1.6rem',
+      marginTop: theme.spacing(4),
     },
   },
   description: {
