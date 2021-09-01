@@ -8,6 +8,7 @@ import Article from 'components/common/Article';
 import MenuTab from 'components/common/MenuTab';
 import { setTag } from 'features/articles/articlesSlice';
 import { Link, NavLink } from 'react-router-dom';
+import { upperFirstLetter } from 'share/methods/upperFirst';
 import Loading from '../../../components/common/Loading';
 import { followProfile, selectProfile, unFollowProfile } from '../profileSlice';
 import ProfileArticlePagination from './ProfileArticlePagination';
@@ -223,7 +224,7 @@ const Profile: React.FC<ProfileProps> = ({
         <MenuTab
           option={displayMode}
           handleDisplay={handleDisplay}
-          tab1="My Articles"
+          tab1={`${upperFirstLetter(username || 'My')}'s  Articles`}
           tab2="Favorited Articles"
         />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
