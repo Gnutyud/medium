@@ -91,6 +91,10 @@ const ProfilePage = () => {
     dispatch(action);
   }, [dispatch, username]);
 
+  // pagination data
+  const totalPage = totalArticle && articlePerPage ? Math.ceil(totalArticle / articlePerPage) : 0;
+  const pathName = `/profile/${username}`;
+
   return (
     <Box>
       {isLoadingProfile ? (
@@ -99,13 +103,11 @@ const ProfilePage = () => {
         <Box>
           <Profile
             author={profile}
+            totalPage={totalPage}
+            pathName={pathName}
+            username={username}
             articleList={articleList}
             isLoading={isLoading}
-            articleCount={totalArticle}
-            tagByArticle={tagByArticle}
-            currentPage={currentPage}
-            articlePerPage={articlePerPage}
-            username={username}
             displayMode={displayMode}
             handleDisplay={handleListArticleDisplay}
           />

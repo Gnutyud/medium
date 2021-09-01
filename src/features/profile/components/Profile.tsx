@@ -6,12 +6,12 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import Article from 'components/common/Article';
 import MenuTab from 'components/common/MenuTab';
-import { setTag } from 'features/articles/articlesSlice';
+import PaginationComponent from 'components/common/PaginationComponent';
+import { selectTagByArticle, setTag } from 'features/articles/articlesSlice';
 import { Link, NavLink } from 'react-router-dom';
 import { upperFirstLetter } from 'share/methods/upperFirst';
 import Loading from '../../../components/common/Loading';
 import { followProfile, selectProfile, unFollowProfile } from '../profileSlice';
-import ProfileArticlePagination from './ProfileArticlePagination';
 
 const HEIGHT = window.screen.height;
 
@@ -119,11 +119,9 @@ interface ProfileProps {
   author: ProfileType;
   articleList?: ArticleType[];
   isLoading?: boolean;
-  articleCount?: number;
-  tagByArticle?: string;
-  currentPage?: number;
-  articlePerPage?: number;
-  username?: string;
+  totalPage: number;
+  pathName: string;
+  username: string;
   displayMode: number;
   handleDisplay: (choose: number) => void;
 }
@@ -132,10 +130,8 @@ const Profile: React.FC<ProfileProps> = ({
   author,
   articleList,
   isLoading,
-  articleCount,
-  tagByArticle,
-  currentPage,
-  articlePerPage,
+  totalPage,
+  pathName,
   username,
   displayMode,
   handleDisplay,
@@ -187,7 +183,8 @@ const Profile: React.FC<ProfileProps> = ({
     }
   };
 
-  console.log('username ', username);
+  // pagination data
+  const tagByArticle = useAppSelector(selectTagByArticle);
 
   return (
     <Card className={classes.root}>
@@ -230,13 +227,11 @@ const Profile: React.FC<ProfileProps> = ({
           tab2="Favorited Articles"
         />
         <Box className={classes.articleListContainer}>{articleListElement}</Box>
-        {articleCount && articleCount > 0 ? (
-          <ProfileArticlePagination
-            articleCount={articleCount}
-            articlePerPage={articlePerPage}
+        {totalPage > 0 ? (
+          <PaginationComponent
+            pathName={pathName}
+            totalPage={totalPage}
             tagByArticle={tagByArticle}
-            currentPage={currentPage}
-            username={username}
           />
         ) : (
           <Box style={{ marginTop: '50px', marginLeft: '30px' }}>No Article To Show...</Box>

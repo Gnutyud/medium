@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import Article from 'components/common/Article';
 import Loading from 'components/common/Loading';
 import MenuTab from 'components/common/MenuTab';
+import PaginationComponent from 'components/common/PaginationComponent';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
@@ -16,7 +17,6 @@ import {
   selectNumberCurrentPage,
   selectTagByArticle,
 } from '../articlesSlice';
-import ArticlePagination from './ArticlePagination';
 
 const queryString = require('query-string');
 
@@ -59,8 +59,12 @@ const ArticleList = () => {
 
   // select data for pagination from store
   const articleCount = useAppSelector(selectCountArticles);
-  const currentPage = useAppSelector(selectNumberCurrentPage);
   const articlePerPage = useAppSelector(selectNumberArticlePerPage);
+
+  // pagination data passed
+  const currentPage = useAppSelector(selectNumberCurrentPage);
+  const totalPage = Math.ceil(articleCount / articlePerPage);
+  const pathName = '/';
 
   // select data for filter by tags
   const tagByArticle = useAppSelector(selectTagByArticle);
@@ -113,11 +117,10 @@ const ArticleList = () => {
 
           <Box>
             {articleCount > 0 && (
-              <ArticlePagination
-                articleCount={articleCount}
-                articlePerPage={articlePerPage}
+              <PaginationComponent
+                pathName={pathName}
+                totalPage={totalPage}
                 tagByArticle={tagByArticle}
-                currentPage={currentPage}
               />
             )}
           </Box>
