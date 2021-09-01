@@ -15,9 +15,10 @@ import { blue } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
-import { useAppDispatch } from 'app/hooks';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 import clsx from 'clsx';
 import { favoriteRequest, setTag } from 'features/articles/articlesSlice';
+import { selectProfile } from 'features/profile/profileSlice';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { convertArticleDate } from 'share/methods/dateFormat';
 import { upperFirstLetter } from 'share/methods/upperFirst';
@@ -145,6 +146,10 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
   const { slug, author, title, updatedAt, description, favorited, favoritesCount, tagList } =
     article;
 
+  // following state
+  const userFromStore = useAppSelector(selectProfile);
+  const followingState = userFromStore.following;
+
   // update tags from store
   const handleClickTag = (tagLabel: string) => {
     dispatch(setTag(tagLabel));
@@ -183,7 +188,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
                     {upperFirstLetter(author?.username)}
                   </Link>
                   <Box className={classes.popup}>
-                    <Popup article={article} />
+                    <Popup article={article} followingState={followingState} />
                   </Box>
                 </Box>
               </Box>

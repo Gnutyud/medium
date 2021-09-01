@@ -9,3 +9,11 @@ body {
   height: 100%;
   overflow-x: hidden;
 }
+
+a:link {
+  color: rgba(41, 41, 41, 1);
+}
+
+a:visited {
+  color: rgba(41, 41, 41, 1);
+}
