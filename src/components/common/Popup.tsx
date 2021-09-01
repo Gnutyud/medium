@@ -16,15 +16,22 @@ const useStyle = makeStyles((theme) => ({
     lineHeight: '40px',
     marginLeft: '10px',
     textDecoration: 'none',
+    fontSize: theme.spacing(3),
   },
   followBtn: {
     '&:hover': {
       opacity: '0.8',
     },
+    fontSize: theme.spacing(1.5),
+  },
+  followContent: {
+    alignSelf: 'center',
+    fontSize: theme.spacing(1.5),
+    // color: '#a9a9a1',
   },
   containerAvatar: {
     display: 'flex',
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(1),
   },
   containerFollow: {
     display: 'flex',
@@ -70,9 +77,9 @@ function Popup({ article }: ArticleProps) {
         </Box>
         <Divider color="black" />
         <Box className={classes.containerFollow}>
-          <Box style={{ alignSelf: 'center' }}>Articles: 1</Box>
+          {/* <Box className={classes.followContent}>10 Articles</Box> */}
           <Button
-            variant="outlined"
+            variant="contained"
             color="primary"
             className={classes.followBtn}
             onClick={handleFollow}
