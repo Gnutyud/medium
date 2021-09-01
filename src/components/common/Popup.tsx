@@ -1,12 +1,17 @@
 import { Avatar, Box, Button, Divider, makeStyles } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { followProfile, selectProfile, unFollowProfile } from 'features/profile/profileSlice';
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import {
+  followProfile,
+  getProfile,
+  selectProfile,
+  unFollowProfile,
+} from 'features/profile/profileSlice';
+import React, { useEffect } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 import { upperFirstLetter } from 'share/methods/upperFirst';
 import AddIcon from '@material-ui/icons/Add';
 import CheckIcon from '@material-ui/icons/Check';
-
+import SettingsIcon from '@material-ui/icons/Settings';
 interface ArticleProps {
   article: ArticleType;
 }
@@ -49,10 +54,10 @@ function Popup({ article }: ArticleProps) {
   const curUser = JSON.parse(local);
   const userFromStore = useAppSelector(selectProfile);
   const followingState = userFromStore.following;
+  const history = useHistory();
 
-  // handle follow action
   const handleFollow = () => {
-    if (curUser) {
+    if (curUser?.username !== author?.username) {
       if (!followingState) {
         dispatch({
           type: followProfile.type,
@@ -64,6 +69,8 @@ function Popup({ article }: ArticleProps) {
           payload: { username: author?.username },
         });
       }
+    } else {
+      history.push('/settings');
     }
   };
   return (
@@ -84,8 +91,24 @@ function Popup({ article }: ArticleProps) {
             className={classes.followBtn}
             onClick={handleFollow}
           >
-            {followingState ? <CheckIcon /> : <AddIcon />}
-            Following
+            {curUser?.username !== author?.username ? (
+              followingState ? (
+                <>
+                  <CheckIcon />
+                  Following
+                </>
+              ) : (
+                <>
+                  <AddIcon />
+                  Following
+                </>
+              )
+            ) : (
+              <>
+                <SettingsIcon />
+                Setting
+              </>
+            )}
           </Button>
         </Box>
       </Box>
