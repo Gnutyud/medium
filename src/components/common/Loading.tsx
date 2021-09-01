@@ -3,7 +3,7 @@ import Loader from 'react-loader-spinner';
 
 const Loading = () => {
   return (
-    <Box>
+    <Box style={{ textAlign: 'center' }}>
       <Loader type="Circles" color="#00BFFF" height={80} width={80} />
     </Box>
   );
