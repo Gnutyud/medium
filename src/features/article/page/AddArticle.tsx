@@ -1,8 +1,8 @@
 import { Box, Button, Container, makeStyles } from '@material-ui/core';
 import { Editor } from '@tinymce/tinymce-react';
 import { postArticle } from 'features/articles/articlesSlice';
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import { useEffect, useState } from 'react';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import FormikInput from 'share/components/FormikInput';
 import * as Yup from 'yup';
@@ -47,7 +47,6 @@ function AddArticle() {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const article: ArticleType = useAppSelector(selectArticle);
-  const [text, setText] = useState('');
   const initialValues: FormInputArticleType = {
     title: slug ? (article.title ? article.title : '') : '',
     description: slug ? (article.description ? article.description : '') : '',
@@ -64,8 +63,7 @@ function AddArticle() {
     }
   }, [dispatch, slug]);
 
-  const onSubmit = (values: FormInputArticleType, FormikHelpers: FormikHelpers<any>) => {
-    FormikHelpers.setFieldValue('body', text);
+  const onSubmit = (values: FormInputArticleType) => {
     if (slug) {
       dispatch({
         type: UpdateArticle.type,
@@ -87,10 +85,10 @@ function AddArticle() {
         onSubmit={onSubmit}
         validationSchema={validationSchema}
       >
-        {({ values, isValid, dirty, setFieldValue, handleChange }) => {
+        {({ values, isValid, dirty, handleChange }) => {
           return (
             <Form className={classes.form}>
-              <div>
+              <Box>
                 <Box className={classes.title}>
                   <Field label="Article Title" name="title" as={FormikInput} />
                 </Box>
@@ -100,7 +98,7 @@ function AddArticle() {
                 <Box className={classes.textEditer}>
                   <Editor
                     apiKey="jb12i6p3jdt0oeipnd0l60gym5ehjx8t67dt4t49tcci14h8"
-                    initialValue={values.body}
+                    value={values.body}
                     init={{
                       height: 500,
                       menubar: false,
@@ -115,21 +113,21 @@ function AddArticle() {
                         'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                     }}
                     // onEditorChange={(newText) => setFieldValue('body', newText)}
-                    onEditorChange={(e) => {
-                      handleChange({ target: { name: 'body', value: e } });
+                    onEditorChange={(newText) => {
+                      handleChange({ target: { name: 'body', value: newText } });
                     }}
                   />
                 </Box>
                 <Field name="tagList" component={FormikTags} />
-                <div className={classes.error}>
+                <Box className={classes.error}>
                   <ErrorMessage name="tagList" />
-                </div>
-              </div>
+                </Box>
+              </Box>
               <Button
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                // disabled={!isValid || !dirty}
+                disabled={!isValid || !dirty}
                 type="submit"
               >
                 Publish Article
