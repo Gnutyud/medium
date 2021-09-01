@@ -6,8 +6,10 @@ import {
   ListItemAvatar,
   ListItemText,
   makeStyles,
+  TextField,
 } from '@material-ui/core';
 import { useAppDispatch } from 'app/hooks';
+import { convertArticleDate } from 'share/methods/dateFormat';
 import { deleteComment } from '../articleSlice';
 const useStyle = makeStyles(() => ({
   footer: {
@@ -17,6 +19,9 @@ const useStyle = makeStyles(() => ({
   },
   container: {
     marginTop: '10px',
+    '& .MuiInputBase-root': {
+      color: 'black',
+    },
   },
 }));
 interface CommentItemProps {
@@ -44,10 +49,16 @@ export const CommentItem = (props: CommentItemProps) => {
         </ListItemAvatar>
         <ListItemText
           primary={props.commentData.author.username}
-          secondary={props.commentData.createdAt}
+          secondary={convertArticleDate(props.commentData.createdAt)}
         />
       </ListItem>
-      <p>{props.commentData.body}</p>
+      <TextField
+        disabled
+        multiline
+        fullWidth
+        InputProps={{ disableUnderline: true }}
+        value={props.commentData.body}
+      />
       <div className={classes.footer}>
         {currentUser?.username === props.commentData.author.username && (
           <Button style={{ textTransform: 'none' }} onClick={handleDeleteComment}>
