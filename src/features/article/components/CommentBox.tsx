@@ -8,12 +8,14 @@ import {
   makeStyles,
   TextField,
   Typography,
+  FormControl,
+  NativeSelect,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { isLoggedInSelector } from 'features/auth/authSlice';
 import { getUser, selectUser } from 'features/setting/settingSlice';
-import React, { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { commentList, commentRequest, showComment, toggleComment } from '../articleSlice';
 import { CommentItem } from './CommentItem';
@@ -51,7 +53,7 @@ const useStyle = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   content: {
-    padding: '20px',
+    padding: '20px 30px',
   },
   closeBtn: {
     '&:hover': {
@@ -63,6 +65,13 @@ const useStyle = makeStyles((theme) => ({
     cursor: 'pointer',
     padding: '5px',
     fontSize: '40px',
+  },
+  formControl: {
+    minWidth: 120,
+    textDecoration: 'none',
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
   },
 }));
 interface PropsType {
@@ -151,7 +160,14 @@ export const CommentBox = (props: PropsType) => {
         </form>
       </div>
       <div className={classes.content}>
-        <Typography>Most Relevant</Typography>
+        <FormControl className={classes.formControl}>
+          <NativeSelect className={classes.selectEmpty} name="sortBy" disableUnderline>
+            <option value="most-relevant" defaultChecked>
+              Most Relevant
+            </option>
+            <option value="newest">Most Recent</option>
+          </NativeSelect>
+        </FormControl>
       </div>
       <Divider />
       <div className={classes.content}>
