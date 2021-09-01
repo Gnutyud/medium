@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { NotFound } from 'components/common';
 import Loading from 'components/common/Loading';
 import { getListArticle, selectListArticles } from 'features/articles/articlesSlice';
-import { nanoid } from 'nanoid';
 import React from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { convertArticleDate } from 'share/methods/dateFormat';
