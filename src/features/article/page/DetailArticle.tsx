@@ -23,7 +23,7 @@ const useStyle = makeStyles((theme) => ({
     fontWeight: 'bold',
     fontSize: '40px',
     marginBottom: '30px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '1.6rem',
     },
   },
@@ -31,7 +31,7 @@ const useStyle = makeStyles((theme) => ({
     fontSize: '25px',
     marginBottom: '20px',
     color: 'rgba(117, 117, 117, 1);',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('md')]: {
       fontSize: '1rem',
     },
   },
@@ -54,26 +54,27 @@ const useStyle = makeStyles((theme) => ({
   sideBar: {
     [theme.breakpoints.down('md')]: {
       marginLeft: '0px',
-    },
-    [theme.breakpoints.down('sm')]: {
       order: '2',
     },
+    // [theme.breakpoints.down('sm')]: {
+    //   order: '2',
+    // },
   },
   boxContent: {
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       margin: '0px 20px',
     },
   },
   authorInfor: {
     display: 'flex',
     marginBottom: '30px',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
     },
   },
   container: {
     marginTop: '50px',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('md')]: {
       marginTop: '0px',
     },
   },
@@ -117,10 +118,10 @@ function DetailArticle() {
       article && (
         <Box className={classes.container}>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={3} className={classes.sideBar}>
+            <Grid item md={12} lg={3} className={classes.sideBar}>
               {currentArticle && <SidebarDetail article={currentArticle} />}
             </Grid>
-            <Grid item xs={12} md={6} className={classes.boxContent}>
+            <Grid item md={12} lg={6} className={classes.boxContent}>
               <Typography variant="h5" className={classes.title}>
                 {article.title}
               </Typography>
@@ -144,7 +145,7 @@ function DetailArticle() {
               ))}
             </Grid>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item md={12} lg={3}>
             <CommentBox slug={slug} />
           </Grid>
         </Box>

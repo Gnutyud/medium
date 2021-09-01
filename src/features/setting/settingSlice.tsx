@@ -9,6 +9,7 @@ export const settingSlice = createSlice({
       state.isLoading = true;
     },
     getUserSaga: (state, action: PayloadAction<any>) => {
+      state.isLoading = false;
       state.currentUser = action.payload;
       localStorage.setItem('user', JSON.stringify(action.payload));
     },
