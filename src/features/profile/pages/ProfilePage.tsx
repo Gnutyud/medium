@@ -1,6 +1,7 @@
 import { Box } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import Loading from 'components/common/Loading';
+import MenuTab from 'components/common/MenuTab';
 import {
   getListArticle,
   selectCountArticles,
@@ -13,8 +14,14 @@ import {
 } from 'features/articles/articlesSlice';
 import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import Profile from '../components/Profile';
-import { getProfile, selectIsLoading, selectProfile } from '../profileSlice';
+import { upperFirstLetter } from 'share/methods/upperFirst';
+import ProfileArticles from '../components/ProfileArticleList';
+import ProfileContent from '../components/ProfileContent';
+import ProfileHead from '../components/ProfileHead';
+import ProfileInfo from '../components/ProfileInfo';
+import ProfileLayout from '../components/ProfileLayout';
+import ProfilePagination from '../components/ProfilePagination';
+import { getProfile, selectIsLoading } from '../profileSlice';
 
 const queryString = require('query-string');
 
@@ -37,8 +44,7 @@ const ProfilePage = () => {
     dispatch(setNumberCurrentPage(1));
   }, [dispatch]);
 
-  // select profile + loading state
-  const profile = useAppSelector(selectProfile);
+  // loading state
   const isLoadingProfile = useAppSelector(selectIsLoading);
 
   // select data from store
@@ -93,7 +99,6 @@ const ProfilePage = () => {
 
   // pagination data
   const totalPage = totalArticle && articlePerPage ? Math.ceil(totalArticle / articlePerPage) : 0;
-  const pathName = `/profile/${username}`;
 
   return (
     <Box>
@@ -101,16 +106,24 @@ const ProfilePage = () => {
         <Loading />
       ) : (
         <Box>
-          <Profile
-            author={profile}
-            totalPage={totalPage}
-            pathName={pathName}
-            username={username}
-            articleList={articleList}
-            isLoading={isLoading}
-            displayMode={displayMode}
-            handleDisplay={handleListArticleDisplay}
-          />
+          <ProfileLayout>
+            <ProfileHead username={username} />
+            <ProfileInfo username={username} />
+            <ProfileContent>
+              <MenuTab
+                option={displayMode}
+                handleDisplay={handleListArticleDisplay}
+                tab1={`${username ? upperFirstLetter(username) : 'My'}'s Articles`}
+                tab2="Favorited Articles"
+              />
+              <ProfileArticles articleList={articleList} isLoading={isLoading} />
+              <ProfilePagination
+                totalPage={totalPage}
+                pathName={`/profile/${username}`}
+                tagByArticle={tagByArticle}
+              />
+            </ProfileContent>
+          </ProfileLayout>
         </Box>
       )}
     </Box>
