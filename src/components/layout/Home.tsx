@@ -1,10 +1,21 @@
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import ArticleList from 'features/articles/components/ArticleList';
 import TagList from 'features/tags/components/TagList';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: '50px',
+    padding: '0 16px',
+    [theme.breakpoints.up('md')]: {
+      marginTop: '100px',
+    },
+  },
+}));
+
 const HomeLayout = () => {
+  const classes = useStyles();
   return (
-    <div style={{ marginTop: '100px' }}>
+    <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={9}>
           <ArticleList />

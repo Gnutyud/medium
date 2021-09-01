@@ -32,9 +32,11 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '30px',
   },
   newFeedEmpty: {
+    marginLeft: '25px',
     [theme.breakpoints.down('xs')]: {
       width: '100%',
       textAlign: 'center',
+      marginLeft: '0',
     },
   },
 }));
