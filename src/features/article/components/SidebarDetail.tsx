@@ -13,8 +13,8 @@ import { upperFirstLetter } from 'share/methods/upperFirst';
 const useStyle = makeStyles((theme) => ({
   position: {
     position: 'fixed',
-    width: '17%',
-    margin: '20px',
+    width: '19%',
+    marginTop: theme.spacing(6),
     [theme.breakpoints.down('sm')]: {
       position: 'static',
       width: '100%',
@@ -22,12 +22,12 @@ const useStyle = makeStyles((theme) => ({
   },
   name: {
     textDecoration: 'none',
-    fontSize: '25px',
+    fontSize: theme.spacing(3),
     fontWeight: 'bold',
     color: 'black',
     '&:hover': {
       transition: 'all 0.5s',
-      fontSize: '30px',
+      fontSize: theme.spacing(4),
       cursor: 'pointer',
     },
     [theme.breakpoints.down('sm')]: {
@@ -35,7 +35,7 @@ const useStyle = makeStyles((theme) => ({
     },
   },
   bio: {
-    marginTop: '25px',
+    marginTop: theme.spacing(3),
     fontSize: '15px',
     [theme.breakpoints.down('sm')]: {
       display: 'none',
