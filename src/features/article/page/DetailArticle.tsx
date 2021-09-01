@@ -17,6 +17,7 @@ import {
 } from '../articleSlice';
 import { CommentBox } from '../components/CommentBox';
 import SidebarDetail from '../components/SidebarDetail';
+import parser from 'html-react-parser';
 
 const useStyle = makeStyles((theme) => ({
   title: {
@@ -90,7 +91,6 @@ function DetailArticle() {
   // test
   const articleList = useAppSelector(selectListArticles);
   const currentArticle = articleList.find((item) => item.slug === slug);
-  const body = article.body ? article.body.split('\n') : [];
   React.useEffect(() => {
     dispatch({
       type: getArticle.type,
@@ -138,12 +138,7 @@ function DetailArticle() {
                 </Box>
                 <Box className={classes.avatarDate}>{convertArticleDate(article.createdAt)}</Box>
               </Box>
-              {body.map((item: string) => (
-                <Box key={nanoid()}>
-                  <Typography variant="body1">{item}</Typography>
-                  <br />
-                </Box>
-              ))}
+              {parser(article?.body)}
             </Grid>
           </Grid>
           <Grid item md={12} lg={3}>
