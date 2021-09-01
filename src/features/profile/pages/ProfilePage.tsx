@@ -29,7 +29,6 @@ const ProfilePage = () => {
   const [displayMode, setDisplayMode] = useState(0);
 
   const handleListArticleDisplay = (choose: number) => {
-    console.log(choose);
     setDisplayMode(choose);
   };
 
