@@ -16,10 +16,10 @@ import { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import { upperFirstLetter } from 'share/methods/upperFirst';
 import ProfileArticles from '../components/ProfileArticleList';
-import ProfileContent from '../components/ProfileContent';
+import ProfileContentLayout from '../layout/ProfileContentLayout';
 import ProfileHead from '../components/ProfileHead';
 import ProfileInfo from '../components/ProfileInfo';
-import ProfileLayout from '../components/ProfileLayout';
+import ProfileLayout from '../layout/ProfileLayout';
 import ProfilePagination from '../components/ProfilePagination';
 import { getProfile, selectIsLoading } from '../profileSlice';
 
@@ -109,7 +109,7 @@ const ProfilePage = () => {
           <ProfileLayout>
             <ProfileHead username={username} />
             <ProfileInfo username={username} />
-            <ProfileContent>
+            <ProfileContentLayout>
               <MenuTab
                 option={displayMode}
                 handleDisplay={handleListArticleDisplay}
@@ -122,7 +122,7 @@ const ProfilePage = () => {
                 pathName={`/profile/${username}`}
                 tagByArticle={tagByArticle}
               />
-            </ProfileContent>
+            </ProfileContentLayout>
           </ProfileLayout>
         </Box>
       )}
