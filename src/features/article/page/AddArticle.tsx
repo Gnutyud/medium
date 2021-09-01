@@ -1,14 +1,14 @@
 import { Box, Button, Container, makeStyles } from '@material-ui/core';
+import { Editor } from '@tinymce/tinymce-react';
 import { postArticle } from 'features/articles/articlesSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import FormikInput from 'share/components/FormikInput';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import FormikTags from '../../../share/components/FormikTags';
 import { getArticle, selectArticle, UpdateArticle } from '../articleSlice';
-import { Editor } from '@tinymce/tinymce-react';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -80,7 +80,6 @@ function AddArticle() {
     }
   };
   const classes = useStyles();
-  const [text, setText] = useState('');
   return (
     <Container component="main" maxWidth="md">
       <Formik
@@ -99,15 +98,6 @@ function AddArticle() {
                 <Box className={classes.title}>
                   <Field label="What's this article about?" name="description" as={FormikInput} />
                 </Box>
-                {/* <Box className={classes.title}>
-                  <Field
-                    label="Write your article (in markdown)"
-                    name="body"
-                    multiline={true}
-                    minsRow={10}
-                    as={FormikInput}
-                  />
-                </Box> */}
                 <Box className={classes.textEditer}>
                   <Editor
                     apiKey="jb12i6p3jdt0oeipnd0l60gym5ehjx8t67dt4t49tcci14h8"

@@ -7,13 +7,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface ProfileContentProps {
+interface ProfileContentLayoutProps {
   children: React.ReactNode;
 }
 
-const ProfileContent: React.FC<ProfileContentProps> = ({ children }) => {
+const ProfileContentLayout: React.FC<ProfileContentLayoutProps> = ({ children }) => {
   const classes = useStyles();
   return <CardContent className={classes.contentContainer}>{children}</CardContent>;
 };
 
-export default ProfileContent;
+export default ProfileContentLayout;
