@@ -1,12 +1,18 @@
 import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { TextField } from '@material-ui/core';
-import { FieldInputProps, FormikProps } from 'formik';
+import { Box, makeStyles, TextField } from '@material-ui/core';
+import { ErrorMessage, FieldInputProps, FormikProps } from 'formik';
 
 interface Props {
   field: FieldInputProps<any>;
   form: FormikProps<any>;
 }
+
+const useStyles = makeStyles((theme) => ({
+  error: {
+    color: 'red !important',
+  },
+}));
 
 function FormikTags({ field, form }: Props) {
   const handleKeyDown = (event: any) => {
@@ -26,6 +32,7 @@ function FormikTags({ field, form }: Props) {
     }
   };
 
+  const classes = useStyles();
   return (
     <Autocomplete
       {...field}
@@ -49,6 +56,9 @@ function FormikTags({ field, form }: Props) {
               margin="normal"
               fullWidth
             />
+            <Box className={classes.error}>
+              <ErrorMessage name="tagList" />
+            </Box>
           </>
         );
       }}

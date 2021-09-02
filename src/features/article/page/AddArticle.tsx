@@ -1,9 +1,9 @@
 import { Box, Button, Container, makeStyles } from '@material-ui/core';
-import { Editor } from '@tinymce/tinymce-react';
 import { postArticle } from 'features/articles/articlesSlice';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import FormikEditer from 'share/components/FormikEditer';
 import FormikInput from 'share/components/FormikInput';
 import * as Yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
@@ -13,6 +13,7 @@ import { getArticle, selectArticle, UpdateArticle } from '../articleSlice';
 const useStyles = makeStyles((theme) => ({
   form: {
     marginTop: theme.spacing(3),
+    minHeight: theme.spacing(100),
   },
   title: {
     marginTop: 15,
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: 10,
     float: 'right',
+    marginBottom: 20,
   },
   error: {
     color: 'red !important',
@@ -76,7 +78,9 @@ function AddArticle() {
       });
     }
   };
+
   const classes = useStyles();
+
   return (
     <Container component="main" maxWidth="md">
       <Formik
@@ -85,7 +89,7 @@ function AddArticle() {
         onSubmit={onSubmit}
         validationSchema={validationSchema}
       >
-        {({ values, isValid, dirty, handleChange }) => {
+        {({ isValid, dirty }) => {
           return (
             <Form className={classes.form}>
               <Box>
@@ -96,42 +100,22 @@ function AddArticle() {
                   <Field label="What's this article about?" name="description" as={FormikInput} />
                 </Box>
                 <Box className={classes.textEditer}>
-                  <Editor
-                    apiKey="jb12i6p3jdt0oeipnd0l60gym5ehjx8t67dt4t49tcci14h8"
-                    value={values.body}
-                    init={{
-                      height: 500,
-                      menubar: false,
-                      plugins: [
-                        'advlist autolink lists link image charmap print preview anchor',
-                        'searchreplace visualblocks code fullscreen',
-                        'insertdatetime media table paste code help wordcount',
-                      ],
-                      toolbar:
-                        'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl',
-                      content_style:
-                        'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
-                    }}
-                    // onEditorChange={(newText) => setFieldValue('body', newText)}
-                    onEditorChange={(newText) => {
-                      handleChange({ target: { name: 'body', value: newText } });
-                    }}
-                  />
+                  <FormikEditer name="body" />
                 </Box>
-                <Field name="tagList" component={FormikTags} />
-                <Box className={classes.error}>
-                  <ErrorMessage name="tagList" />
+                <Box>
+                  <Field name="tagList" component={FormikTags} />
+                </Box>
+                <Box className={classes.button}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={!isValid || !dirty}
+                    type="submit"
+                  >
+                    Publish Article
+                  </Button>
                 </Box>
               </Box>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                disabled={!isValid || !dirty}
-                type="submit"
-              >
-                Publish Article
-              </Button>
             </Form>
           );
         }}
