@@ -23,6 +23,14 @@ const useStyles = makeStyles((theme) => ({
       justifyContent: 'center',
     },
   },
+  iconItem: {
+    '&:hover': {
+      transform: 'scale(1.2)',
+      color: 'primary',
+    },
+    backgroundColor: '#3d3d3d',
+    cursor: 'pointer',
+  },
 }));
 export const Footer = () => {
   const classes = useStyles();
@@ -30,13 +38,13 @@ export const Footer = () => {
     <Box className={classes.root}>
       <Typography variant="h6">Contact Us</Typography>
       <Box className={classes.icon}>
-        <Avatar style={{ backgroundColor: '#3d3d3d' }}>
+        <Avatar className={classes.iconItem}>
           <TwitterIcon />
         </Avatar>
-        <Avatar style={{ backgroundColor: '#3d3d3d' }}>
+        <Avatar className={classes.iconItem}>
           <FacebookIcon />
         </Avatar>
-        <Avatar style={{ backgroundColor: '#3d3d3d' }}>
+        <Avatar className={classes.iconItem}>
           <LinkedInIcon />
         </Avatar>
       </Box>
