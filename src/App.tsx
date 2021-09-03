@@ -1,6 +1,6 @@
 import '@fontsource/roboto';
 import { Box, makeStyles } from '@material-ui/core';
-import { Header, NotFound } from 'components/common';
+import { Header, NotFound, PrivateRoute } from 'components/common';
 import HomeLayout from 'components/layout/Home';
 import AddArticle from 'features/article/page/AddArticle';
 import DetailArticle from 'features/article/page/DetailArticle';
@@ -30,10 +30,10 @@ function App() {
           <Route path="/" component={HomeLayout} exact />
           <Route path="/auth" component={LoginPage} />
           <Route path="/home" component={HomeLayout} />
-          <Route path="/article/create" component={AddArticle} />
-          <Route exact path="/article/:slug" component={DetailArticle} />
-          <Route path="/article/:slug/edit" component={AddArticle} />
-          <Route path="/settings" component={SettingPage} />
+          <PrivateRoute path="/article/create" component={AddArticle} />
+          <PrivateRoute exact path="/article/:slug" component={DetailArticle} />
+          <PrivateRoute path="/article/:slug/edit" component={AddArticle} />
+          <PrivateRoute path="/settings" component={SettingPage} />
           <Route path="/profile/:username" component={ProfilePage} exact />
           <Route component={NotFound} />
         </Switch>
