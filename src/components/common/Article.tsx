@@ -22,7 +22,6 @@ import { selectProfile } from 'features/profile/profileSlice';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { convertArticleDate } from 'share/methods/dateFormat';
 import { upperFirstLetter } from 'share/methods/upperFirst';
-import Popup from './Popup';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -99,34 +98,8 @@ const useStyles = makeStyles((theme) =>
     link: {
       textDecoration: 'none',
     },
-    linkContainer: {
-      position: 'relative',
-      [theme.breakpoints.up('sm')]: {
-        '&:hover > $popup': {
-          display: 'block',
-          position: 'absolute',
-          marginTop: '20px',
-        },
-      },
-    },
     title: {
       cursor: 'pointer',
-    },
-    popup: {
-      display: 'none',
-      Height: '80px',
-      minWidth: '200px',
-      position: 'absolute',
-      boxShadow: '0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)',
-      padding: '10px',
-      borderRadius: '5px',
-      backgroundColor: 'white',
-      marginTop: '20px',
-      top: '5px',
-      '&:hover': {
-        display: 'block',
-        position: 'absolute',
-      },
     },
   })
 );
@@ -184,13 +157,10 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
             }
             title={
               <Box className={classes.authorName} component="div">
-                <Box className={classes.linkContainer}>
+                <Box>
                   <Link className={classes.link} to={`/profile/${author?.username}`}>
                     {upperFirstLetter(author?.username)}
                   </Link>
-                  <Box className={classes.popup}>
-                    <Popup article={article} followingState={followingState} />
-                  </Box>
                 </Box>
               </Box>
             }
