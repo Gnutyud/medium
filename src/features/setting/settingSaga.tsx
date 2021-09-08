@@ -25,7 +25,7 @@ export function* updateCurrentUserSaga(action: PayloadAction<any>): SagaIterator
       type: updateUserSaga.type,
       payload: res.user,
     });
-  } catch (error) {
+  } catch (error: any) {
     yield put({
       type: updateError.type,
       payload: error.response.data.errors,

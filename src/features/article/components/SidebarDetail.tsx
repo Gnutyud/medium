@@ -54,9 +54,13 @@ const useStyle = makeStyles((theme) => ({
     },
   },
   iconSpacing: {
+    marginRight: '10px',
     [theme.breakpoints.down('md')]: {
-      marginRight: '15px',
+      marginRight: '10px',
     },
+  },
+  favoriteIcon: {
+    padding: '5px !important',
   },
 }));
 
@@ -90,14 +94,14 @@ function SidebarDetail({ article }: { article: ArticleType }) {
       <Divider light />
       <Box className={classes.actionContainer}>
         <Box className={classes.iconSpacing}>
-          <IconButton aria-label="like" color="default" onClick={handleFavorite}>
+          <IconButton className={classes.favoriteIcon} color="default" onClick={handleFavorite}>
             {article?.favorited ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
           </IconButton>
           <span>{article?.favoritesCount}</span>
         </Box>
         <Box className={classes.iconSpacing}>
           <React.Fragment key="right">
-            <IconButton aria-label="comment" color="default" onClick={onShowComment}>
+            <IconButton className={classes.favoriteIcon} color="default" onClick={onShowComment}>
               <ChatBubbleOutlineIcon />
             </IconButton>
           </React.Fragment>

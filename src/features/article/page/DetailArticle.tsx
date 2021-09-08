@@ -57,9 +57,6 @@ const useStyle = makeStyles((theme) => ({
       marginLeft: '0px',
       order: '2',
     },
-    // [theme.breakpoints.down('sm')]: {
-    //   order: '2',
-    // },
   },
   boxContent: {
     [theme.breakpoints.down('md')]: {
@@ -75,8 +72,15 @@ const useStyle = makeStyles((theme) => ({
   },
   container: {
     marginTop: '50px',
+    lineHeight: '1.5',
     [theme.breakpoints.down('md')]: {
       marginTop: '0px',
+    },
+    [theme.breakpoints.down('xs')]: {
+      '& img': {
+        width: '100%',
+        maxWidth: '315px',
+      },
     },
   },
 }));
