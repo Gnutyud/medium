@@ -1,22 +1,22 @@
 import {
   Avatar,
   Button,
+  CircularProgress,
   Divider,
+  FormControl,
   ListItem,
   ListItemAvatar,
   ListItemText,
   makeStyles,
+  NativeSelect,
   TextField,
   Typography,
-  FormControl,
-  NativeSelect,
-  CircularProgress,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { isLoggedInSelector } from 'features/auth/authSlice';
 import { getUser, selectUser } from 'features/setting/settingSlice';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   commentList,

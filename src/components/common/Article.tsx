@@ -15,10 +15,9 @@ import { blue } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { nanoid } from '@reduxjs/toolkit';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { useAppDispatch } from 'app/hooks';
 import clsx from 'clsx';
 import { favoriteRequest, setTag } from 'features/articles/articlesSlice';
-import { selectProfile } from 'features/profile/profileSlice';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { convertArticleDate } from 'share/methods/dateFormat';
 import { upperFirstLetter } from 'share/methods/upperFirst';
@@ -101,6 +100,9 @@ const useStyles = makeStyles((theme) =>
     title: {
       cursor: 'pointer',
     },
+    favoriteIcon: {
+      padding: '5px !important',
+    },
   })
 );
 
@@ -118,10 +120,6 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
 
   const { slug, author, title, updatedAt, description, favorited, favoritesCount, tagList } =
     article;
-
-  // following state
-  const userFromStore = useAppSelector(selectProfile);
-  const followingState = userFromStore.following;
 
   // update tags from store
   const handleClickTag = (tagLabel: string) => {
@@ -184,7 +182,7 @@ const Article: React.FC<ArticleProps> = ({ article }) => {
           <CardActions className={classes.cardAction}>
             <Box className={classes.favoritesContainer}>
               {favoritesCount}
-              <IconButton aria-label="add to favorites" onClick={handleFavorite}>
+              <IconButton className={classes.favoriteIcon} onClick={handleFavorite}>
                 {favorited ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
               </IconButton>
             </Box>
