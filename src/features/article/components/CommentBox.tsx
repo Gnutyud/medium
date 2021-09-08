@@ -10,6 +10,7 @@ import {
   Typography,
   FormControl,
   NativeSelect,
+  CircularProgress,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -17,7 +18,18 @@ import { isLoggedInSelector } from 'features/auth/authSlice';
 import { getUser, selectUser } from 'features/setting/settingSlice';
 import { FormEvent, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { commentList, commentRequest, showComment, toggleComment } from '../articleSlice';
+import {
+  commentList,
+  commentRequest,
+  commentTextValue,
+  getCommentText,
+  hideCommentInput,
+  isLoadingCmt,
+  isShowCmtInput,
+  showComment,
+  showCommentInput,
+  toggleComment,
+} from '../articleSlice';
 import { CommentItem } from './CommentItem';
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -29,6 +41,7 @@ const useStyle = makeStyles((theme) => ({
     maxHeight: '100%',
     backgroundColor: 'white',
     overflowY: 'scroll',
+    paddingTop: '70px',
     boxShadow: 'inset 1px 0px 0px 0px rgba(0, 0, 0, 0.2)',
     transition: 'all 0.5s ease-in-out',
     [theme.breakpoints.down('xs')]: {
@@ -80,10 +93,11 @@ interface PropsType {
 export const CommentBox = (props: PropsType) => {
   const classes = useStyle();
   const history = useHistory();
-  const [show, setShow] = useState(false);
-  const [commentText, setCommentText] = useState('');
   const dispatch = useAppDispatch();
   const isShowComment = useAppSelector(showComment);
+  const isLoadingComment = useAppSelector(isLoadingCmt);
+  const isShowInput = useAppSelector(isShowCmtInput);
+  const commentValues = useAppSelector(commentTextValue);
   const currentUser = useAppSelector(selectUser);
   const comments = useAppSelector(commentList);
   const isLoggedIn = useAppSelector(isLoggedInSelector);
@@ -94,25 +108,21 @@ export const CommentBox = (props: PropsType) => {
     dispatch(toggleComment());
   };
   const handleCancel = () => {
-    setShow(false);
-    setCommentText('');
+    dispatch(hideCommentInput());
   };
   const handleSubmitComment = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isLoggedIn) {
       history.push('/auth');
     }
-    if (commentText.trim() === '') {
-      setShow(false);
-      setCommentText('');
+    if (commentValues.trim() === '') {
+      dispatch(hideCommentInput());
       return;
     }
     dispatch({
       type: commentRequest.type,
-      payload: { slug: props.slug, data: commentText },
+      payload: { slug: props.slug, data: commentValues },
     });
-    setShow(false);
-    setCommentText('');
   };
   if (!comments) {
     return <h1>Loading...</h1>;
@@ -125,7 +135,7 @@ export const CommentBox = (props: PropsType) => {
           <CloseIcon onClick={toggle} className={classes.closeBtn} />
         </div>
         <form className={classes.inputBox} onSubmit={handleSubmitComment}>
-          {show && isLoggedIn && (
+          {isShowInput && isLoggedIn && (
             <ListItem style={{ padding: '0', marginBottom: '5px' }}>
               <ListItemAvatar>
                 <Avatar src={currentUser?.image && currentUser.image} />
@@ -138,22 +148,23 @@ export const CommentBox = (props: PropsType) => {
             multiline
             fullWidth
             InputProps={{ disableUnderline: true }}
-            value={commentText}
-            onChange={(e: any) => setCommentText(e.target.value)}
-            onClick={() => setShow(true)}
+            value={commentValues}
+            onChange={(e: any) => dispatch(getCommentText(e.target.value))}
+            onClick={() => dispatch(showCommentInput())}
           />
-          {show && (
+          {isShowInput && (
             <div className={classes.btnGroup}>
               <Button onClick={handleCancel} style={{ textTransform: 'none' }}>
                 Cancel
               </Button>
               <Button
+                disabled={isLoadingComment}
                 type="submit"
                 variant="contained"
                 color="primary"
                 style={{ borderRadius: '25px', marginLeft: '5px', textTransform: 'none' }}
               >
-                Respond
+                {isLoadingComment ? <CircularProgress size={14} /> : 'Respond'}
               </Button>
             </div>
           )}

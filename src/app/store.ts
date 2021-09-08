@@ -11,7 +11,7 @@ import tagReducer from '../features/tags/tagsSlice';
 import settingReducer from './../features/setting/settingSlice';
 import rootSaga from './rootSaga';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   router: connectRouter(history),
   auth: authReducer,
   tag: tagReducer,
