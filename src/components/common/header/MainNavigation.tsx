@@ -61,7 +61,7 @@ const MainNavigation = () => {
   };
 
   return (
-    <AppBar position="static" className={classes.root}>
+    <AppBar position="sticky" className={classes.root}>
       <Toolbar>
         <Typography className={classes.logo} variant="h6">
           <NavLink to="/" onClick={handleClickNavLink}>

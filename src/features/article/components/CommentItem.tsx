@@ -9,7 +9,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import { useAppDispatch } from 'app/hooks';
-import { convertArticleDate } from 'share/methods/dateFormat';
+import Moment from 'react-moment';
 import { deleteComment } from '../articleSlice';
 const useStyle = makeStyles(() => ({
   footer: {
@@ -47,7 +47,7 @@ export const CommentItem = (props: CommentItemProps) => {
         </ListItemAvatar>
         <ListItemText
           primary={props.commentData.author.username}
-          secondary={convertArticleDate(props.commentData.createdAt)}
+          secondary={<Moment fromNow>{props.commentData.createdAt}</Moment>}
         />
       </ListItem>
       <TextField
