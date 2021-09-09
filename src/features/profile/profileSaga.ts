@@ -4,6 +4,7 @@ import followApi from 'api/followApi';
 import { profileApi } from 'api/profileApi';
 import { SagaIterator } from 'redux-saga';
 import { followProfileSuccess, getProfileSuccess, unFollowProfileSuccess } from './profileSlice';
+import { getError } from '../article/articleSlice';
 
 export function* getProfileSaga(action: PayloadAction<{ username: string }>): SagaIterator<void> {
   try {
@@ -16,6 +17,10 @@ export function* getProfileSaga(action: PayloadAction<{ username: string }>): Sa
     });
   } catch (error) {
     console.error(error);
+    yield put({
+      type: getError.type,
+      payload: error,
+    });
   }
 }
 

@@ -2,6 +2,7 @@ import { Box } from '@material-ui/core';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import Loading from 'components/common/Loading';
 import MenuTab from 'components/common/MenuTab';
+import { NotFound } from 'components/common/NotFound';
 import {
   getListArticle,
   selectCountArticles,
@@ -22,6 +23,7 @@ import ProfileInfo from '../components/ProfileInfo';
 import ProfileLayout from '../layout/ProfileLayout';
 import ProfilePagination from '../components/ProfilePagination';
 import { getProfile, selectIsLoading } from '../profileSlice';
+import { selectError } from '../../article/articleSlice';
 
 const queryString = require('query-string');
 
@@ -99,6 +101,13 @@ const ProfilePage = () => {
 
   // pagination data
   const totalPage = totalArticle && articlePerPage ? Math.ceil(totalArticle / articlePerPage) : 0;
+
+  // error
+  const error = useAppSelector(selectError);
+
+  if (error) {
+    return <NotFound />;
+  }
 
   return (
     <Box>
