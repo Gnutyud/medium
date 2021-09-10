@@ -15,7 +15,7 @@ const initialState: InitialState = {
   articlesCount: 0,
   isLoading: false,
   numberCurrentPage: 1,
-  numberArticlePerPage: 5,
+  numberArticlePerPage: 4,
 };
 
 export const articlesSlice = createSlice({

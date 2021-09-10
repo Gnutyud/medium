@@ -54,7 +54,7 @@ const useStyle = makeStyles((theme) => ({
   },
   sideBar: {
     [theme.breakpoints.down('md')]: {
-      marginLeft: '0px',
+      margin: '0px 16px',
       order: '2',
     },
   },
@@ -94,6 +94,7 @@ function DetailArticle() {
   // test
   const articleList = useAppSelector(selectListArticles);
   const currentArticle = articleList.find((item) => item.slug === slug);
+
   React.useEffect(() => {
     dispatch({
       type: getArticle.type,

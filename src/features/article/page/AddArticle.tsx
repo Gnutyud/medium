@@ -1,6 +1,6 @@
 import { Box, Button, Container, makeStyles } from '@material-ui/core';
 import { postArticle } from 'features/articles/articlesSlice';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import FormikEditer from 'share/components/FormikEditer';
